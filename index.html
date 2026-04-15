@@ -52,15 +52,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* FAQ Modal */
-        .modal {
-            animation: modalPop 0.4s ease;
-        }
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
         .form-input {
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
@@ -111,11 +102,95 @@
             </div>
         </div>
 
-        <!-- FAQ Icon Button -->
+        <!-- FAQ Icon -->
         <button onclick="toggleFAQ()" 
                 class="fixed bottom-8 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
             <i class="fa-solid fa-circle-info text-blue-400"></i>
         </button>
+    </div>
+
+    <!-- CREATOR FORM -->
+    <div id="page-creator" class="hidden py-16 relative">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="form-card rounded-3xl p-10 fade-in">
+                <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
+                
+                <div class="space-y-7">
+                    <!-- Changed Field -->
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name)</label>
+                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
+                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
+                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
+                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
+                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
+                    </div>
+
+                    <button onclick="submitCreatorForm()" 
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
+                        Submit Creator Application
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAFF FORM -->
+    <div id="page-staff" class="hidden py-16 relative">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="form-card rounded-3xl p-10 fade-in">
+                <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
+                
+                <div class="space-y-7">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
+                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
+                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For</label>
+                        <input id="s-position" type="text" placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff?</label>
+                        <textarea id="s-why" rows="5" placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
+                    </div>
+
+                    <button onclick="submitStaffForm()" 
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
+                        Submit Staff Application
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
+        <div class="text-center max-w-md px-6 fade-in">
+            <div class="text-8xl mb-6">🎉</div>
+            <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
+            <p class="text-slate-400">Thank you! Your application has been received.</p>
+            <button onclick="navigateTo('home')" class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                Return to Home
+            </button>
+        </div>
     </div>
 
     <!-- FAQ Modal -->
@@ -141,90 +216,6 @@
             <button onclick="toggleFAQ()" 
                     class="mt-8 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-2xl font-medium">
                 Close
-            </button>
-        </div>
-    </div>
-
-    <!-- CREATOR FORM -->
-    <div id="page-creator" class="hidden py-16 relative">
-        <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card rounded-3xl p-10 fade-in">
-                <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
-                <div class="space-y-7">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
-                        <input id="c-name" type="text" class="form-input w-full h-14 rounded-3xl px-6" placeholder="Enter your full name">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox Username</label>
-                        <input id="c-roblox" type="text" placeholder="Your Roblox username" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
-                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
-                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
-                    </div>
-
-                    <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
-                        Submit Creator Application
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- STAFF FORM -->
-    <div id="page-staff" class="hidden py-16 relative">
-        <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card rounded-3xl p-10 fade-in">
-                <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
-                <div class="space-y-7">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
-                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For</label>
-                        <input id="s-position" type="text" placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff?</label>
-                        <textarea id="s-why" rows="5" placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
-                    </div>
-
-                    <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
-                        Submit Staff Application
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONFIRMATION -->
-    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
-        <div class="text-center max-w-md px-6 fade-in">
-            <div class="text-8xl mb-6">🎉</div>
-            <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400">Thank you! Your application has been received.</p>
-            <button onclick="navigateTo('home')" class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
-                Return to Home
             </button>
         </div>
     </div>
@@ -265,9 +256,8 @@
         function submitCreatorForm() {
             const data = {
                 type: "creator",
-                name: document.getElementById("c-name").value || "Anonymous",
+                roblox: document.getElementById("c-roblox").value || "Anonymous",
                 discord: document.getElementById("c-discord").value,
-                roblox: document.getElementById("c-roblox").value,
                 social: document.getElementById("c-social").value,
                 followers: document.getElementById("c-followers").value,
                 why: document.getElementById("c-why").value
@@ -293,7 +283,6 @@
             document.getElementById('confirmation-screen').classList.remove('hidden');
         }
 
-        // Close modal when clicking outside
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
         });
