@@ -80,22 +80,13 @@
             background-color: #1e2937 !important;
         }
 
+        .error {
+            border-color: #ef4444 !important;
+        }
+
         .required::after {
             content: " *";
             color: #ef4444;
-        }
-
-        .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -121,7 +112,7 @@
     </nav>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="page active min-h-screen flex items-center relative">
+    <div id="page-home" class="min-h-screen flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
                  alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
@@ -154,7 +145,7 @@
     </div>
 
     <!-- CONTENT CREATOR FORM -->
-    <div id="page-creator" class="page hidden py-16 relative">
+    <div id="page-creator" class="hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
@@ -181,8 +172,8 @@
                         <textarea id="c-why" rows="4" required placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
-                    <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
+                    <button onclick="submitCreatorForm()" id="creator-submit-btn"
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95 disabled:opacity-50">
                         Submit Content Creator Application
                     </button>
                 </div>
@@ -191,7 +182,7 @@
     </div>
 
     <!-- STAFF FORM -->
-    <div id="page-staff" class="page hidden py-16 relative">
+    <div id="page-staff" class="hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
@@ -214,8 +205,8 @@
                         <textarea id="s-why" rows="5" required placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
-                    <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
+                    <button onclick="submitStaffForm()" id="staff-submit-btn"
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95 disabled:opacity-50">
                         Submit Staff Application
                     </button>
                 </div>
@@ -224,13 +215,16 @@
     </div>
 
     <!-- CONFIRMATION SCREEN -->
-    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
+    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
             <p class="text-slate-400 text-lg mb-8">
                 Please wait 24-48 hours for a response.<br>
                 <span class="text-red-400 font-medium">Do not ping the owners.</span>
+            </p>
+            <p class="text-xs text-slate-500 mb-10">
+                You can only apply once every 48 hours.
             </p>
             
             <button onclick="navigateTo('home')" 
@@ -270,14 +264,12 @@
     <script>
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(el => {
-                el.classList.remove('active');
-                el.style.display = 'none';
+                el.classList.add('hidden');
             });
 
-            const targetPage = document.getElementById(`page-${page}`);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-                setTimeout(() => targetPage.classList.add('active'), 10);
+            const target = document.getElementById(`page-${page}`);
+            if (target) {
+                target.classList.remove('hidden');
             }
         }
 
@@ -305,40 +297,71 @@
             } catch(e) {}
         }
 
+        // Form Validation + Submit
+        function validateAndSubmit(formId, submitBtnId, dataFunc) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll('input[required], textarea[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            if (!isValid) {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            const submitBtn = document.getElementById(submitBtnId);
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting...";
+
+            dataFunc();
+        }
+
         function submitCreatorForm() {
-            const data = {
-                type: "creator",
-                roblox: document.getElementById("c-roblox").value,
-                discord: document.getElementById("c-discord").value,
-                social: document.getElementById("c-social").value,
-                followers: document.getElementById("c-followers").value,
-                why: document.getElementById("c-why").value
-            };
-            sendToDiscord(data);
-            showConfirmation();
+            validateAndSubmit('page-creator', 'creator-submit-btn', () => {
+                const data = {
+                    type: "creator",
+                    roblox: document.getElementById("c-roblox").value,
+                    discord: document.getElementById("c-discord").value,
+                    social: document.getElementById("c-social").value,
+                    followers: document.getElementById("c-followers").value,
+                    why: document.getElementById("c-why").value
+                };
+                sendToDiscord(data);
+                showConfirmation();
+            });
         }
 
         function submitStaffForm() {
-            const data = {
-                type: "staff",
-                roblox: document.getElementById("s-roblox").value,
-                discord: document.getElementById("s-discord").value,
-                position: document.getElementById("s-position").value,
-                why: document.getElementById("s-why").value
-            };
-            sendToDiscord(data);
-            showConfirmation();
+            validateAndSubmit('page-staff', 'staff-submit-btn', () => {
+                const data = {
+                    type: "staff",
+                    roblox: document.getElementById("s-roblox").value,
+                    discord: document.getElementById("s-discord").value,
+                    position: document.getElementById("s-position").value,
+                    why: document.getElementById("s-why").value
+                };
+                sendToDiscord(data);
+                showConfirmation();
+            });
         }
 
         function showConfirmation() {
-            document.querySelectorAll('.page').forEach(el => {
-                el.classList.remove('active');
-                el.style.display = 'none';
-            });
-            
+            document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
             const conf = document.getElementById('confirmation-screen');
-            conf.style.display = 'flex';
-            setTimeout(() => conf.classList.add('active'), 10);
+            conf.classList.remove('hidden');
+
+            // Auto return to home after 4 seconds
+            setTimeout(() => {
+                navigateTo('home');
+            }, 4000);
         }
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
