@@ -80,6 +80,11 @@
             background-color: #1e2937 !important;
         }
 
+        .form-card {
+            max-width: 640px;   /* Same width as creator form */
+            margin: 0 auto;
+        }
+
         .page {
             display: none;
             opacity: 0;
@@ -183,11 +188,12 @@
         </div>
     </div>
 
-    <!-- STAFF FORM -->
+    <!-- STAFF FORM - NOW SAME SIZE -->
     <div id="page-staff" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
+                
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
@@ -215,17 +221,14 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION SCREEN - NOW PROPERLY CENTERED -->
+    <!-- CONFIRMATION -->
     <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
-            <!-- Big Celebration Icon -->
             <div class="text-8xl mb-6">🎉</div>
-            
-            <h2 class="text-4xl font-semibold mb-3">Application Submitted Successfully!</h2>
-            <p class="text-slate-400 text-lg mb-10">Thank you! Your application has been received and forwarded to the team.</p>
-            
+            <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
+            <p class="text-slate-400">Thank you! Your application has been received.</p>
             <button onclick="navigateTo('home')" 
-                    class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all active:scale-95">
+                    class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
                 Return to Home
             </button>
         </div>
@@ -267,7 +270,7 @@
 
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
-                targetPage.style.display = 'flex';   // Changed to flex for better centering
+                targetPage.style.display = 'block';
                 setTimeout(() => {
                     targetPage.classList.add('active');
                 }, 10);
