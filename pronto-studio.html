@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pronto Studio • Join the Next Generation of Creators</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        :root {
+            --tw-color-primary: #10b981;
+        }
+        
+        .tail-container * {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .logo-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .form-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .form-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgb(16 185 129 / 0.15);
+        }
+
+        .step-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .success-confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="tail-container">
+    <!-- NAVBAR -->
+    <nav class="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <div class="flex items-center gap-x-2">
+                <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-inner">
+                    <i class="fa-solid fa-bolt-lightning text-xl"></i>
+                </div>
+                <h1 class="logo-font text-2xl tracking-[-1px] text-zinc-900 dark:text-white">Pronto Studio</h1>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <button onclick="navigateTo('home')" 
+                        class="nav-link flex items-center gap-x-1 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </button>
+                <button onclick="navigateTo('creator')" 
+                        class="nav-link flex items-center gap-x-1 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <span>Apply as Creator</span>
+                </button>
+                <button onclick="navigateTo('staff')" 
+                        class="nav-link flex items-center gap-x-1 text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Apply for Staff</span>
+                </button>
+            </div>
+
+            <!-- Right side -->
+            <div class="flex items-center gap-x-4">
+                <!-- Dark mode toggle -->
+                <button onclick="toggleDarkMode()" 
+                        class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900 text-zinc-700 dark:text-zinc-300 transition-colors">
+                    <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+                </button>
+
+                <!-- Fake "Community" badge -->
+                <div class="hidden sm:flex items-center bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-medium px-4 h-9 rounded-3xl gap-x-1">
+                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                    248 creators online
+                </div>
+
+                <!-- Mobile menu button -->
+                <button onclick="toggleMobileMenu()" class="md:hidden w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900">
+                    <i id="mobile-icon" class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-zinc-950 border-t px-6 py-4">
+            <div class="flex flex-col gap-y-4 text-sm font-medium">
+                <button onclick="navigateTo('home');toggleMobileMenu()" class="flex items-center gap-x-3 py-3 px-4 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900">
+                    <i class="fa-solid fa-house w-5"></i> Home
+                </button>
+                <button onclick="navigateTo('creator');toggleMobileMenu()" class="flex items-center gap-x-3 py-3 px-4 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900">
+                    <i class="fa-solid fa-user-pen w-5"></i> Apply as Creator
+                </button>
+                <button onclick="navigateTo('staff');toggleMobileMenu()" class="flex items-center gap-x-3 py-3 px-4 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900">
+                    <i class="fa-solid fa-briefcase w-5"></i> Apply for Staff
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="page-home" class="min-h-screen">
+        
+        <!-- HERO -->
+        <div class="hero-bg text-white pt-16 pb-24">
+            <div class="max-w-screen-2xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="inline-flex items-center gap-x-2 bg-white/20 backdrop-blur-md text-white text-sm font-medium px-5 h-9 rounded-3xl">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                        </span>
+                        Now accepting applications
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-7xl font-semibold leading-none tracking-[-2px] logo-font">
+                        Join the next<br>generation of<br>creators
+                    </h1>
+                    
+                    <p class="text-xl text-white/90 max-w-md">
+                        Pronto Studio is a creative collective where creators grow together, get discovered, and build real impact.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="navigateTo('creator')" 
+                                class="bg-white text-emerald-700 hover:bg-emerald-50 font-semibold px-8 h-14 rounded-3xl flex items-center gap-x-3 text-lg transition-all active:scale-95">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Apply as Creator
+                        </button>
+                        <button onclick="navigateTo('staff')" 
+                                class="border-2 border-white hover:bg-white/10 font-semibold px-8 h-14 rounded-3xl flex items-center gap-x-3 text-lg transition-all active:scale-95">
+                            <i class="fa-solid fa-briefcase"></i>
+                            Apply for Staff
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center gap-x-8 text-sm">
+                        <div class="flex -space-x-4">
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-emerald-500 shadow-md">👾</div>
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-emerald-500 shadow-md">🎥</div>
+                            <div class="w-8 h-8 bg-white rounded-2xl flex items-center justify-center text-emerald-500 shadow-md">📸</div>
+                        </div>
+                        <p class="text-white/80">Trusted by 1,847 creators • 42 staff members</p>
+                    </div>
+                </div>
+                
+                <!-- Hero visual -->
+                <div class="hidden md:flex justify-end">
+                    <div class="bg-white/10 backdrop-blur-xl rounded-3xl p-8 max-w-xs w-full shadow-2xl border border-white/30">
+                        <div class="text-center space-y-6">
+                            <div class="mx-auto w-20 h-20 bg-white rounded-3xl flex items-center justify-center text-5xl">🚀</div>
+                            <div>
+                                <p class="text-3xl font-semibold">Ready in 60 seconds</p>
+                                <p class="text-white/70">Your application is live. Get matched with mentors instantly.</p>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3 text-center text-xs">
+                                <div class="bg-white/20 rounded-2xl py-3">Growth<br><span class="font-bold text-2xl">3.2×</span></div>
+                                <div class="bg-white/20 rounded-2xl py-3">Collaborations<br><span class="font-bold text-2xl">19</span></div>
+                                <div class="bg-white/20 rounded-2xl py-3">Reach<br><span class="font-bold text-2xl">2.4M</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHAT IS PRONTO STUDIO -->
+        <div class="max-w-screen-2xl mx-auto px-6 py-16">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="px-4 py-2 bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 rounded-3xl text-sm font-medium">Built for creators, by creators</span>
+                <h2 class="text-4xl font-semibold mt-4 tracking-tight">Pronto Studio is your creative launchpad</h2>
+                <p class="text-zinc-600 dark:text-zinc-400 mt-4">We connect talented creators with the resources, community, and opportunities they need to go from good to legendary.</p>
+            </div>
+            
+            <!-- Benefits -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="form-card bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-transparent">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-2xl flex items-center justify-center text-3xl mb-6">👥</div>
+                    <h3 class="font-semibold text-xl mb-2">Vibrant Community</h3>
+                    <p class="text-zinc-600 dark:text-zinc-400">Weekly creator circles, live workshops, and direct feedback from 1,800+ members.</p>
+                </div>
+                <div class="form-card bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-transparent">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-2xl flex items-center justify-center text-3xl mb-6">📈</div>
+                    <h3 class="font-semibold text-xl mb-2">Real Growth</h3>
+                    <p class="text-zinc-600 dark:text-zinc-400">Mentorship programs, brand deals, and analytics tools designed to 10× your reach.</p>
+                </div>
+                <div class="form-card bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-transparent">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-2xl flex items-center justify-center text-3xl mb-6">🌍</div>
+                    <h3 class="font-semibold text-xl mb-2">Massive Exposure</h3>
+                    <p class="text-zinc-600 dark:text-zinc-400">Featured on our channels (1.2M+ followers), cross-promotions, and PR opportunities.</p>
+                </div>
+                <div class="form-card bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-transparent">
+                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900 rounded-2xl flex items-center justify-center text-3xl mb-6">🤝</div>
+                    <h3 class="font-semibold text-xl mb-2">Seamless Collaboration</h3>
+                    <p class="text-zinc-600 dark:text-zinc-400">Team up with other creators and staff on campaigns, content series, and events.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRUST BAR -->
+        <div class="bg-zinc-100 dark:bg-zinc-900 py-8">
+            <div class="max-w-screen-2xl mx-auto px-6 flex flex-wrap justify-center items-center gap-x-12 gap-y-6 opacity-75">
+                <div class="flex items-center gap-x-3 text-sm font-medium"><i class="fa-brands fa-tiktok"></i> @prontostudio</div>
+                <div class="flex items-center gap-x-3 text-sm font-medium"><i class="fa-brands fa-instagram"></i> @prontostudio</div>
+                <div class="flex items-center gap-x-3 text-sm font-medium"><i class="fa-brands fa-youtube"></i> Pronto Studio</div>
+                <div class="h-3 w-px bg-zinc-300 dark:bg-zinc-700"></div>
+                <p class="text-xs uppercase tracking-widest font-medium">Featured in • Forbes • Hypebeast • Creator Economy Report 2026</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATOR APPLICATION FORM (Multi-step Google Forms style) -->
+    <div id="page-creator" class="hidden min-h-screen bg-zinc-50 dark:bg-zinc-950 py-12">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <button onclick="navigateTo('home')" class="flex items-center gap-x-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span class="font-medium">Back to home</span>
+                </button>
+                <h2 class="text-3xl font-semibold logo-font tracking-tight">Creator Application</h2>
+                <div class="text-emerald-600 font-medium flex items-center gap-x-1">
+                    <span class="text-xs uppercase">Step</span> 
+                    <span id="current-step-display" class="text-2xl font-semibold">1</span>
+                    <span class="text-xs uppercase text-zinc-400">/ 5</span>
+                </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="h-2 bg-zinc-200 dark:bg-zinc-800 rounded-3xl mb-10 overflow-hidden">
+                <div id="progress-bar" class="h-2 bg-emerald-500 rounded-3xl w-1/5 transition-all duration-500"></div>
+            </div>
+
+            <!-- STEP 1 -->
+            <div id="creator-step-1" class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-8 md:p-10 shadow-xl">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-x-2"><span class="text-emerald-500">01</span> Personal Information</h3>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Full Name</label>
+                        <input id="creator-name" type="text" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5 focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Email Address</label>
+                        <input id="creator-email" type="email" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+                <div class="flex justify-end mt-10">
+                    <button onclick="nextCreatorStep()" class="px-10 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl flex items-center gap-x-2 font-medium">
+                        Continue <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div id="creator-step-2" class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-8 md:p-10 shadow-xl hidden">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-x-2"><span class="text-emerald-500">02</span> Your Online Presence</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Instagram @</label>
+                        <input id="creator-ig" type="text" placeholder="@yourhandle" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">TikTok @</label>
+                        <input id="creator-tiktok" type="text" placeholder="@yourhandle" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">YouTube</label>
+                        <input id="creator-youtube" type="text" placeholder="youtube.com/@yourchannel" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Portfolio / Linktree</label>
+                        <input id="creator-portfolio" type="url" placeholder="https://" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                    </div>
+                </div>
+                <div class="flex gap-x-4 mt-10">
+                    <button onclick="prevCreatorStep()" class="px-8 h-12 border border-zinc-300 dark:border-zinc-700 rounded-3xl font-medium">Back</button>
+                    <button onclick="nextCreatorStep()" class="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-medium">Next</button>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div id="creator-step-3" class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-8 md:p-10 shadow-xl hidden">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-x-2"><span class="text-emerald-500">03</span> Content &amp; Audience</h3>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Content Niche</label>
+                        <select id="creator-niche" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                            <option value="">Select niche...</option>
+                            <option value="Lifestyle">Lifestyle</option>
+                            <option value="Tech">Tech &amp; Gadgets</option>
+                            <option value="Beauty">Beauty &amp; Fashion</option>
+                            <option value="Gaming">Gaming</option>
+                            <option value="Education">Education / Edutainment</option>
+                            <option value="Fitness">Fitness &amp; Health</option>
+                            <option value="Food">Food &amp; Cooking</option>
+                            <option value="Other">Other (please specify below)</option>
+                        </select>
+                        <input id="creator-niche-other" type="text" placeholder="If other, tell us..." class="w-full mt-3 h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5 hidden">
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="text-xs font-medium">IG Followers</label>
+                            <input id="creator-audience-ig" type="text" placeholder="12.4K" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                        </div>
+                        <div>
+                            <label class="text-xs font-medium">TikTok Followers</label>
+                            <input id="creator-audience-tt" type="text" placeholder="87K" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                        </div>
+                        <div>
+                            <label class="text-xs font-medium">YT Subscribers</label>
+                            <input id="creator-audience-yt" type="text" placeholder="4.2K" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Brief Content Description (what you create)</label>
+                        <textarea id="creator-description" rows="3" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5 resize-none"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-x-4 mt-10">
+                    <button onclick="prevCreatorStep()" class="px-8 h-12 border border-zinc-300 dark:border-zinc-700 rounded-3xl font-medium">Back</button>
+                    <button onclick="nextCreatorStep()" class="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-medium">Next</button>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div id="creator-step-4" class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-8 md:p-10 shadow-xl hidden">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-x-2"><span class="text-emerald-500">04</span> Experience &amp; Motivation</h3>
+                <div class="space-y-8">
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Experience Level</label>
+                        <div class="flex gap-x-3">
+                            <button onclick="selectExperience(this)" data-value="Beginner" class="exp-btn flex-1 h-12 rounded-3xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-emerald-300 text-sm font-medium">Beginner</button>
+                            <button onclick="selectExperience(this)" data-value="Intermediate" class="exp-btn flex-1 h-12 rounded-3xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-emerald-300 text-sm font-medium">Intermediate</button>
+                            <button onclick="selectExperience(this)" data-value="Advanced" class="exp-btn flex-1 h-12 rounded-3xl border-2 border-zinc-300 dark:border-zinc-700 hover:border-emerald-300 text-sm font-medium">Advanced / Pro</button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">Why do you want to join Pronto Studio?</label>
+                        <textarea id="creator-why" rows="4" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5 resize-none"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1.5">What are your goals as a creator in the next 12 months?</label>
+                        <textarea id="creator-goals" rows="4" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5 resize-none"></textarea>
+                    </div>
+                </div>
+                <div class="flex gap-x-4 mt-10">
+                    <button onclick="prevCreatorStep()" class="px-8 h-12 border border-zinc-300 dark:border-zinc-700 rounded-3xl font-medium">Back</button>
+                    <button onclick="nextCreatorStep()" class="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-medium">Continue to samples</button>
+                </div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div id="creator-step-5" class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-8 md:p-10 shadow-xl hidden">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-x-2"><span class="text-emerald-500">05</span> Content Samples &amp; Submit</h3>
+                
+                <div class="border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-3xl p-8 text-center mb-8">
+                    <i class="fa-solid fa-cloud-upload text-4xl text-zinc-400 mb-4"></i>
+                    <p class="font-medium mb-1">Upload 1–3 content samples (video / reel / photo)</p>
+                    <p class="text-xs text-zinc-500">Drag &amp; drop or</p>
+                    <label class="cursor-pointer inline-flex mt-3 px-6 h-10 bg-zinc-100 dark:bg-zinc-800 rounded-3xl items-center text-sm font-medium">
+                        Choose files
+                        <input type="file" id="creator-upload" multiple accept="video/*,image/*" class="hidden">
+                    </label>
+                    <p id="files-selected" class="text-xs text-emerald-600 mt-2"></p>
+                </div>
+                
+                <div class="flex justify-between items-center text-xs text-zinc-400 mb-4">
+                    <span>Your application will be reviewed within 48 hours</span>
+                    <span class="text-emerald-500">100% secure • Private</span>
+                </div>
+                
+                <div class="flex gap-x-4">
+                    <button onclick="prevCreatorStep()" class="px-8 h-12 border border-zinc-300 dark:border-zinc-700 rounded-3xl font-medium">Back</button>
+                    <button onclick="submitCreatorForm()" 
+                            class="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-semibold flex items-center justify-center gap-x-2">
+                        Submit Application
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STAFF APPLICATION FORM -->
+    <div id="page-staff" class="hidden min-h-screen bg-zinc-50 dark:bg-zinc-950 py-12">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <button onclick="navigateTo('home')" class="flex items-center gap-x-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span class="font-medium">Back to home</span>
+                </button>
+                <h2 class="text-3xl font-semibold logo-font tracking-tight">Staff Application</h2>
+            </div>
+
+            <div class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-10 shadow-xl">
+                <div class="space-y-10">
+                    <!-- Section 1 -->
+                    <div>
+                        <h3 class="uppercase text-emerald-600 text-sm font-medium mb-4">Basic Information</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Full Name</label>
+                                <input id="staff-name" type="text" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Email Address</label>
+                                <input id="staff-email" type="email" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div>
+                        <h3 class="uppercase text-emerald-600 text-sm font-medium mb-4">Role &amp; Experience</h3>
+                        <div>
+                            <label class="block text-sm font-medium mb-1.5">Role you’re applying for</label>
+                            <select id="staff-role" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                                <option>Content Manager</option>
+                                <option>Moderator</option>
+                                <option>Community Admin</option>
+                                <option>Graphic Designer</option>
+                                <option>Video Editor</option>
+                                <option>Partnerships / Brand Manager</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <label class="block text-sm font-medium mb-1.5">Relevant Experience</label>
+                            <textarea id="staff-experience" rows="4" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5"></textarea>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <label class="block text-sm font-medium mb-3">Skills (select all that apply)</label>
+                            <div id="skills-container" class="flex flex-wrap gap-2">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div>
+                        <h3 class="uppercase text-emerald-600 text-sm font-medium mb-4">Documents &amp; Availability</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Resume / CV (PDF)</label>
+                                <label class="cursor-pointer flex items-center justify-center border border-dashed border-zinc-300 dark:border-zinc-700 rounded-3xl h-28 text-zinc-400 hover:text-emerald-500">
+                                    <div class="text-center">
+                                        <i class="fa-solid fa-file-pdf text-3xl mb-2"></i>
+                                        <p class="text-sm">Click to upload</p>
+                                    </div>
+                                    <input type="file" id="staff-resume" accept=".pdf" class="hidden">
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Portfolio URL (optional)</label>
+                                <input id="staff-portfolio" type="url" placeholder="https://" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <label class="block text-sm font-medium mb-1.5">Availability (hours per week)</label>
+                            <input id="staff-availability" type="number" placeholder="20" class="w-full h-12 rounded-2xl border border-zinc-300 dark:border-zinc-700 px-5">
+                        </div>
+                    </div>
+
+                    <!-- Section 4 -->
+                    <div>
+                        <h3 class="uppercase text-emerald-600 text-sm font-medium mb-4">Final Questions</h3>
+                        <div class="space-y-8">
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Why should we hire you for Pronto Studio?</label>
+                                <textarea id="staff-why" rows="4" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">Previous leadership or moderation experience?</label>
+                                <textarea id="staff-leadership" rows="3" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1.5">References (optional)</label>
+                                <textarea id="staff-references" rows="2" placeholder="Name, role, contact" class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-12 flex items-center justify-between">
+                    <button onclick="navigateTo('home')" class="text-zinc-400 hover:text-zinc-600 flex items-center gap-x-2">
+                        <i class="fa-solid fa-xmark"></i> Cancel
+                    </button>
+                    <button onclick="submitStaffForm()" 
+                            class="px-12 h-14 bg-emerald-500 hover:bg-emerald-600 text-white rounded-3xl font-semibold flex items-center gap-x-3">
+                        Submit Staff Application 
+                        <i class="fa-solid fa-check-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFIRMATION SCREEN (shared for both forms) -->
+    <div id="confirmation-screen" class="hidden min-h-screen bg-white dark:bg-zinc-950 flex items-center justify-center px-6">
+        <div class="max-w-md w-full text-center">
+            <div class="mx-auto w-24 h-24 bg-emerald-100 dark:bg-emerald-900 rounded-3xl flex items-center justify-center mb-8 text-6xl">🎉</div>
+            <h2 id="confirmation-title" class="text-4xl font-semibold mb-3">Application received!</h2>
+            <p id="confirmation-subtitle" class="text-zinc-600 dark:text-zinc-400 mb-8">Thank you. Our team will review your submission within 48 hours.</p>
+            
+            <div class="bg-zinc-100 dark:bg-zinc-900 rounded-3xl p-6 text-left mb-10">
+                <p class="text-xs uppercase font-medium mb-3 text-emerald-600">What happens next</p>
+                <ul class="space-y-4 text-sm">
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-px"></i> You’ll receive a confirmation email</li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-px"></i> We may request a quick 15-minute call</li>
+                    <li class="flex gap-x-3"><i class="fa-solid fa-check text-emerald-500 mt-px"></i> Final decision within 7 days</li>
+                </ul>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="navigateTo('home')" 
+                        class="flex-1 h-12 border border-zinc-300 dark:border-zinc-700 rounded-3xl font-medium">Back to Home</button>
+                <button onclick="viewMyApplication()" 
+                        class="flex-1 h-12 bg-zinc-900 dark:bg-white dark:text-zinc-900 text-white rounded-3xl font-medium">View my application</button>
+            </div>
+            
+            <p onclick="navigateTo('home')" class="mt-8 text-xs text-zinc-400 cursor-pointer">← Return to Pronto Studio homepage</p>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Main script for Pronto Studio demo web app
+         * Fully functional, modern Google Forms + SaaS style
+         * Self-contained – just open index.html
+         */
+
+        // Tailwind initialization
+        function initializeTailwind() {
+            return {
+                config(userConfig = {}) {
+                    return {
+                        content: [],
+                        theme: {
+                            extend: {}
+                        },
+                        plugins: [],
+                        ...userConfig,
+                    }
+                },
+                theme: {
+                    extend: {}
+                }
+            }
+        }
+
+        // Dark mode
+        function toggleDarkMode() {
+            const html = document.documentElement
+            html.classList.toggle('dark')
+            const icon = document.getElementById('theme-icon')
+            if (html.classList.contains('dark')) {
+                icon.classList.remove('fa-moon')
+                icon.classList.add('fa-sun')
+                localStorage.setItem('darkMode', 'true')
+            } else {
+                icon.classList.remove('fa-sun')
+                icon.classList.add('fa-moon')
+                localStorage.setItem('darkMode', 'false')
+            }
+        }
+
+        // Mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu')
+            const icon = document.getElementById('mobile-icon')
+            menu.classList.toggle('hidden')
+            icon.classList.toggle('fa-bars')
+            icon.classList.toggle('fa-xmark')
+        }
+
+        // Navigation between pages
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => {
+                el.classList.add('hidden')
+            })
+            
+            // Show requested page
+            if (page === 'home') {
+                document.getElementById('page-home').classList.remove('hidden')
+            } else if (page === 'creator') {
+                resetCreatorForm()
+                document.getElementById('page-creator').classList.remove('hidden')
+            } else if (page === 'staff') {
+                resetStaffForm()
+                document.getElementById('page-staff').classList.remove('hidden')
+            }
+            
+            // Close mobile menu if open
+            const mobileMenu = document.getElementById('mobile-menu')
+            if (!mobileMenu.classList.contains('hidden')) toggleMobileMenu()
+        }
+
+        // CREATOR FORM LOGIC
+        let creatorCurrentStep = 1
+        let creatorExperienceLevel = ''
+
+        function showCreatorStep(step) {
+            creatorCurrentStep = step
+            document.getElementById('current-step-display').textContent = step
+            document.getElementById('progress-bar').style.width = `${(step / 5) * 100}%`
+            
+            // Hide all steps
+            for (let i = 1; i <= 5; i++) {
+                const el = document.getElementById(`creator-step-${i}`)
+                if (el) el.classList.add('hidden')
+            }
+            // Show current
+            const current = document.getElementById(`creator-step-${step}`)
+            if (current) current.classList.remove('hidden')
+        }
+
+        function nextCreatorStep() {
+            if (creatorCurrentStep < 5) {
+                showCreatorStep(creatorCurrentStep + 1)
+            }
+        }
+
+        function prevCreatorStep() {
+            if (creatorCurrentStep > 1) {
+                showCreatorStep(creatorCurrentStep - 1)
+            }
+        }
+
+        function selectExperience(btn) {
+            document.querySelectorAll('.exp-btn').forEach(b => b.classList.remove('border-emerald-500', 'text-emerald-600'))
+            btn.classList.add('border-emerald-500', 'text-emerald-600')
+            creatorExperienceLevel = btn.dataset.value
+        }
+
+        function resetCreatorForm() {
+            creatorCurrentStep = 1
+            showCreatorStep(1)
+            creatorExperienceLevel = ''
+            
+            // Clear inputs
+            const inputs = ['creator-name','creator-email','creator-ig','creator-tiktok','creator-youtube','creator-portfolio','creator-description','creator-why','creator-goals']
+            inputs.forEach(id => {
+                const el = document.getElementById(id)
+                if (el) el.value = ''
+            })
+            document.getElementById('creator-niche-other').classList.add('hidden')
+            document.getElementById('files-selected').textContent = ''
+            
+            // Clear experience buttons
+            document.querySelectorAll('.exp-btn').forEach(b => b.classList.remove('border-emerald-500', 'text-emerald-600'))
+        }
+
+        function submitCreatorForm() {
+            // Collect data
+            const data = {
+                type: 'creator',
+                timestamp: new Date().toISOString(),
+                name: document.getElementById('creator-name').value || 'Anonymous',
+                email: document.getElementById('creator-email').value,
+                social: {
+                    instagram: document.getElementById('creator-ig').value,
+                    tiktok: document.getElementById('creator-tiktok').value,
+                    youtube: document.getElementById('creator-youtube').value,
+                },
+                portfolio: document.getElementById('creator-portfolio').value,
+                niche: document.getElementById('creator-niche').value,
+                audience: {
+                    ig: document.getElementById('creator-audience-ig').value,
+                    tiktok: document.getElementById('creator-audience-tt').value,
+                    youtube: document.getElementById('creator-audience-yt').value,
+                },
+                description: document.getElementById('creator-description').value,
+                experience: creatorExperienceLevel,
+                why: document.getElementById('creator-why').value,
+                goals: document.getElementById('creator-goals').value,
+                filesUploaded: document.getElementById('creator-upload').files.length > 0 ? true : false
+            }
+            
+            // Save to localStorage (demo database)
+            let submissions = JSON.parse(localStorage.getItem('prontoSubmissions') || '[]')
+            submissions.unshift(data)
+            localStorage.setItem('prontoSubmissions', JSON.stringify(submissions))
+            
+            // Show confirmation
+            showConfirmation('creator')
+        }
+
+        // STAFF FORM LOGIC
+        const defaultSkills = [
+            'Content Strategy', 'Community Management', 'Video Editing', 'Graphic Design',
+            'Discord / Telegram Moderation', 'Brand Partnerships', 'SEO', 'Analytics',
+            'Live Streaming', 'Copywriting', 'Notion / Project Management', 'Canva / Figma'
+        ]
+
+        function populateSkills() {
+            const container = document.getElementById('skills-container')
+            container.innerHTML = ''
+            defaultSkills.forEach(skill => {
+                const chip = document.createElement('button')
+                chip.type = 'button'
+                chip.className = 'skill-chip px-4 h-9 text-sm border border-zinc-300 dark:border-zinc-700 rounded-3xl hover:bg-emerald-100 hover:border-emerald-300 dark:hover:bg-emerald-900 transition-colors'
+                chip.textContent = skill
+                chip.onclick = () => chip.classList.toggle('bg-emerald-100 border-emerald-500 text-emerald-700 dark:bg-emerald-900')
+                container.appendChild(chip)
+            })
+        }
+
+        function resetStaffForm() {
+            // Clear inputs
+            const ids = ['staff-name','staff-email','staff-experience','staff-portfolio','staff-why','staff-leadership','staff-references','staff-availability']
+            ids.forEach(id => {
+                const el = document.getElementById(id)
+                if (el) el.value = ''
+            })
+            document.getElementById('staff-role').value = 'Content Manager'
+            
+            // Reset skill chips
+            document.querySelectorAll('.skill-chip').forEach(chip => {
+                chip.classList.remove('bg-emerald-100', 'border-emerald-500', 'text-emerald-700', 'dark:bg-emerald-900')
+            })
+        }
+
+        function submitStaffForm() {
+            // Collect selected skills
+            const selectedSkills = Array.from(document.querySelectorAll('.skill-chip.bg-emerald-100')).map(chip => chip.textContent)
+            
+            const data = {
+                type: 'staff',
+                timestamp: new Date().toISOString(),
+                name: document.getElementById('staff-name').value || 'Anonymous',
+                email: document.getElementById('staff-email').value,
+                role: document.getElementById('staff-role').value,
+                experience: document.getElementById('staff-experience').value,
+                skills: selectedSkills,
+                portfolio: document.getElementById('staff-portfolio').value,
+                availability: document.getElementById('staff-availability').value,
+                why: document.getElementById('staff-why').value,
+                leadership: document.getElementById('staff-leadership').value,
+                references: document.getElementById('staff-references').value
+            }
+            
+            // Save to localStorage
+            let submissions = JSON.parse(localStorage.getItem('prontoSubmissions') || '[]')
+            submissions.unshift(data)
+            localStorage.setItem('prontoSubmissions', JSON.stringify(submissions))
+            
+            // Show confirmation
+            showConfirmation('staff')
+        }
+
+        function showConfirmation(type) {
+            // Hide all pages
+            document.querySelectorAll('#page-home, #page-creator, #page-staff').forEach(el => el.classList.add('hidden'))
+            
+            const screen = document.getElementById('confirmation-screen')
+            screen.classList.remove('hidden')
+            
+            if (type === 'creator') {
+                document.getElementById('confirmation-title').innerHTML = `You’re in the queue, <span class="text-emerald-600">${document.getElementById('creator-name').value.split(' ')[0] || 'Creator'}</span>!`
+                document.getElementById('confirmation-subtitle').textContent = 'Your creator application has been received. Welcome to the Pronto family.'
+            } else {
+                document.getElementById('confirmation-title').textContent = 'Staff application received!'
+                document.getElementById('confirmation-subtitle').textContent = 'Thank you! Our hiring team will be in touch shortly.'
+            }
+            
+            // Simple confetti
+            createConfetti()
+        }
+
+        function createConfetti() {
+            const container = document.createElement('div')
+            container.className = 'success-confetti'
+            document.body.appendChild(container)
+            
+            for (let i = 0; i < 80; i++) {
+                const confetti = document.createElement('div')
+                confetti.style.position = 'absolute'
+                confetti.style.left = Math.random() * 100 + 'vw'
+                confetti.style.top = '-10px'
+                confetti.style.width = '12px'
+                confetti.style.height = '12px'
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px'
+                confetti.style.backgroundColor = ['#10b981', '#34d399', '#a3e4d0'][Math.floor(Math.random()*3)]
+                confetti.style.transform = `rotate(${Math.random()*360}deg)`
+                confetti.style.animation = `confetti-fall ${3 + Math.random()*4}s linear forwards`
+                container.appendChild(confetti)
+                
+                setTimeout(() => confetti.remove(), 7000)
+            }
+            
+            // Remove container after animation
+            setTimeout(() => container.remove(), 8000)
+            
+            // Add CSS animation
+            const style = document.createElement('style')
+            style.innerHTML = `
+                @keyframes confetti-fall {
+                    to {
+                        transform: translateY(110vh) rotate(720deg);
+                    }
+                }
+            `
+            document.head.appendChild(style)
+            setTimeout(() => style.remove(), 8000)
+        }
+
+        function viewMyApplication() {
+            alert('📋 In a real app this would open your saved submission with an “Edit Responses” button.\n\nDemo: Your latest application was saved to browser localStorage under the key “prontoSubmissions”.')
+            navigateTo('home')
+        }
+
+        // Initialize everything
+        function init() {
+            // Tailwind
+            initializeTailwind()
+            
+            // Dark mode from saved preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark')
+                document.getElementById('theme-icon').classList.remove('fa-moon')
+                document.getElementById('theme-icon').classList.add('fa-sun')
+            }
+            
+            // Populate staff skills
+            populateSkills()
+            
+            // Listen for niche “Other” option
+            const nicheSelect = document.getElementById('creator-niche')
+            if (nicheSelect) {
+                nicheSelect.addEventListener('change', () => {
+                    const otherInput = document.getElementById('creator-niche-other')
+                    if (nicheSelect.value === 'Other') {
+                        otherInput.classList.remove('hidden')
+                        otherInput.focus()
+                    } else {
+                        otherInput.classList.add('hidden')
+                    }
+                })
+            }
+            
+            // Fake upload feedback for creator
+            const uploadInput = document.getElementById('creator-upload')
+            if (uploadInput) {
+                uploadInput.addEventListener('change', () => {
+                    const count = uploadInput.files.length
+                    document.getElementById('files-selected').innerHTML = `✅ ${count} file${count !== 1 ? 's' : ''} selected`
+                })
+            }
+            
+            console.log('%c✅ Pronto Studio web app initialized successfully!', 'color:#10b981; font-family:Space Grotesk; font-size:13px')
+            console.log('💡 All forms save to localStorage. Open DevTools → Application → Local Storage to see submissions.')
+        }
+        
+        // Launch the app
+        window.onload = init
+    </script>
+</body>
+</html>
