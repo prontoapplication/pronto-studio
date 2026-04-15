@@ -66,20 +66,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Page & FAQ Animations */
-        .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .form-input {
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
@@ -94,20 +80,22 @@
             background-color: #1e2937 !important;
         }
 
-        /* FAQ Modal Animation */
-        #faq-modal .modal-content {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        .required::after {
+            content: " *";
+            color: #ef4444;
         }
 
-        @keyframes modalPop {
-            from {
-                opacity: 0;
-                transform: scale(0.7) translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -173,24 +161,24 @@
                 
                 <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name)</label>
-                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Roblox User (Streetz War 2 Name)</label>
+                        <input id="c-roblox" type="text" required placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Discord Name or ID</label>
+                        <input id="c-discord" type="text" required placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
-                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Social Links (TikTok, YouTube, etc.)</label>
+                        <input id="c-social" type="text" required placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
-                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Total Followers</label>
+                        <input id="c-followers" type="text" required placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Why do you want to join Pronto Studio?</label>
+                        <textarea id="c-why" rows="4" required placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -207,22 +195,23 @@
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
+                
                 <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
-                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Roblox User (Streetz War 2 Name)</label>
+                        <input id="s-roblox" type="text" required placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Discord Name or ID</label>
+                        <input id="s-discord" type="text" required placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For</label>
-                        <input id="s-position" type="text" placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Position You're Applying For</label>
+                        <input id="s-position" type="text" required placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff?</label>
-                        <textarea id="s-why" rows="5" placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Why do you want to become staff?</label>
+                        <textarea id="s-why" rows="5" required placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
@@ -234,12 +223,15 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION SCREEN - Nicely Centered with Animation -->
+    <!-- CONFIRMATION SCREEN -->
     <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
-            <div class="text-8xl mb-6 animate-bounce">🎉</div>
+            <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400 text-lg mb-10">Thank you! Your application has been received and forwarded to the team.</p>
+            <p class="text-slate-400 text-lg mb-8">
+                Please wait 24-48 hours for a response.<br>
+                <span class="text-red-400 font-medium">Do not ping the owners.</span>
+            </p>
             
             <button onclick="navigateTo('home')" 
                     class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all active:scale-95">
@@ -248,7 +240,7 @@
         </div>
     </div>
 
-    <!-- FAQ Modal with Animation -->
+    <!-- FAQ Modal -->
     <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
         <div class="modal-content bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
@@ -285,15 +277,12 @@
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
-                setTimeout(() => {
-                    targetPage.classList.add('active');
-                }, 10);
+                setTimeout(() => targetPage.classList.add('active'), 10);
             }
         }
 
         function toggleFAQ() {
-            const modal = document.getElementById('faq-modal');
-            modal.classList.toggle('hidden');
+            document.getElementById('faq-modal').classList.toggle('hidden');
         }
 
         async function sendToDiscord(data) {
@@ -319,7 +308,7 @@
         function submitCreatorForm() {
             const data = {
                 type: "creator",
-                roblox: document.getElementById("c-roblox").value || "Anonymous",
+                roblox: document.getElementById("c-roblox").value,
                 discord: document.getElementById("c-discord").value,
                 social: document.getElementById("c-social").value,
                 followers: document.getElementById("c-followers").value,
@@ -332,7 +321,7 @@
         function submitStaffForm() {
             const data = {
                 type: "staff",
-                name: document.getElementById("s-name").value || "Anonymous",
+                roblox: document.getElementById("s-roblox").value,
                 discord: document.getElementById("s-discord").value,
                 position: document.getElementById("s-position").value,
                 why: document.getElementById("s-why").value
@@ -349,7 +338,7 @@
             
             const conf = document.getElementById('confirmation-screen');
             conf.style.display = 'flex';
-            setTimeout(() => conf.classList.add('active'), 50);
+            setTimeout(() => conf.classList.add('active'), 10);
         }
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
