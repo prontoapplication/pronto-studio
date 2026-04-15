@@ -32,12 +32,11 @@
             z-index: -1;
         }
 
-        /* Rounded Logo Styling */
         .lil-logo {
             width: 52px;
             height: 52px;
             object-fit: cover;
-            border-radius: 18px;           /* Nice rounded square */
+            border-radius: 18px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             transition: all 0.4s ease;
         }
@@ -45,7 +44,6 @@
         .lil-logo:hover {
             transform: scale(1.15) rotate(8deg);
             border-radius: 22px;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
 
         .hero-title {
@@ -82,15 +80,16 @@
             background-color: #1e2937 !important;
         }
 
+        /* Simple & Reliable Page Animation */
         .page {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: none;
             opacity: 0;
-            transform: translateY(30px);
+            transition: opacity 0.4s ease;
         }
         
         .page.active {
+            display: block;
             opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
@@ -116,20 +115,20 @@
     </nav>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="page min-h-screen flex items-center relative active">
+    <div id="page-home" class="page active min-h-screen flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl fade-in" style="animation-delay: 0.1s">
+                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
 
-            <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6 fade-in" style="animation-delay: 0.4s">
+            <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6">
                 Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
             </h1>
             
-            <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 fade-in" style="animation-delay: 0.7s">
+            <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12">
                 Join the next generation of creators and staff in Streetz War 2 community.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 1s">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="navigateTo('creator')" 
                         class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
                     Apply as Content Creator
@@ -258,21 +257,22 @@
     </div>
 
     <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
-
         function navigateTo(page) {
+            // Hide all pages
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
-                setTimeout(() => el.classList.add('hidden'), 400);
+                el.style.display = 'none';
             });
 
-            setTimeout(() => {
-                const target = document.getElementById(`page-${page}`);
-                if (target) {
-                    target.classList.remove('hidden');
-                    setTimeout(() => target.classList.add('active'), 10);
-                }
-            }, 300);
+            // Show selected page
+            const targetPage = document.getElementById(`page-${page}`);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                // Trigger animation
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
+            }
         }
 
         function toggleFAQ() {
@@ -281,7 +281,7 @@
 
         async function sendToDiscord(data) {
             try {
-                await fetch(WEBHOOK_URL, {
+                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -325,9 +325,9 @@
         }
 
         function showConfirmation() {
-            document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
             const conf = document.getElementById('confirmation-screen');
-            conf.classList.remove('hidden');
+            conf.style.display = 'block';
             setTimeout(() => conf.classList.add('active'), 10);
         }
 
@@ -335,7 +335,10 @@
             if (e.target === this) toggleFAQ();
         });
 
-        window.onload = () => navigateTo('home');
+        // Initialize
+        window.onload = () => {
+            navigateTo('home');
+        };
     </script>
 </body>
 </html>
