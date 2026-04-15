@@ -42,7 +42,6 @@
             transform: scale(1.15) rotate(8deg);
         }
 
-        /* Enhanced Homepage Title */
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
@@ -50,7 +49,6 @@
             line-height: 1.05;
         }
 
-        /* Input Focus Animation */
         .form-input {
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
@@ -64,26 +62,6 @@
             transform: scale(1.02);
             background-color: #1e2937 !important;
         }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-card {
-            transition: transform 0.4s ease;
-        }
-        .form-card:hover {
-            transform: translateY(-6px);
-        }
     </style>
 </head>
 <body class="main-bg text-slate-100 min-h-screen">
@@ -91,10 +69,12 @@
     <!-- NAVBAR -->
     <nav class="bg-slate-900/95 backdrop-blur-lg border-b border-slate-700 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-x-3">
+            <div class="flex items-center gap-x-3 cursor-pointer" onclick="navigateTo('home')">
                 <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
                      alt="Lil Logo" class="lil-logo">
-                <h1 class="logo-font text-2xl tracking-tighter">Pronto Studio</h1>
+                <h1 class="logo-font text-2xl tracking-tighter hover:text-blue-400 transition-colors">
+                    Pronto Studio
+                </h1>
             </div>
 
             <div class="hidden md:flex gap-x-8 text-sm font-medium">
@@ -112,7 +92,7 @@
                  alt="Lil Logo" class="mx-auto mb-8 w-40 h-40 fade-in" style="animation-delay: 0.1s">
 
             <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6 fade-in" style="animation-delay: 0.4s">
-                Welcome to Pronto Studio<br>Application Center
+                Welcome to <span class="text-blue-500">Pronto Studio</span><br>Application Center
             </h1>
             
             <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 fade-in" style="animation-delay: 0.7s">
@@ -180,7 +160,7 @@
         </div>
     </div>
 
-    <!-- STAFF FORM (unchanged) -->
+    <!-- STAFF FORM -->
     <div id="page-staff" class="hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
