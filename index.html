@@ -21,6 +21,15 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            position: relative;
+        }
+
+        .main-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.92));
+            z-index: -1;
         }
 
         .lil-logo {
@@ -33,12 +42,27 @@
         }
         
         .lil-logo:hover {
-            transform: scale(1.15) rotate(8deg);
+            transform: scale(1.12) rotate(8deg);
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -3.5px;
+            line-height: 1.05;
         }
 
         .highlight-text {
-            color: #3b82f6;
-            font-weight: 700;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .form-input {
@@ -50,22 +74,32 @@
         
         .form-input:focus {
             border-color: #60a5fa !important;
-            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
+            box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
             transform: scale(1.02);
         }
 
+        /* Simple & Reliable Animations */
         .page {
             display: none;
+            opacity: 0;
+            transform: translateY(30px);
         }
         
         .page.active {
             display: block;
-            animation: fadeIn 0.6s ease;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* FAQ Modal Animation */
+        .faq-modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.8) translateY(40px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
@@ -91,10 +125,10 @@
     </nav>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="page active min-h-screen flex items-center">
+    <div id="page-home" class="page active min-h-screen flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-10 w-44 h-44 rounded-3xl shadow-2xl">
+                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
 
             <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6">
                 Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
@@ -115,10 +149,16 @@
                 </button>
             </div>
         </div>
+
+        <!-- FAQ Icon -->
+        <button onclick="toggleFAQ()" 
+                class="fixed bottom-8 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
+            <i class="fa-solid fa-circle-info text-blue-400"></i>
+        </button>
     </div>
 
     <!-- CONTENT CREATOR FORM -->
-    <div id="page-creator" class="page hidden py-16">
+    <div id="page-creator" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
@@ -126,28 +166,28 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="c-roblox" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="c-discord" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Social Links <span class="text-red-500">*</span></label>
-                        <input id="c-social" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-social" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
-                        <input id="c-followers" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-followers" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to join? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" required class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
+                        <textarea id="c-why" rows="4" class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
                             class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
-                        Submit Application
+                        Submit Content Creator Application
                     </button>
                 </div>
             </div>
@@ -155,7 +195,7 @@
     </div>
 
     <!-- STAFF FORM -->
-    <div id="page-staff" class="page hidden py-16">
+    <div id="page-staff" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
@@ -163,19 +203,19 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="s-roblox" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="s-discord" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
-                        <input id="s-position" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-position" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" required class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="s-why" rows="5" class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
@@ -187,14 +227,14 @@
         </div>
     </div>
 
-    <!-- SUCCESS SCREEN -->
-    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center">
+    <!-- CONFIRMATION -->
+    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
             <p class="text-slate-400 text-lg mb-8">
                 Please wait 24-48 hours for a response.<br>
-                <span class="text-red-400">Do not ping the owners.</span>
+                <span class="text-red-400 font-medium">Do not ping the owners.</span>
             </p>
             <button onclick="navigateTo('home')" 
                     class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
@@ -203,44 +243,60 @@
         </div>
     </div>
 
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
+        <div class="faq-modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-blue-400"></i>
+                    Important Information
+                </h3>
+                <button onclick="toggleFAQ()" class="text-slate-400 hover:text-white text-2xl">×</button>
+            </div>
+            
+            <div class="space-y-4 text-sm text-slate-300">
+                <p><strong>Owners:</strong> Ksoo & PayChris</p>
+                <p><strong>Website Created:</strong> April 2026</p>
+                <p>By submitting an application, you agree to our Terms of Service and Privacy Policy.</p>
+                <p class="text-blue-400 text-xs pt-4 border-t border-slate-700">
+                    All applications are reviewed manually by the Pronto Studio team.
+                </p>
+            </div>
+
+            <button onclick="toggleFAQ()" 
+                    class="mt-8 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-2xl font-medium">
+                Close
+            </button>
+        </div>
+    </div>
+
     <script>
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
+            const target = document.getElementById(`page-${page}`);
+            if (target) {
+                target.classList.add('active');
+            }
+        }
+
+        function toggleFAQ() {
+            const modal = document.getElementById('faq-modal');
+            modal.classList.toggle('hidden');
         }
 
         function submitCreatorForm() {
-            if (!validateForm('page-creator')) return;
             sendToDiscord("creator");
             showConfirmation();
         }
 
         function submitStaffForm() {
-            if (!validateForm('page-staff')) return;
             sendToDiscord("staff");
             showConfirmation();
         }
 
-        function validateForm(pageId) {
-            const inputs = document.querySelectorAll(`#${pageId} input[required], #${pageId} textarea[required]`);
-            let valid = true;
-
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.style.borderColor = '#ef4444';
-                    valid = false;
-                } else {
-                    input.style.borderColor = '#60a5fa';
-                }
-            });
-
-            if (!valid) alert("Please fill in all required fields.");
-            return valid;
-        }
-
         async function sendToDiscord(type) {
-            // Your webhook is here
-            console.log(`${type} application submitted`);
+            // Your webhook
+            console.log(type + " application submitted");
         }
 
         function showConfirmation() {
@@ -252,6 +308,11 @@
                 navigateTo('home');
             }, 4000);
         }
+
+        // Close FAQ when clicking outside
+        document.getElementById('faq-modal').addEventListener('click', function(e) {
+            if (e.target === this) toggleFAQ();
+        });
 
         window.onload = () => navigateTo('home');
     </script>
