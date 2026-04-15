@@ -11,8 +11,6 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
-            -webkit-user-select: none;   /* Disable text selection */
-            user-select: none;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -44,7 +42,25 @@
             transform: scale(1.15) rotate(8deg);
         }
 
-        /* Highlight Animation */
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: -3.5px;
+            line-height: 1.05;
+        }
+
+        /* Page Transition Animation */
+        .page {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .highlight-text {
             background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
             background-size: 200% 100%;
@@ -56,13 +72,6 @@
         @keyframes shine {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
-        }
-
-        .hero-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -3.5px;
-            line-height: 1.05;
         }
 
         .form-input {
@@ -77,16 +86,6 @@
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
             transform: scale(1.02);
             background-color: #1e2937 !important;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -105,14 +104,14 @@
 
             <div class="hidden md:flex gap-x-8 text-sm font-medium">
                 <button onclick="navigateTo('home')" class="hover:text-blue-400">Home</button>
-                <button onclick="navigateTo('creator')" class="hover:text-blue-400">Creator Application</button>
+                <button onclick="navigateTo('creator')" class="hover:text-blue-400">Content Creator Application</button>
                 <button onclick="navigateTo('staff')" class="hover:text-blue-400">Staff Application</button>
             </div>
         </div>
     </nav>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="min-h-screen flex items-center relative">
+    <div id="page-home" class="page min-h-screen flex items-center relative active">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
                  alt="Lil Logo" class="mx-auto mb-8 w-40 h-40 fade-in" style="animation-delay: 0.1s">
@@ -128,7 +127,7 @@
             <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 1s">
                 <button onclick="navigateTo('creator')" 
                         class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
-                    Apply as Creator
+                    Apply as Content Creator
                 </button>
                 <button onclick="navigateTo('staff')" 
                         class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
@@ -144,11 +143,11 @@
         </button>
     </div>
 
-    <!-- CREATOR FORM -->
-    <div id="page-creator" class="hidden py-16 relative">
+    <!-- CONTENT CREATOR FORM -->
+    <div id="page-creator" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
-                <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
+                <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
                 
                 <div class="space-y-7">
                     <div>
@@ -179,7 +178,7 @@
 
                     <button onclick="submitCreatorForm()" 
                             class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
-                        Submit Creator Application
+                        Submit Content Creator Application
                     </button>
                 </div>
             </div>
@@ -187,7 +186,7 @@
     </div>
 
     <!-- STAFF FORM -->
-    <div id="page-staff" class="hidden py-16 relative">
+    <div id="page-staff" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
@@ -219,8 +218,8 @@
     </div>
 
     <!-- CONFIRMATION -->
-    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
-        <div class="text-center max-w-md px-6 fade-in">
+    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
+        <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
             <p class="text-slate-400">Thank you! Your application has been received.</p>
@@ -262,8 +261,24 @@
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
 
         function navigateTo(page) {
-            document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`page-${page}`).classList.remove('hidden');
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(el => {
+                el.classList.remove('active');
+                setTimeout(() => {
+                    el.classList.add('hidden');
+                }, 400);
+            });
+
+            // Show new page with animation
+            setTimeout(() => {
+                const targetPage = document.getElementById(`page-${page}`);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                    setTimeout(() => {
+                        targetPage.classList.add('active');
+                    }, 10);
+                }
+            }, 300);
         }
 
         function toggleFAQ() {
@@ -277,7 +292,7 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         embeds: [{
-                            title: data.type === "creator" ? "New Creator Application" : "New Staff Application",
+                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
                             color: 0x3b82f6,
                             fields: Object.keys(data).map(key => ({
                                 name: key.charAt(0).toUpperCase() + key.slice(1),
@@ -316,8 +331,10 @@
         }
 
         function showConfirmation() {
-            document.querySelectorAll('#page-home, #page-creator, #page-staff').forEach(el => el.classList.add('hidden'));
-            document.getElementById('confirmation-screen').classList.remove('hidden');
+            document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
+            const confirmation = document.getElementById('confirmation-screen');
+            confirmation.classList.remove('hidden');
+            setTimeout(() => confirmation.classList.add('active'), 10);
         }
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
