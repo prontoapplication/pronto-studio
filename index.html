@@ -11,8 +11,6 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
-            -webkit-user-select: none;
-            user-select: none;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -83,7 +81,7 @@
 
         .form-input.error {
             border-color: #ef4444 !important;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.4);
         }
 
         .page {
@@ -99,12 +97,13 @@
             transition: all 0.5s ease;
         }
 
-        .faq-modal {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Custom Modern Alert */
+        .custom-alert {
+            animation: alertPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.8) translateY(40px); }
+        @keyframes alertPop {
+            from { opacity: 0; transform: scale(0.7) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
@@ -249,6 +248,19 @@
         </div>
     </div>
 
+    <!-- Modern Custom Error Modal -->
+    <div id="error-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110]">
+        <div class="custom-alert bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full mx-4 text-center">
+            <div class="text-red-500 text-5xl mb-4">⚠️</div>
+            <h3 class="text-xl font-semibold mb-2 text-white">Missing Information</h3>
+            <p class="text-slate-400 mb-6">Please fill in all required fields before submitting.</p>
+            <button onclick="closeErrorModal()" 
+                    class="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-2xl font-medium text-white transition-all">
+                Got it
+            </button>
+        </div>
+    </div>
+
     <!-- FAQ Modal -->
     <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
         <div class="faq-modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
@@ -294,6 +306,14 @@
             document.getElementById('faq-modal').classList.toggle('hidden');
         }
 
+        function showErrorModal() {
+            document.getElementById('error-modal').classList.remove('hidden');
+        }
+
+        function closeErrorModal() {
+            document.getElementById('error-modal').classList.add('hidden');
+        }
+
         function validateForm(pageId) {
             const inputs = document.querySelectorAll(`#${pageId} input, #${pageId} textarea`);
             let isValid = true;
@@ -307,19 +327,22 @@
                 }
             });
 
-            if (!isValid) {
-                alert("Please fill in all required fields.");
-            }
             return isValid;
         }
 
         function submitCreatorForm() {
-            if (!validateForm('page-creator')) return;
+            if (!validateForm('page-creator')) {
+                showErrorModal();
+                return;
+            }
             showConfirmation();
         }
 
         function submitStaffForm() {
-            if (!validateForm('page-staff')) return;
+            if (!validateForm('page-staff')) {
+                showErrorModal();
+                return;
+            }
             showConfirmation();
         }
 
@@ -340,6 +363,10 @@
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
+        });
+
+        document.getElementById('error-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeErrorModal();
         });
 
         window.onload = () => navigateTo('home');
