@@ -80,7 +80,6 @@
             background-color: #1e2937 !important;
         }
 
-        /* Simple & Reliable Page Animation */
         .page {
             display: none;
             opacity: 0;
@@ -216,14 +215,17 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION -->
+    <!-- CONFIRMATION SCREEN - NOW PROPERLY CENTERED -->
     <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
+            <!-- Big Celebration Icon -->
             <div class="text-8xl mb-6">🎉</div>
-            <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400">Thank you! Your application has been received.</p>
+            
+            <h2 class="text-4xl font-semibold mb-3">Application Submitted Successfully!</h2>
+            <p class="text-slate-400 text-lg mb-10">Thank you! Your application has been received and forwarded to the team.</p>
+            
             <button onclick="navigateTo('home')" 
-                    class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                    class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all active:scale-95">
                 Return to Home
             </button>
         </div>
@@ -258,17 +260,14 @@
 
     <script>
         function navigateTo(page) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
 
-            // Show selected page
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
-                targetPage.style.display = 'block';
-                // Trigger animation
+                targetPage.style.display = 'flex';   // Changed to flex for better centering
                 setTimeout(() => {
                     targetPage.classList.add('active');
                 }, 10);
@@ -325,9 +324,13 @@
         }
 
         function showConfirmation() {
-            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+            
             const conf = document.getElementById('confirmation-screen');
-            conf.style.display = 'block';
+            conf.style.display = 'flex';
             setTimeout(() => conf.classList.add('active'), 10);
         }
 
@@ -335,10 +338,7 @@
             if (e.target === this) toggleFAQ();
         });
 
-        // Initialize
-        window.onload = () => {
-            navigateTo('home');
-        };
+        window.onload = () => navigateTo('home');
     </script>
 </body>
 </html>
