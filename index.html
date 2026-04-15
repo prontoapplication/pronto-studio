@@ -15,31 +15,49 @@
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
         }
-        .hero-bg {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-        }
+
         .main-bg {
-            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+            background-image: url('https://media.discordapp.net/attachments/1481675942693965874/1489421948080488458/4189768043_11177482306_1775173994708.png?ex=69e0d688&is=69df8508&hm=910c083c3eddeca676e379f405b2951f9ea9e8ec4835fa7db6b0ae21f0ed6910&=&format=webp&quality=lossless&width=1086&height=571');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
         }
+
+        /* Dark overlay to make text readable */
+        .main-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85));
+            z-index: -1;
+        }
+
         .form-input {
-            background-color: #1f2937 !important;
+            background-color: rgba(31, 41, 55, 0.95) !important;
             color: #e2e8f0 !important;
             border: 1px solid #475569 !important;
         }
+        
         .form-input:focus {
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
         }
+
         .form-card {
-            background-color: #1f2937;
+            background-color: rgba(31, 41, 55, 0.95);
             border: 1px solid #334155;
+            backdrop-filter: blur(8px);
         }
     </style>
 </head>
 <body class="main-bg text-slate-100 min-h-screen">
 
     <!-- NAVBAR -->
-    <nav class="bg-slate-900/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
+    <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
                 <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
@@ -49,29 +67,35 @@
             </div>
 
             <div class="hidden md:flex gap-x-8 text-sm font-medium">
-                <button onclick="navigateTo('home')" class="hover:text-blue-400">Home</button>
-                <button onclick="navigateTo('creator')" class="hover:text-blue-400">Apply as Creator</button>
-                <button onclick="navigateTo('staff')" class="hover:text-blue-400">Apply for Staff</button>
+                <button onclick="navigateTo('home')" class="hover:text-blue-400 transition-colors">Home</button>
+                <button onclick="navigateTo('creator')" class="hover:text-blue-400 transition-colors">Apply as Creator</button>
+                <button onclick="navigateTo('staff')" class="hover:text-blue-400 transition-colors">Apply for Staff</button>
             </div>
         </div>
     </nav>
 
     <!-- HOME -->
-    <div id="page-home" class="hero-bg min-h-screen flex items-center">
-        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
+    <div id="page-home" class="min-h-screen flex items-center relative">
+        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <h1 class="text-6xl md:text-7xl font-semibold tracking-[-2px] logo-font leading-none mb-6">
                 Join the next<br>generation of creators
             </h1>
             <p class="text-xl text-slate-300 max-w-lg mx-auto">Pronto Studio is a creative collective for Roblox & TikTok creators.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
-                <button onclick="navigateTo('creator')" class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg">Apply as Creator</button>
-                <button onclick="navigateTo('staff')" class="border-2 border-white/70 hover:bg-white/10 px-10 py-4 rounded-3xl font-semibold text-lg">Apply for Staff</button>
+                <button onclick="navigateTo('creator')" 
+                        class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
+                    Apply as Creator
+                </button>
+                <button onclick="navigateTo('staff')" 
+                        class="border-2 border-white/70 hover:bg-white/10 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
+                    Apply for Staff
+                </button>
             </div>
         </div>
     </div>
 
     <!-- CREATOR APPLICATION -->
-    <div id="page-creator" class="hidden py-16">
+    <div id="page-creator" class="hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
@@ -94,7 +118,7 @@
                         <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-400">How many followers do you have? (Total across platforms)</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">How many followers do you have? (Total)</label>
                         <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
@@ -112,7 +136,7 @@
     </div>
 
     <!-- STAFF APPLICATION -->
-    <div id="page-staff" class="hidden py-16">
+    <div id="page-staff" class="hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
@@ -145,11 +169,11 @@
     </div>
 
     <!-- CONFIRMATION -->
-    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center">
+    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
         <div class="text-center max-w-md px-6">
             <div class="text-7xl mb-6">✅</div>
             <h2 class="text-4xl font-semibold mb-3">Application Submitted!</h2>
-            <p class="text-slate-400">Thank you! Your application has been sent and the team has been notified via Discord.</p>
+            <p class="text-slate-400">Thank you! Your application has been received and sent to the team.</p>
             <button onclick="navigateTo('home')" class="mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">
                 Back to Home
             </button>
@@ -161,7 +185,11 @@
 
         function navigateTo(page) {
             document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`page-${page}`).classList.remove('hidden');
+            if (page === 'home') {
+                document.getElementById('page-home').classList.remove('hidden');
+            } else {
+                document.getElementById(`page-${page}`).classList.remove('hidden');
+            }
         }
 
         async function sendToDiscord(data) {
@@ -176,7 +204,7 @@
                             fields: Object.keys(data).map(key => ({
                                 name: key.charAt(0).toUpperCase() + key.slice(1),
                                 value: data[key] || "Not provided",
-                                inline: key !== "why" && key !== "message"
+                                inline: key.length < 10
                             })),
                             timestamp: new Date().toISOString()
                         }]
@@ -188,7 +216,7 @@
         function submitCreatorForm() {
             const data = {
                 type: "creator",
-                name: document.getElementById("c-name").value,
+                name: document.getElementById("c-name").value || "Anonymous",
                 discord: document.getElementById("c-discord").value,
                 roblox: document.getElementById("c-roblox").value,
                 social: document.getElementById("c-social").value,
@@ -202,7 +230,7 @@
         function submitStaffForm() {
             const data = {
                 type: "staff",
-                name: document.getElementById("s-name").value,
+                name: document.getElementById("s-name").value || "Anonymous",
                 discord: document.getElementById("s-discord").value,
                 position: document.getElementById("s-position").value,
                 why: document.getElementById("s-why").value
@@ -216,7 +244,6 @@
             document.getElementById('confirmation-screen').classList.remove('hidden');
         }
 
-        // Start on home
         window.onload = () => navigateTo('home');
     </script>
 </body>
