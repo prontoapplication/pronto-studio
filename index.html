@@ -11,10 +11,8 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
-            -webkit-user-select: none;   /* Disable text selection */
+            -webkit-user-select: none;
             user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -81,7 +79,11 @@
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
             transform: scale(1.02);
-            background-color: #1e2937 !important;
+        }
+
+        .form-input.error {
+            border-color: #ef4444 !important;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
         }
 
         .page {
@@ -154,7 +156,7 @@
             </div>
         </div>
 
-        <!-- FAQ Icon - Moved a bit higher -->
+        <!-- FAQ Icon -->
         <button onclick="toggleFAQ()" 
                 class="fixed bottom-16 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
             <i class="fa-solid fa-circle-info text-blue-400"></i>
@@ -186,7 +188,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate with other creators..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -284,9 +286,7 @@
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
-                setTimeout(() => {
-                    targetPage.classList.add('active');
-                }, 10);
+                setTimeout(() => targetPage.classList.add('active'), 10);
             }
         }
 
@@ -333,7 +333,6 @@
             conf.style.display = 'flex';
             setTimeout(() => conf.classList.add('active'), 10);
 
-            // Auto return to home after 4 seconds
             setTimeout(() => {
                 navigateTo('home');
             }, 4000);
