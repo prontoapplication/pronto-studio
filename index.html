@@ -10,156 +10,160 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
         
         :root {
-            --primary-color: #3b82f6;
+            --primary: #3b82f6;
         }
-        
-        .tail-container * {
+
+        body {
             font-family: 'Inter', system_ui, sans-serif;
         }
-        
+
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .hero-bg {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+
+        /* Modern subtle background */
+        .main-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .form-input {
+            background-color: #1f2937 !important;
+            color: #e2e8f0 !important;
+            border: 1px solid #475569 !important;
+        }
+        
+        .form-input:focus {
+            border-color: #60a5fa !important;
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
+            outline: none;
         }
 
         .form-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .form-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px -12px rgb(59 130 246 / 0.25);
-        }
-
-        /* Fix for input text visibility */
-        input, textarea, select {
-            color: #111827 !important;           /* Dark text in light mode */
-            background-color: white !important;
-        }
-        
-        .dark input, .dark textarea, .dark select {
-            color: #f1f5f9 !important;           /* Light text in dark mode */
-            background-color: #1f2937 !important;
-            border-color: #374151 !important;
-        }
-
-        .dark input:focus, .dark textarea:focus {
-            border-color: #60a5fa !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            background-color: #1f2937;
+            border: 1px solid #334155;
         }
     </style>
 </head>
-<body class="tail-container bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white">
-    
+<body class="tail-container main-bg text-slate-100 min-h-screen">
+
     <!-- NAVBAR -->
-    <nav class="bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 sticky top-0 z-50">
+    <nav class="bg-slate-900/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-x-2">
-                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center text-white">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
                     <i class="fa-solid fa-bolt-lightning text-xl"></i>
                 </div>
-                <h1 class="logo-font text-2xl tracking-[-1px]">Pronto Studio</h1>
+                <h1 class="logo-font text-2xl tracking-tighter">Pronto Studio</h1>
             </div>
 
-            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
-                <button onclick="navigateTo('home')" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Home</button>
-                <button onclick="navigateTo('creator')" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Apply as Creator</button>
-                <button onclick="navigateTo('staff')" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Apply for Staff</button>
+            <div class="hidden md:flex gap-x-8 text-sm font-medium">
+                <button onclick="navigateTo('home')" class="hover:text-blue-400 transition-colors">Home</button>
+                <button onclick="navigateTo('creator')" class="hover:text-blue-400 transition-colors">Apply as Creator</button>
+                <button onclick="navigateTo('staff')" class="hover:text-blue-400 transition-colors">Apply for Staff</button>
             </div>
 
-            <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900">
-                <i id="theme-icon" class="fa-solid fa-moon text-xl"></i>
+            <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-800">
+                <i id="theme-icon" class="fa-solid fa-sun text-xl"></i>
             </button>
         </div>
     </nav>
 
-    <!-- HOME PAGE -->
-    <div id="page-home" class="min-h-screen">
-        <div class="hero-bg text-white pt-20 pb-24">
-            <div class="max-w-screen-2xl mx-auto px-6 text-center">
-                <h1 class="text-6xl md:text-7xl font-semibold leading-none tracking-[-2px] logo-font mb-6">
-                    Join the next<br>generation of creators
-                </h1>
-                <p class="text-xl max-w-lg mx-auto mb-10">Pronto Studio is a creative collective where creators grow, collaborate, and get discovered.</p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <button onclick="navigateTo('creator')" 
-                            class="bg-white text-blue-700 hover:bg-blue-50 font-semibold px-10 py-4 rounded-3xl text-lg transition-all">
-                        Apply as Creator
-                    </button>
-                    <button onclick="navigateTo('staff')" 
-                            class="border-2 border-white hover:bg-white/10 font-semibold px-10 py-4 rounded-3xl text-lg transition-all">
-                        Apply for Staff
-                    </button>
-                </div>
+    <!-- HOME -->
+    <div id="page-home" class="min-h-screen hero-bg flex items-center">
+        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
+            <h1 class="text-6xl md:text-7xl font-semibold tracking-[-2px] logo-font leading-none mb-6">
+                Join the next<br>generation of creators
+            </h1>
+            <p class="text-xl text-slate-300 max-w-lg mx-auto mb-10">
+                Pronto Studio — where creators grow together, get discovered, and build real impact.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="navigateTo('creator')" 
+                        class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
+                    Apply as Creator
+                </button>
+                <button onclick="navigateTo('staff')" 
+                        class="border-2 border-white/70 hover:bg-white/10 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
+                    Apply for Staff
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- CREATOR APPLICATION -->
-    <div id="page-creator" class="hidden min-h-screen py-12">
-        <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-4xl font-semibold mb-8 text-center">Creator Application</h2>
-            
-            <div class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-10 shadow-xl">
-                <div class="space-y-8">
+    <!-- CREATOR FORM -->
+    <div id="page-creator" class="hidden py-16">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="form-card rounded-3xl p-10 shadow-2xl">
+                <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
+                
+                <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Full Name</label>
-                        <input id="c-name" type="text" placeholder="John Doe" 
-                               class="w-full h-14 rounded-3xl border border-zinc-300 dark:border-zinc-700 px-6 text-lg">
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Full Name</label>
+                        <input id="c-name" type="text" placeholder="Your full name" 
+                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
                     </div>
-                    
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Email Address</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Email Address</label>
                         <input id="c-email" type="email" placeholder="you@example.com" 
-                               class="w-full h-14 rounded-3xl border border-zinc-300 dark:border-zinc-700 px-6 text-lg">
+                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
                     </div>
-
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="5" placeholder="Tell us your motivation..." 
-                                  class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-6 text-lg resize-none"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Why do you want to join Pronto Studio?</label>
+                        <textarea id="c-why" rows="5" placeholder="Tell us your story and goals..." 
+                                  class="form-input w-full rounded-3xl p-6 text-lg resize-y"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-3xl font-semibold text-lg transition-all">
-                        Submit Creator Application
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all mt-4">
+                        Submit Application
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- STAFF APPLICATION -->
-    <div id="page-staff" class="hidden min-h-screen py-12">
-        <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-4xl font-semibold mb-8 text-center">Staff Application</h2>
-            
-            <div class="form-card bg-white dark:bg-zinc-900 rounded-3xl p-10 shadow-xl">
-                <div class="space-y-8">
+    <!-- STAFF FORM -->
+    <div id="page-staff" class="hidden py-16">
+        <div class="max-w-2xl mx-auto px-6">
+            <div class="form-card rounded-3xl p-10 shadow-2xl">
+                <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
+                
+                <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Full Name</label>
-                        <input id="s-name" type="text" placeholder="Jane Smith" 
-                               class="w-full h-14 rounded-3xl border border-zinc-300 dark:border-zinc-700 px-6 text-lg">
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Full Name</label>
+                        <input id="s-name" type="text" placeholder="Your full name" 
+                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
                     </div>
-                    
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Email Address</label>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Email Address</label>
                         <input id="s-email" type="email" placeholder="you@example.com" 
-                               class="w-full h-14 rounded-3xl border border-zinc-300 dark:border-zinc-700 px-6 text-lg">
+                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
                     </div>
-
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">Why should we hire you?</label>
-                        <textarea id="s-why" rows="5" placeholder="Explain your experience and fit..." 
-                                  class="w-full rounded-3xl border border-zinc-300 dark:border-zinc-700 p-6 text-lg resize-none"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Why should we hire you?</label>
+                        <textarea id="s-why" rows="5" placeholder="Describe your experience and why you're a great fit..." 
+                                  class="form-input w-full rounded-3xl p-6 text-lg resize-y"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-3xl font-semibold text-lg transition-all">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all mt-4">
                         Submit Staff Application
                     </button>
                 </div>
@@ -168,13 +172,13 @@
     </div>
 
     <!-- CONFIRMATION -->
-    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center bg-white dark:bg-zinc-950">
-        <div class="text-center max-w-md">
-            <div class="text-8xl mb-6">🎉</div>
-            <h2 class="text-4xl font-semibold mb-4">Application Received!</h2>
-            <p class="text-zinc-600 dark:text-zinc-400 mb-10">Thank you! We'll review your submission and get back to you soon.</p>
+    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center">
+        <div class="text-center">
+            <div class="text-7xl mb-6">🚀</div>
+            <h2 class="text-4xl font-semibold mb-3">Application Sent Successfully!</h2>
+            <p class="text-slate-400 max-w-sm mx-auto">Thank you! Your application has been received and a notification was sent to the team.</p>
             <button onclick="navigateTo('home')" 
-                    class="px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-3xl font-semibold text-lg">
+                    class="mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">
                 Back to Home
             </button>
         </div>
@@ -184,16 +188,12 @@
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
 
         function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const icon = document.getElementById('theme-icon');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
+            // This app is already in dark mode by design
+            alert("This version is designed in dark mode for best visual experience.");
         }
 
         function navigateTo(page) {
-            document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => {
-                el.classList.add('hidden');
-            });
+            document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => el.classList.add('hidden'));
             
             if (page === 'home') document.getElementById('page-home').classList.remove('hidden');
             else if (page === 'creator') document.getElementById('page-creator').classList.remove('hidden');
@@ -204,24 +204,21 @@
             try {
                 await fetch(WEBHOOK_URL, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         embeds: [{
-                            title: data.type === 'creator' ? "New Creator Application" : "New Staff Application",
+                            title: data.type === "creator" ? "New Creator Application" : "New Staff Application",
                             color: 0x3b82f6,
-                            timestamp: new Date().toISOString(),
                             fields: [
-                                { name: "Name", value: data.name, inline: true },
-                                { name: "Email", value: data.email || "Not provided", inline: true },
-                                { name: "Type", value: data.type.toUpperCase(), inline: true },
-                                { name: "Reason", value: data.message || "No message provided", inline: false }
-                            ]
+                                {name: "Name", value: data.name, inline: true},
+                                {name: "Email", value: data.email || "-", inline: true},
+                                {name: "Reason", value: data.message || "No message provided"}
+                            ],
+                            timestamp: new Date().toISOString()
                         }]
                     })
                 });
-            } catch (e) {
-                console.log("Webhook sent (or failed silently)");
-            }
+            } catch(e) {}
         }
 
         function submitCreatorForm() {
@@ -251,10 +248,8 @@
             document.getElementById('confirmation-screen').classList.remove('hidden');
         }
 
-        // Init
-        window.onload = () => {
-            navigateTo('home');
-        };
+        // Start on home page
+        window.onload = () => navigateTo('home');
     </script>
 </body>
 </html>
