@@ -42,7 +42,8 @@
         }
         
         .lil-logo:hover {
-            transform: scale(1.12) rotate(8deg);
+            transform: scale(1.15) rotate(8deg);
+            border-radius: 22px;
         }
 
         .hero-title {
@@ -69,37 +70,30 @@
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
             border: 2px solid #475569 !important;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .form-input:focus {
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
             transform: scale(1.02);
+            background-color: #1e2937 !important;
         }
 
-        /* Simple & Reliable Animations */
+        .form-card {
+            max-width: 640px;   /* Same width as creator form */
+            margin: 0 auto;
+        }
+
         .page {
             display: none;
             opacity: 0;
-            transform: translateY(30px);
+            transition: opacity 0.4s ease;
         }
         
         .page.active {
             display: block;
             opacity: 1;
-            transform: translateY(0);
-            transition: all 0.5s ease;
-        }
-
-        /* FAQ Modal Animation */
-        .faq-modal {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.8) translateY(40px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
@@ -126,7 +120,7 @@
 
     <!-- HOME PAGE -->
     <div id="page-home" class="page active min-h-screen flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
+        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
                  alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
 
@@ -140,11 +134,11 @@
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="navigateTo('creator')" 
-                        class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all">
+                        class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
                     Apply as Content Creator
                 </button>
                 <button onclick="navigateTo('staff')" 
-                        class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all">
+                        class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
                     Apply for Staff
                 </button>
             </div>
@@ -160,33 +154,33 @@
     <!-- CONTENT CREATOR FORM -->
     <div id="page-creator" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
+            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
                 
-                <div class="space-y-6">
+                <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="c-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name)</label>
+                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="c-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
+                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Social Links <span class="text-red-500">*</span></label>
-                        <input id="c-social" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
+                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
-                        <input id="c-followers" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
+                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
+                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
                         Submit Content Creator Application
                     </button>
                 </div>
@@ -194,32 +188,32 @@
         </div>
     </div>
 
-    <!-- STAFF FORM -->
+    <!-- STAFF FORM - NOW SAME SIZE -->
     <div id="page-staff" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
+            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
                 
-                <div class="space-y-6">
+                <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="s-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
+                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="s-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
+                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
-                        <input id="s-position" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For</label>
+                        <input id="s-position" type="text" placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff?</label>
+                        <textarea id="s-why" rows="5" placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
                         Submit Staff Application
                     </button>
                 </div>
@@ -232,12 +226,9 @@
         <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400 text-lg mb-8">
-                Please wait 24-48 hours for a response.<br>
-                <span class="text-red-400 font-medium">Do not ping the owners.</span>
-            </p>
+            <p class="text-slate-400">Thank you! Your application has been received.</p>
             <button onclick="navigateTo('home')" 
-                    class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                    class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
                 Return to Home
             </button>
         </div>
@@ -245,13 +236,13 @@
 
     <!-- FAQ Modal -->
     <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
-        <div class="faq-modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
+        <div class="modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold flex items-center gap-2">
                     <i class="fa-solid fa-circle-info text-blue-400"></i>
                     Important Information
                 </h3>
-                <button onclick="toggleFAQ()" class="text-slate-400 hover:text-white text-2xl">×</button>
+                <button onclick="toggleFAQ()" class="text-slate-400 hover:text-white text-2xl leading-none">×</button>
             </div>
             
             <div class="space-y-4 text-sm text-slate-300">
@@ -272,44 +263,80 @@
 
     <script>
         function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(`page-${page}`);
-            if (target) {
-                target.classList.add('active');
+            document.querySelectorAll('.page').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+
+            const targetPage = document.getElementById(`page-${page}`);
+            if (targetPage) {
+                targetPage.style.display = 'block';
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
             }
         }
 
         function toggleFAQ() {
-            const modal = document.getElementById('faq-modal');
-            modal.classList.toggle('hidden');
+            document.getElementById('faq-modal').classList.toggle('hidden');
+        }
+
+        async function sendToDiscord(data) {
+            try {
+                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        embeds: [{
+                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
+                            color: 0x3b82f6,
+                            fields: Object.keys(data).map(key => ({
+                                name: key.charAt(0).toUpperCase() + key.slice(1),
+                                value: data[key] || "Not provided"
+                            })),
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
+                });
+            } catch(e) {}
         }
 
         function submitCreatorForm() {
-            sendToDiscord("creator");
+            const data = {
+                type: "creator",
+                roblox: document.getElementById("c-roblox").value || "Anonymous",
+                discord: document.getElementById("c-discord").value,
+                social: document.getElementById("c-social").value,
+                followers: document.getElementById("c-followers").value,
+                why: document.getElementById("c-why").value
+            };
+            sendToDiscord(data);
             showConfirmation();
         }
 
         function submitStaffForm() {
-            sendToDiscord("staff");
+            const data = {
+                type: "staff",
+                name: document.getElementById("s-name").value || "Anonymous",
+                discord: document.getElementById("s-discord").value,
+                position: document.getElementById("s-position").value,
+                why: document.getElementById("s-why").value
+            };
+            sendToDiscord(data);
             showConfirmation();
         }
 
-        async function sendToDiscord(type) {
-            // Your webhook
-            console.log(type + " application submitted");
-        }
-
         function showConfirmation() {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('confirmation-screen').classList.add('active');
-
-            // Auto return to home after 4 seconds
-            setTimeout(() => {
-                navigateTo('home');
-            }, 4000);
+            document.querySelectorAll('.page').forEach(el => {
+                el.classList.remove('active');
+                el.style.display = 'none';
+            });
+            
+            const conf = document.getElementById('confirmation-screen');
+            conf.style.display = 'flex';
+            setTimeout(() => conf.classList.add('active'), 10);
         }
 
-        // Close FAQ when clicking outside
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
         });
