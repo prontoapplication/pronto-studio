@@ -39,13 +39,39 @@
             transition: transform 0.4s ease;
         }
         .lil-logo:hover {
-            transform: scale(1.1) rotate(8deg);
+            transform: scale(1.12) rotate(8deg);
         }
 
-        /* FIXED INPUT STYLES - Better visibility */
+        /* Improved Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.9s ease forwards;
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .form-input {
-            background-color: #0f172a !important;     /* Very dark background */
-            color: #f1f5f9 !important;                /* Bright white text */
+            background-color: #0f172a !important;
+            color: #f1f5f9 !important;
             border: 2px solid #475569 !important;
             font-size: 1.05rem;
         }
@@ -60,16 +86,6 @@
             background-color: rgba(15, 23, 42, 0.95);
             border: 1px solid #334155;
             backdrop-filter: blur(12px);
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.8s forwards;
-        }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -92,23 +108,43 @@
         </div>
     </nav>
 
-    <!-- HOME -->
+    <!-- HOME PAGE -->
     <div id="page-home" class="min-h-screen flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-6 w-40 h-40 fade-in" style="animation-delay: 0.2s">
+                 alt="Lil Logo" class="mx-auto mb-8 w-40 h-40 fade-in" style="animation-delay: 0.1s">
 
             <h1 class="text-5xl md:text-7xl font-semibold tracking-[-2px] logo-font leading-none mb-6 fade-in" style="animation-delay: 0.4s">
                 Welcome to Pronto Studio<br>Application Center
             </h1>
-            <p class="text-xl text-slate-300 max-w-lg mx-auto mb-12 fade-in" style="animation-delay: 0.6s">
+            <p class="text-xl text-slate-300 max-w-lg mx-auto mb-12 fade-in" style="animation-delay: 0.7s">
                 Apply to join our creator network or become part of the staff team.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 0.8s">
-                <button onclick="navigateTo('creator')" class="bg-blue-600 hover:bg-blue-700 px-10 py-5 rounded-3xl font-semibold text-lg">Apply as Creator</button>
-                <button onclick="navigateTo('staff')" class="border-2 border-white/70 hover:bg-white/10 px-10 py-5 rounded-3xl font-semibold text-lg">Apply for Staff</button>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 1s">
+                <button onclick="navigateTo('creator')" 
+                        class="bg-blue-600 hover:bg-blue-700 px-10 py-5 rounded-3xl font-semibold text-lg transition-all">
+                    Apply as Creator
+                </button>
+                <button onclick="navigateTo('staff')" 
+                        class="border-2 border-white/70 hover:bg-white/10 px-10 py-5 rounded-3xl font-semibold text-lg transition-all">
+                    Apply for Staff
+                </button>
             </div>
+        </div>
+
+        <!-- FAQ / Info Box (Left Bottom) -->
+        <div class="absolute bottom-8 left-8 max-w-xs bg-slate-900/90 backdrop-blur-md border border-slate-700 rounded-3xl p-6 text-sm slide-in-left" style="animation-delay: 1.2s">
+            <h3 class="font-semibold text-blue-400 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info"></i> Important Information
+            </h3>
+            <ul class="space-y-3 text-slate-300 text-xs leading-relaxed">
+                <li>• This website was created with assistance from Grok (xAI) and ChatGPT.</li>
+                <li>• Owners: <span class="text-white">Ksoo</span> &amp; <span class="text-white">PayChris</span></li>
+                <li>• Website created: April 2026</li>
+                <li>• By submitting an application, you agree to our Terms of Service and Privacy Policy.</li>
+                <li class="text-blue-400">All applications are reviewed manually by the team.</li>
+            </ul>
         </div>
     </div>
 
@@ -145,7 +181,7 @@
                     </div>
 
                     <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all">
                         Submit Creator Application
                     </button>
                 </div>
@@ -178,7 +214,7 @@
                     </div>
 
                     <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all">
                         Submit Staff Application
                     </button>
                 </div>
@@ -191,8 +227,9 @@
         <div class="text-center max-w-md px-6 fade-in">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400 text-lg">Thank you! Your application has been received.</p>
-            <button onclick="navigateTo('home')" class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+            <p class="text-slate-400 text-lg">Thank you! Your application has been received and forwarded to the team.</p>
+            <button onclick="navigateTo('home')" 
+                    class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all">
                 Return to Home
             </button>
         </div>
@@ -211,7 +248,17 @@
                 await fetch(WEBHOOK_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ embeds: [{ title: data.type === "creator" ? "New Creator Application" : "New Staff Application", color: 0x3b82f6, fields: Object.keys(data).map(key => ({ name: key.charAt(0).toUpperCase() + key.slice(1), value: data[key] || "Not provided" })) }] })
+                    body: JSON.stringify({
+                        embeds: [{
+                            title: data.type === "creator" ? "New Creator Application" : "New Staff Application",
+                            color: 0x3b82f6,
+                            fields: Object.keys(data).map(key => ({
+                                name: key.charAt(0).toUpperCase() + key.slice(1),
+                                value: data[key] || "Not provided"
+                            })),
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
                 });
             } catch(e) {}
         }
@@ -247,7 +294,10 @@
             document.getElementById('confirmation-screen').classList.remove('hidden');
         }
 
-        window.onload = () => navigateTo('home');
+        // Initialize
+        window.onload = () => {
+            navigateTo('home');
+        };
     </script>
 </body>
 </html>
