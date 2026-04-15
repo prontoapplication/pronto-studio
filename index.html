@@ -32,14 +32,20 @@
             z-index: -1;
         }
 
+        /* Rounded Logo Styling */
         .lil-logo {
             width: 52px;
             height: 52px;
-            object-fit: contain;
-            transition: transform 0.4s ease;
+            object-fit: cover;
+            border-radius: 18px;           /* Nice rounded square */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
         }
+        
         .lil-logo:hover {
             transform: scale(1.15) rotate(8deg);
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
 
         .hero-title {
@@ -47,18 +53,6 @@
             font-weight: 700;
             letter-spacing: -3.5px;
             line-height: 1.05;
-        }
-
-        /* Page Transition Animation */
-        .page {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .page.active {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .highlight-text {
@@ -87,6 +81,17 @@
             transform: scale(1.02);
             background-color: #1e2937 !important;
         }
+
+        .page {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="main-bg text-slate-100 min-h-screen">
@@ -114,7 +119,7 @@
     <div id="page-home" class="page min-h-screen flex items-center relative active">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-8 w-40 h-40 fade-in" style="animation-delay: 0.1s">
+                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl fade-in" style="animation-delay: 0.1s">
 
             <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6 fade-in" style="animation-delay: 0.4s">
                 Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
@@ -152,28 +157,23 @@
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name)</label>
-                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" 
-                               class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" 
-                               class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
-                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" 
-                               class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
-                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" 
-                               class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." 
-                                  class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -261,22 +261,16 @@
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
 
         function navigateTo(page) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
-                setTimeout(() => {
-                    el.classList.add('hidden');
-                }, 400);
+                setTimeout(() => el.classList.add('hidden'), 400);
             });
 
-            // Show new page with animation
             setTimeout(() => {
-                const targetPage = document.getElementById(`page-${page}`);
-                if (targetPage) {
-                    targetPage.classList.remove('hidden');
-                    setTimeout(() => {
-                        targetPage.classList.add('active');
-                    }, 10);
+                const target = document.getElementById(`page-${page}`);
+                if (target) {
+                    target.classList.remove('hidden');
+                    setTimeout(() => target.classList.add('active'), 10);
                 }
             }, 300);
         }
@@ -332,9 +326,9 @@
 
         function showConfirmation() {
             document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
-            const confirmation = document.getElementById('confirmation-screen');
-            confirmation.classList.remove('hidden');
-            setTimeout(() => confirmation.classList.add('active'), 10);
+            const conf = document.getElementById('confirmation-screen');
+            conf.classList.remove('hidden');
+            setTimeout(() => conf.classList.add('active'), 10);
         }
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
