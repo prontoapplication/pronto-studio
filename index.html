@@ -13,9 +13,6 @@
             font-family: 'Inter', system_ui, sans-serif;
             -webkit-user-select: none;
             user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            cursor: default;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -101,16 +98,6 @@
             transform: translateY(0);
             transition: all 0.5s ease;
         }
-
-        /* FAQ Modal Animation */
-        .faq-modal {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.8) translateY(40px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
     </style>
 </head>
 <body class="main-bg text-slate-100 min-h-screen">
@@ -160,7 +147,7 @@
             </div>
         </div>
 
-        <!-- FAQ Icon - Slightly higher -->
+        <!-- FAQ Icon -->
         <button onclick="toggleFAQ()" 
                 class="fixed bottom-16 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
             <i class="fa-solid fa-circle-info text-blue-400"></i>
@@ -192,7 +179,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -225,7 +212,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating large Discord servers..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
@@ -253,9 +240,9 @@
         </div>
     </div>
 
-    <!-- Modern Error Modal -->
+    <!-- Error Modal -->
     <div id="error-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110]">
-        <div class="custom-alert bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full mx-4 text-center">
+        <div class="bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full mx-4 text-center">
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
             <h3 class="text-xl font-semibold mb-2 text-white">Missing Information</h3>
             <p class="text-slate-400 mb-6">Please fill in all required fields before submitting.</p>
@@ -294,6 +281,8 @@
     </div>
 
     <script>
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
+
         function navigateTo(page) {
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
@@ -309,10 +298,6 @@
 
         function toggleFAQ() {
             document.getElementById('faq-modal').classList.toggle('hidden');
-        }
-
-        function showErrorModal() {
-            document.getElementById('error-modal').classList.remove('hidden');
         }
 
         function closeErrorModal() {
@@ -333,18 +318,58 @@
             });
 
             if (!isValid) {
-                showErrorModal();
+                document.getElementById('error-modal').classList.remove('hidden');
             }
             return isValid;
         }
 
+        async function sendToDiscord(data) {
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        embeds: [{
+                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
+                            color: 0x3b82f6,
+                            fields: Object.keys(data).map(key => ({
+                                name: key.charAt(0).toUpperCase() + key.slice(1),
+                                value: data[key] || "Not provided"
+                            })),
+                            timestamp: new Date().toISOString()
+                        }]
+                    })
+                });
+                console.log("Webhook sent successfully");
+            } catch (e) {
+                console.error("Webhook failed:", e);
+            }
+        }
+
         function submitCreatorForm() {
             if (!validateForm('page-creator')) return;
+            const data = {
+                type: "creator",
+                roblox: document.getElementById("c-roblox").value,
+                discord: document.getElementById("c-discord").value,
+                social: document.getElementById("c-social").value,
+                followers: document.getElementById("c-followers").value,
+                why: document.getElementById("c-why").value
+            };
+            sendToDiscord(data);
             showConfirmation();
         }
 
         function submitStaffForm() {
             if (!validateForm('page-staff')) return;
+            const data = {
+                type: "staff",
+                roblox: document.getElementById("s-roblox").value,
+                discord: document.getElementById("s-discord").value,
+                position: document.getElementById("s-position").value,
+                why: document.getElementById("s-why").value
+            };
+            sendToDiscord(data);
             showConfirmation();
         }
 
@@ -363,7 +388,6 @@
             }, 4000);
         }
 
-        // Close modals when clicking outside
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
         });
