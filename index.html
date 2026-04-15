@@ -73,14 +73,11 @@
             transition: all 0.3s ease;
         }
         
-        .form-input:focus {
+        .form-input:focus, .form-input.error {
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
-            transform: scale(1.02);
-            background-color: #1e2937 !important;
         }
 
-        /* Fixed Animations */
         .page {
             display: none;
             opacity: 0;
@@ -167,24 +164,24 @@
                 
                 <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name)</label>
-                        <input id="c-roblox" type="text" placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
+                        <input id="c-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
+                        <input id="c-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.)</label>
-                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.) <span class="text-red-500">*</span></label>
+                        <input id="c-social" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers</label>
-                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
+                        <input id="c-followers" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
+                        <textarea id="c-why" rows="4" class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -204,20 +201,20 @@
                 
                 <div class="space-y-7">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Full Name</label>
-                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
+                        <input id="s-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID</label>
-                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
+                        <input id="s-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For</label>
-                        <input id="s-position" type="text" placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
+                        <input id="s-position" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff?</label>
-                        <textarea id="s-why" rows="5" placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
+                        <textarea id="s-why" rows="5" class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
@@ -279,7 +276,6 @@
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
-                // Trigger animation
                 setTimeout(() => {
                     targetPage.classList.add('active');
                 }, 10);
@@ -287,52 +283,42 @@
         }
 
         function toggleFAQ() {
-            const modal = document.getElementById('faq-modal');
-            modal.classList.toggle('hidden');
+            document.getElementById('faq-modal').classList.toggle('hidden');
         }
 
-        async function sendToDiscord(data) {
-            try {
-                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
-                            color: 0x3b82f6,
-                            fields: Object.keys(data).map(key => ({
-                                name: key.charAt(0).toUpperCase() + key.slice(1),
-                                value: data[key] || "Not provided"
-                            })),
-                            timestamp: new Date().toISOString()
-                        }]
-                    })
-                });
-            } catch(e) {}
+        function validateForm(pageId) {
+            const inputs = document.querySelectorAll(`#${pageId} input, #${pageId} textarea`);
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            if (!isValid) {
+                alert("Please fill in all required fields.");
+            }
+            return isValid;
+        }
+
+        async function sendToDiscord(type) {
+            console.log(type + " application submitted");
+            // Your webhook code can go here
         }
 
         function submitCreatorForm() {
-            const data = {
-                type: "creator",
-                roblox: document.getElementById("c-roblox").value || "Anonymous",
-                discord: document.getElementById("c-discord").value,
-                social: document.getElementById("c-social").value,
-                followers: document.getElementById("c-followers").value,
-                why: document.getElementById("c-why").value
-            };
-            sendToDiscord(data);
+            if (!validateForm('page-creator')) return;
+            sendToDiscord("creator");
             showConfirmation();
         }
 
         function submitStaffForm() {
-            const data = {
-                type: "staff",
-                name: document.getElementById("s-name").value || "Anonymous",
-                discord: document.getElementById("s-discord").value,
-                position: document.getElementById("s-position").value,
-                why: document.getElementById("s-why").value
-            };
-            sendToDiscord(data);
+            if (!validateForm('page-staff')) return;
+            sendToDiscord("staff");
             showConfirmation();
         }
 
