@@ -282,20 +282,15 @@
 
     <script>
         function navigateTo(page) {
-            // Hide all pages first
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
 
-            // Show the requested page
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
-                // Small delay for smooth animation
-                setTimeout(() => {
-                    targetPage.classList.add('active');
-                }, 10);
+                setTimeout(() => targetPage.classList.add('active'), 10);
             }
         }
 
@@ -343,13 +338,12 @@
                         }]
                     })
                 });
-            } catch(e) {
-                console.log("Webhook sent (or failed silently)");
-            }
+            } catch(e) {}
         }
 
         function submitCreatorForm() {
             if (!validateForm('page-creator')) return;
+
             const data = {
                 type: "creator",
                 roblox: document.getElementById("c-roblox").value,
@@ -358,12 +352,15 @@
                 followers: document.getElementById("c-followers").value,
                 why: document.getElementById("c-why").value
             };
+
             sendToDiscord(data);
+            clearForm('page-creator');   // Clear inputs after submit
             showConfirmation();
         }
 
         function submitStaffForm() {
             if (!validateForm('page-staff')) return;
+
             const data = {
                 type: "staff",
                 roblox: document.getElementById("s-roblox").value,
@@ -371,8 +368,15 @@
                 position: document.getElementById("s-position").value,
                 why: document.getElementById("s-why").value
             };
+
             sendToDiscord(data);
+            clearForm('page-staff');   // Clear inputs after submit
             showConfirmation();
+        }
+
+        function clearForm(pageId) {
+            const inputs = document.querySelectorAll(`#${pageId} input, #${pageId} textarea`);
+            inputs.forEach(input => input.value = '');
         }
 
         function showConfirmation() {
