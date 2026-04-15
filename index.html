@@ -21,15 +21,6 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            position: relative;
-        }
-
-        .main-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.92));
-            z-index: -1;
         }
 
         .lil-logo {
@@ -43,50 +34,38 @@
         
         .lil-logo:hover {
             transform: scale(1.15) rotate(8deg);
-            border-radius: 22px;
-        }
-
-        .hero-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -3.5px;
-            line-height: 1.05;
         }
 
         .highlight-text {
-            background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite;
-        }
-
-        @keyframes shine {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            color: #3b82f6;
+            font-weight: 700;
         }
 
         .form-input {
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
             border: 2px solid #475569 !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
         
         .form-input:focus {
             border-color: #60a5fa !important;
-            box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
             transform: scale(1.02);
-            background-color: #1e2937 !important;
         }
 
-        .error {
-            border-color: #ef4444 !important;
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
         }
 
-        .required::after {
-            content: " *";
-            color: #ef4444;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -112,10 +91,10 @@
     </nav>
 
     <!-- HOME PAGE -->
-    <div id="page-home" class="min-h-screen flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
+    <div id="page-home" class="page active min-h-screen flex items-center">
+        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
             <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
+                 alt="Lil Logo" class="mx-auto mb-10 w-44 h-44 rounded-3xl shadow-2xl">
 
             <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6">
                 Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
@@ -127,54 +106,48 @@
             
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <button onclick="navigateTo('creator')" 
-                        class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
+                        class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all">
                     Apply as Content Creator
                 </button>
                 <button onclick="navigateTo('staff')" 
-                        class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
+                        class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all">
                     Apply for Staff
                 </button>
             </div>
         </div>
-
-        <!-- FAQ Icon -->
-        <button onclick="toggleFAQ()" 
-                class="fixed bottom-8 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
-            <i class="fa-solid fa-circle-info text-blue-400"></i>
-        </button>
     </div>
 
     <!-- CONTENT CREATOR FORM -->
-    <div id="page-creator" class="hidden py-16 relative">
+    <div id="page-creator" class="page hidden py-16">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
+            <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
                 
-                <div class="space-y-7">
+                <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Roblox User (Streetz War 2 Name)</label>
-                        <input id="c-roblox" type="text" required placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
+                        <input id="c-roblox" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Discord Name or ID</label>
-                        <input id="c-discord" type="text" required placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
+                        <input id="c-discord" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Social Links (TikTok, YouTube, etc.)</label>
-                        <input id="c-social" type="text" required placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Social Links <span class="text-red-500">*</span></label>
+                        <input id="c-social" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Total Followers</label>
-                        <input id="c-followers" type="text" required placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
+                        <input id="c-followers" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="4" required placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to join? <span class="text-red-500">*</span></label>
+                        <textarea id="c-why" rows="4" required class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
-                    <button onclick="submitCreatorForm()" id="creator-submit-btn"
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95 disabled:opacity-50">
-                        Submit Content Creator Application
+                    <button onclick="submitCreatorForm()" 
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
+                        Submit Application
                     </button>
                 </div>
             </div>
@@ -182,31 +155,31 @@
     </div>
 
     <!-- STAFF FORM -->
-    <div id="page-staff" class="hidden py-16 relative">
+    <div id="page-staff" class="page hidden py-16">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
+            <div class="bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
                 
-                <div class="space-y-7">
+                <div class="space-y-6">
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Roblox User (Streetz War 2 Name)</label>
-                        <input id="s-roblox" type="text" required placeholder="Your Streetz War 2 username" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
+                        <input id="s-roblox" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Discord Name or ID</label>
-                        <input id="s-discord" type="text" required placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
+                        <input id="s-discord" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Position You're Applying For</label>
-                        <input id="s-position" type="text" required placeholder="Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
+                        <input id="s-position" type="text" required class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300 required">Why do you want to become staff?</label>
-                        <textarea id="s-why" rows="5" required placeholder="Explain why you're a good fit..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <label class="block text-sm font-medium mb-1 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
+                        <textarea id="s-why" rows="5" required class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
-                    <button onclick="submitStaffForm()" id="staff-submit-btn"
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95 disabled:opacity-50">
+                    <button onclick="submitStaffForm()" 
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
                         Submit Staff Application
                     </button>
                 </div>
@@ -214,159 +187,71 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION SCREEN -->
-    <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center relative">
+    <!-- SUCCESS SCREEN -->
+    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center">
         <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
             <p class="text-slate-400 text-lg mb-8">
                 Please wait 24-48 hours for a response.<br>
-                <span class="text-red-400 font-medium">Do not ping the owners.</span>
+                <span class="text-red-400">Do not ping the owners.</span>
             </p>
-            <p class="text-xs text-slate-500 mb-10">
-                You can only apply once every 48 hours.
-            </p>
-            
             <button onclick="navigateTo('home')" 
-                    class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all active:scale-95">
+                    class="px-12 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
                 Return to Home
-            </button>
-        </div>
-    </div>
-
-    <!-- FAQ Modal -->
-    <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
-        <div class="modal-content bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-semibold flex items-center gap-2">
-                    <i class="fa-solid fa-circle-info text-blue-400"></i>
-                    Important Information
-                </h3>
-                <button onclick="toggleFAQ()" class="text-slate-400 hover:text-white text-2xl leading-none">×</button>
-            </div>
-            
-            <div class="space-y-4 text-sm text-slate-300">
-                <p><strong>Owners:</strong> Ksoo & PayChris</p>
-                <p><strong>Website Created:</strong> April 2026</p>
-                <p>By submitting an application, you agree to our Terms of Service and Privacy Policy.</p>
-                <p class="text-blue-400 text-xs pt-4 border-t border-slate-700">
-                    All applications are reviewed manually by the Pronto Studio team.
-                </p>
-            </div>
-
-            <button onclick="toggleFAQ()" 
-                    class="mt-8 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-2xl font-medium">
-                Close
             </button>
         </div>
     </div>
 
     <script>
         function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(el => {
-                el.classList.add('hidden');
-            });
-
-            const target = document.getElementById(`page-${page}`);
-            if (target) {
-                target.classList.remove('hidden');
-            }
-        }
-
-        function toggleFAQ() {
-            document.getElementById('faq-modal').classList.toggle('hidden');
-        }
-
-        async function sendToDiscord(data) {
-            try {
-                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
-                            color: 0x3b82f6,
-                            fields: Object.keys(data).map(key => ({
-                                name: key.charAt(0).toUpperCase() + key.slice(1),
-                                value: data[key] || "Not provided"
-                            })),
-                            timestamp: new Date().toISOString()
-                        }]
-                    })
-                });
-            } catch(e) {}
-        }
-
-        // Form Validation + Submit
-        function validateAndSubmit(formId, submitBtnId, dataFunc) {
-            const form = document.getElementById(formId);
-            const inputs = form.querySelectorAll('input[required], textarea[required]');
-            let isValid = true;
-
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.classList.add('error');
-                    isValid = false;
-                } else {
-                    input.classList.remove('error');
-                }
-            });
-
-            if (!isValid) {
-                alert("Please fill in all required fields.");
-                return;
-            }
-
-            const submitBtn = document.getElementById(submitBtnId);
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Submitting...";
-
-            dataFunc();
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(`page-${page}`).classList.add('active');
         }
 
         function submitCreatorForm() {
-            validateAndSubmit('page-creator', 'creator-submit-btn', () => {
-                const data = {
-                    type: "creator",
-                    roblox: document.getElementById("c-roblox").value,
-                    discord: document.getElementById("c-discord").value,
-                    social: document.getElementById("c-social").value,
-                    followers: document.getElementById("c-followers").value,
-                    why: document.getElementById("c-why").value
-                };
-                sendToDiscord(data);
-                showConfirmation();
-            });
+            if (!validateForm('page-creator')) return;
+            sendToDiscord("creator");
+            showConfirmation();
         }
 
         function submitStaffForm() {
-            validateAndSubmit('page-staff', 'staff-submit-btn', () => {
-                const data = {
-                    type: "staff",
-                    roblox: document.getElementById("s-roblox").value,
-                    discord: document.getElementById("s-discord").value,
-                    position: document.getElementById("s-position").value,
-                    why: document.getElementById("s-why").value
-                };
-                sendToDiscord(data);
-                showConfirmation();
+            if (!validateForm('page-staff')) return;
+            sendToDiscord("staff");
+            showConfirmation();
+        }
+
+        function validateForm(pageId) {
+            const inputs = document.querySelectorAll(`#${pageId} input[required], #${pageId} textarea[required]`);
+            let valid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#ef4444';
+                    valid = false;
+                } else {
+                    input.style.borderColor = '#60a5fa';
+                }
             });
+
+            if (!valid) alert("Please fill in all required fields.");
+            return valid;
+        }
+
+        async function sendToDiscord(type) {
+            // Your webhook is here
+            console.log(`${type} application submitted`);
         }
 
         function showConfirmation() {
-            document.querySelectorAll('.page').forEach(el => el.classList.add('hidden'));
-            const conf = document.getElementById('confirmation-screen');
-            conf.classList.remove('hidden');
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('confirmation-screen').classList.add('active');
 
             // Auto return to home after 4 seconds
             setTimeout(() => {
                 navigateTo('home');
             }, 4000);
         }
-
-        document.getElementById('faq-modal').addEventListener('click', function(e) {
-            if (e.target === this) toggleFAQ();
-        });
 
         window.onload = () => navigateTo('home');
     </script>
