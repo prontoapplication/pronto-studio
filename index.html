@@ -70,7 +70,7 @@
             background-color: #0f172a !important;
             color: #f1f5f9 !important;
             border: 2px solid #475569 !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
         
         .form-input:focus {
@@ -80,20 +80,28 @@
             background-color: #1e2937 !important;
         }
 
-        .form-card {
-            max-width: 640px;   /* Same width as creator form */
-            margin: 0 auto;
-        }
-
+        /* Fixed Animations */
         .page {
             display: none;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transform: translateY(30px);
         }
         
         .page.active {
             display: block;
             opacity: 1;
+            transform: translateY(0);
+            transition: all 0.5s ease;
+        }
+
+        /* FAQ Modal Animation */
+        .faq-modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.8) translateY(40px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
 </head>
@@ -188,7 +196,7 @@
         </div>
     </div>
 
-    <!-- STAFF FORM - NOW SAME SIZE -->
+    <!-- STAFF FORM -->
     <div id="page-staff" class="page hidden py-16 relative">
         <div class="max-w-2xl mx-auto px-6">
             <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
@@ -236,7 +244,7 @@
 
     <!-- FAQ Modal -->
     <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
-        <div class="modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
+        <div class="faq-modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-semibold flex items-center gap-2">
                     <i class="fa-solid fa-circle-info text-blue-400"></i>
@@ -271,6 +279,7 @@
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
+                // Trigger animation
                 setTimeout(() => {
                     targetPage.classList.add('active');
                 }, 10);
@@ -278,7 +287,8 @@
         }
 
         function toggleFAQ() {
-            document.getElementById('faq-modal').classList.toggle('hidden');
+            const modal = document.getElementById('faq-modal');
+            modal.classList.toggle('hidden');
         }
 
         async function sendToDiscord(data) {
@@ -335,6 +345,11 @@
             const conf = document.getElementById('confirmation-screen');
             conf.style.display = 'flex';
             setTimeout(() => conf.classList.add('active'), 10);
+
+            // Auto return to home after 4 seconds
+            setTimeout(() => {
+                navigateTo('home');
+            }, 4000);
         }
 
         document.getElementById('faq-modal').addEventListener('click', function(e) {
