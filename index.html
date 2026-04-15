@@ -9,59 +9,34 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
         
-        :root {
-            --primary: #3b82f6;
-        }
-
         body {
             font-family: 'Inter', system_ui, sans-serif;
         }
-
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
         }
-
         .hero-bg {
             background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
         }
-
-        /* Modern subtle background */
         .main-bg {
             background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-            position: relative;
-            overflow: hidden;
         }
-        
-        .main-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
         .form-input {
             background-color: #1f2937 !important;
             color: #e2e8f0 !important;
             border: 1px solid #475569 !important;
         }
-        
         .form-input:focus {
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.3);
-            outline: none;
         }
-
         .form-card {
             background-color: #1f2937;
             border: 1px solid #334155;
         }
     </style>
 </head>
-<body class="tail-container main-bg text-slate-100 min-h-screen">
+<body class="main-bg text-slate-100 min-h-screen">
 
     <!-- NAVBAR -->
     <nav class="bg-slate-900/80 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
@@ -74,96 +49,94 @@
             </div>
 
             <div class="hidden md:flex gap-x-8 text-sm font-medium">
-                <button onclick="navigateTo('home')" class="hover:text-blue-400 transition-colors">Home</button>
-                <button onclick="navigateTo('creator')" class="hover:text-blue-400 transition-colors">Apply as Creator</button>
-                <button onclick="navigateTo('staff')" class="hover:text-blue-400 transition-colors">Apply for Staff</button>
+                <button onclick="navigateTo('home')" class="hover:text-blue-400">Home</button>
+                <button onclick="navigateTo('creator')" class="hover:text-blue-400">Apply as Creator</button>
+                <button onclick="navigateTo('staff')" class="hover:text-blue-400">Apply for Staff</button>
             </div>
-
-            <button onclick="toggleDarkMode()" class="w-10 h-10 flex items-center justify-center rounded-2xl hover:bg-slate-800">
-                <i id="theme-icon" class="fa-solid fa-sun text-xl"></i>
-            </button>
         </div>
     </nav>
 
     <!-- HOME -->
-    <div id="page-home" class="min-h-screen hero-bg flex items-center">
+    <div id="page-home" class="hero-bg min-h-screen flex items-center">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center">
             <h1 class="text-6xl md:text-7xl font-semibold tracking-[-2px] logo-font leading-none mb-6">
                 Join the next<br>generation of creators
             </h1>
-            <p class="text-xl text-slate-300 max-w-lg mx-auto mb-10">
-                Pronto Studio — where creators grow together, get discovered, and build real impact.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="navigateTo('creator')" 
-                        class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
-                    Apply as Creator
-                </button>
-                <button onclick="navigateTo('staff')" 
-                        class="border-2 border-white/70 hover:bg-white/10 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
-                    Apply for Staff
-                </button>
+            <p class="text-xl text-slate-300 max-w-lg mx-auto">Pronto Studio is a creative collective for Roblox & TikTok creators.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+                <button onclick="navigateTo('creator')" class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg">Apply as Creator</button>
+                <button onclick="navigateTo('staff')" class="border-2 border-white/70 hover:bg-white/10 px-10 py-4 rounded-3xl font-semibold text-lg">Apply for Staff</button>
             </div>
         </div>
     </div>
 
-    <!-- CREATOR FORM -->
+    <!-- CREATOR APPLICATION -->
     <div id="page-creator" class="hidden py-16">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card rounded-3xl p-10 shadow-2xl">
+            <div class="form-card rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Creator Application</h2>
                 
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-400">Full Name</label>
-                        <input id="c-name" type="text" placeholder="Your full name" 
-                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
+                        <input id="c-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-400">Email Address</label>
-                        <input id="c-email" type="email" placeholder="you@example.com" 
-                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Discord Name or ID</label>
+                        <input id="c-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-400">Why do you want to join Pronto Studio?</label>
-                        <textarea id="c-why" rows="5" placeholder="Tell us your story and goals..." 
-                                  class="form-input w-full rounded-3xl p-6 text-lg resize-y"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Roblox Username</label>
+                        <input id="c-roblox" type="text" placeholder="Your Roblox username" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">TikTok, YouTube, Instagram Links</label>
+                        <input id="c-social" type="text" placeholder="https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">How many followers do you have? (Total across platforms)</label>
+                        <input id="c-followers" type="text" placeholder="e.g. 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Why do you want to become a content creator at Pronto Studio?</label>
+                        <textarea id="c-why" rows="4" placeholder="Tell us your motivation..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all mt-4">
-                        Submit Application
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
+                        Submit Creator Application
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- STAFF FORM -->
+    <!-- STAFF APPLICATION -->
     <div id="page-staff" class="hidden py-16">
         <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card rounded-3xl p-10 shadow-2xl">
+            <div class="form-card rounded-3xl p-10">
                 <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
                 
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-400">Full Name</label>
-                        <input id="s-name" type="text" placeholder="Your full name" 
-                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
+                        <input id="s-name" type="text" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-400">Email Address</label>
-                        <input id="s-email" type="email" placeholder="you@example.com" 
-                               class="form-input w-full h-14 rounded-3xl px-6 text-lg">
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Discord Name or ID</label>
+                        <input id="s-discord" type="text" placeholder="username#0000 or User ID" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-400">Why should we hire you?</label>
-                        <textarea id="s-why" rows="5" placeholder="Describe your experience and why you're a great fit..." 
-                                  class="form-input w-full rounded-3xl p-6 text-lg resize-y"></textarea>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">What position are you looking for?</label>
+                        <input id="s-position" type="text" placeholder="e.g. Moderator, Content Manager, Admin" class="form-input w-full h-14 rounded-3xl px-6">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-slate-400">Why do you want to become staff at Pronto Studio?</label>
+                        <textarea id="s-why" rows="5" placeholder="Explain your reasons..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg transition-all mt-4">
+                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6">
                         Submit Staff Application
                     </button>
                 </div>
@@ -173,12 +146,11 @@
 
     <!-- CONFIRMATION -->
     <div id="confirmation-screen" class="hidden min-h-screen flex items-center justify-center">
-        <div class="text-center">
-            <div class="text-7xl mb-6">🚀</div>
-            <h2 class="text-4xl font-semibold mb-3">Application Sent Successfully!</h2>
-            <p class="text-slate-400 max-w-sm mx-auto">Thank you! Your application has been received and a notification was sent to the team.</p>
-            <button onclick="navigateTo('home')" 
-                    class="mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">
+        <div class="text-center max-w-md px-6">
+            <div class="text-7xl mb-6">✅</div>
+            <h2 class="text-4xl font-semibold mb-3">Application Submitted!</h2>
+            <p class="text-slate-400">Thank you! Your application has been sent and the team has been notified via Discord.</p>
+            <button onclick="navigateTo('home')" class="mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">
                 Back to Home
             </button>
         </div>
@@ -187,33 +159,25 @@
     <script>
         const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
 
-        function toggleDarkMode() {
-            // This app is already in dark mode by design
-            alert("This version is designed in dark mode for best visual experience.");
-        }
-
         function navigateTo(page) {
             document.querySelectorAll('#page-home, #page-creator, #page-staff, #confirmation-screen').forEach(el => el.classList.add('hidden'));
-            
-            if (page === 'home') document.getElementById('page-home').classList.remove('hidden');
-            else if (page === 'creator') document.getElementById('page-creator').classList.remove('hidden');
-            else if (page === 'staff') document.getElementById('page-staff').classList.remove('hidden');
+            document.getElementById(`page-${page}`).classList.remove('hidden');
         }
 
         async function sendToDiscord(data) {
             try {
                 await fetch(WEBHOOK_URL, {
                     method: "POST",
-                    headers: {"Content-Type": "application/json"},
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         embeds: [{
                             title: data.type === "creator" ? "New Creator Application" : "New Staff Application",
                             color: 0x3b82f6,
-                            fields: [
-                                {name: "Name", value: data.name, inline: true},
-                                {name: "Email", value: data.email || "-", inline: true},
-                                {name: "Reason", value: data.message || "No message provided"}
-                            ],
+                            fields: Object.keys(data).map(key => ({
+                                name: key.charAt(0).toUpperCase() + key.slice(1),
+                                value: data[key] || "Not provided",
+                                inline: key !== "why" && key !== "message"
+                            })),
                             timestamp: new Date().toISOString()
                         }]
                     })
@@ -224,9 +188,12 @@
         function submitCreatorForm() {
             const data = {
                 type: "creator",
-                name: document.getElementById("c-name").value || "Anonymous",
-                email: document.getElementById("c-email").value,
-                message: document.getElementById("c-why").value
+                name: document.getElementById("c-name").value,
+                discord: document.getElementById("c-discord").value,
+                roblox: document.getElementById("c-roblox").value,
+                social: document.getElementById("c-social").value,
+                followers: document.getElementById("c-followers").value,
+                why: document.getElementById("c-why").value
             };
             sendToDiscord(data);
             showConfirmation();
@@ -235,9 +202,10 @@
         function submitStaffForm() {
             const data = {
                 type: "staff",
-                name: document.getElementById("s-name").value || "Anonymous",
-                email: document.getElementById("s-email").value,
-                message: document.getElementById("s-why").value
+                name: document.getElementById("s-name").value,
+                discord: document.getElementById("s-discord").value,
+                position: document.getElementById("s-position").value,
+                why: document.getElementById("s-why").value
             };
             sendToDiscord(data);
             showConfirmation();
@@ -248,7 +216,7 @@
             document.getElementById('confirmation-screen').classList.remove('hidden');
         }
 
-        // Start on home page
+        // Start on home
         window.onload = () => navigateTo('home');
     </script>
 </body>
