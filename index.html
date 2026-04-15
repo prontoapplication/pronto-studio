@@ -11,6 +11,11 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
+            -webkit-user-select: none;
+            user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            cursor: default;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -97,13 +102,13 @@
             transition: all 0.5s ease;
         }
 
-        /* Custom Modern Alert */
-        .custom-alert {
-            animation: alertPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* FAQ Modal Animation */
+        .faq-modal {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes alertPop {
-            from { opacity: 0; transform: scale(0.7) translateY(30px); }
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.8) translateY(40px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
     </style>
@@ -155,7 +160,7 @@
             </div>
         </div>
 
-        <!-- FAQ Icon -->
+        <!-- FAQ Icon - Slightly higher -->
         <button onclick="toggleFAQ()" 
                 class="fixed bottom-16 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
             <i class="fa-solid fa-circle-info text-blue-400"></i>
@@ -248,7 +253,7 @@
         </div>
     </div>
 
-    <!-- Modern Custom Error Modal -->
+    <!-- Modern Error Modal -->
     <div id="error-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110]">
         <div class="custom-alert bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full mx-4 text-center">
             <div class="text-red-500 text-5xl mb-4">⚠️</div>
@@ -327,22 +332,19 @@
                 }
             });
 
+            if (!isValid) {
+                showErrorModal();
+            }
             return isValid;
         }
 
         function submitCreatorForm() {
-            if (!validateForm('page-creator')) {
-                showErrorModal();
-                return;
-            }
+            if (!validateForm('page-creator')) return;
             showConfirmation();
         }
 
         function submitStaffForm() {
-            if (!validateForm('page-staff')) {
-                showErrorModal();
-                return;
-            }
+            if (!validateForm('page-staff')) return;
             showConfirmation();
         }
 
@@ -361,6 +363,7 @@
             }, 4000);
         }
 
+        // Close modals when clicking outside
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
         });
