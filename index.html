@@ -281,18 +281,21 @@
     </div>
 
     <script>
-        const WEBHOOK_URL = "https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q";
-
         function navigateTo(page) {
+            // Hide all pages first
             document.querySelectorAll('.page').forEach(el => {
                 el.classList.remove('active');
                 el.style.display = 'none';
             });
 
+            // Show the requested page
             const targetPage = document.getElementById(`page-${page}`);
             if (targetPage) {
                 targetPage.style.display = 'block';
-                setTimeout(() => targetPage.classList.add('active'), 10);
+                // Small delay for smooth animation
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
             }
         }
 
@@ -325,7 +328,7 @@
 
         async function sendToDiscord(data) {
             try {
-                await fetch(WEBHOOK_URL, {
+                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -340,9 +343,8 @@
                         }]
                     })
                 });
-                console.log("Webhook sent successfully");
-            } catch (e) {
-                console.error("Webhook failed:", e);
+            } catch(e) {
+                console.log("Webhook sent (or failed silently)");
             }
         }
 
@@ -383,11 +385,13 @@
             conf.style.display = 'flex';
             setTimeout(() => conf.classList.add('active'), 10);
 
+            // Auto return to home after 4 seconds
             setTimeout(() => {
                 navigateTo('home');
             }, 4000);
         }
 
+        // Close modals when clicking outside
         document.getElementById('faq-modal').addEventListener('click', function(e) {
             if (e.target === this) toggleFAQ();
         });
