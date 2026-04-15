@@ -24,16 +24,18 @@
             position: relative;
         }
 
-        /* Dark overlay to make text readable */
         .main-bg::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.85));
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.88));
             z-index: -1;
+        }
+
+        .lil-logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
         }
 
         .form-input {
@@ -58,11 +60,11 @@
 
     <!-- NAVBAR -->
     <nav class="bg-slate-900/90 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div class="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-x-3">
-                <div class="w-9 h-9 bg-blue-600 rounded-2xl flex items-center justify-center">
-                    <i class="fa-solid fa-bolt-lightning text-xl"></i>
-                </div>
+                <!-- Lil Logo -->
+                <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
+                     alt="Lil Logo" class="lil-logo">
                 <h1 class="logo-font text-2xl tracking-tighter">Pronto Studio</h1>
             </div>
 
@@ -74,14 +76,19 @@
         </div>
     </nav>
 
-    <!-- HOME -->
+    <!-- HOME PAGE -->
     <div id="page-home" class="min-h-screen flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
+            <!-- Big Lil Logo on Home -->
+            <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
+                 alt="Lil Logo" class="mx-auto mb-8 w-32 h-32 opacity-90">
+            
             <h1 class="text-6xl md:text-7xl font-semibold tracking-[-2px] logo-font leading-none mb-6">
                 Join the next<br>generation of creators
             </h1>
             <p class="text-xl text-slate-300 max-w-lg mx-auto">Pronto Studio is a creative collective for Roblox & TikTok creators.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-10">
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-12">
                 <button onclick="navigateTo('creator')" 
                         class="bg-blue-600 hover:bg-blue-700 px-10 py-4 rounded-3xl font-semibold text-lg transition-all">
                     Apply as Creator
@@ -173,7 +180,7 @@
         <div class="text-center max-w-md px-6">
             <div class="text-7xl mb-6">✅</div>
             <h2 class="text-4xl font-semibold mb-3">Application Submitted!</h2>
-            <p class="text-slate-400">Thank you! Your application has been received and sent to the team.</p>
+            <p class="text-slate-400">Thank you! Your application has been received and sent to the team via Discord.</p>
             <button onclick="navigateTo('home')" class="mt-10 px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold">
                 Back to Home
             </button>
