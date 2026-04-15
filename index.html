@@ -11,6 +11,8 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
+            -webkit-user-select: none;   /* Disable text selection */
+            user-select: none;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -42,10 +44,24 @@
             transform: scale(1.15) rotate(8deg);
         }
 
+        /* Highlight Animation */
+        .highlight-text {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
         .hero-title {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
-            letter-spacing: -3px;
+            letter-spacing: -3.5px;
             line-height: 1.05;
         }
 
@@ -61,6 +77,16 @@
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
             transform: scale(1.02);
             background-color: #1e2937 !important;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -92,7 +118,7 @@
                  alt="Lil Logo" class="mx-auto mb-8 w-40 h-40 fade-in" style="animation-delay: 0.1s">
 
             <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6 fade-in" style="animation-delay: 0.4s">
-                Welcome to <span class="text-blue-500">Pronto Studio</span><br>Application Center
+                Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
             </h1>
             
             <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12 fade-in" style="animation-delay: 0.7s">
