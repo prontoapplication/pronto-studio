@@ -11,6 +11,10 @@
         
         body {
             font-family: 'Inter', system_ui, sans-serif;
+            -webkit-user-select: none;   /* Disable text selection */
+            user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         .logo-font {
             font-family: 'Space Grotesk', sans-serif;
@@ -182,7 +186,7 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate with other creators in the community..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate with other creators..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -211,11 +215,11 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
-                        <input id="s-position" type="text" placeholder="Example: Moderator or Content Manager" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-position" type="text" placeholder="Example: Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating large Discord servers and want to help build a positive community..." class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating large Discord servers..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
