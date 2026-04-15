@@ -73,9 +73,11 @@
             transition: all 0.3s ease;
         }
         
-        .form-input:focus, .form-input.error {
+        .form-input:focus {
             border-color: #60a5fa !important;
             box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
+            transform: scale(1.02);
+            background-color: #1e2937 !important;
         }
 
         .page {
@@ -91,7 +93,6 @@
             transition: all 0.5s ease;
         }
 
-        /* FAQ Modal Animation */
         .faq-modal {
             animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -149,9 +150,9 @@
             </div>
         </div>
 
-        <!-- FAQ Icon -->
+        <!-- FAQ Icon - Moved a bit higher -->
         <button onclick="toggleFAQ()" 
-                class="fixed bottom-8 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
+                class="fixed bottom-16 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
             <i class="fa-solid fa-circle-info text-blue-400"></i>
         </button>
     </div>
@@ -165,23 +166,23 @@
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="c-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-roblox" type="text" placeholder="Example: StreetzKiller123" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="c-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-discord" type="text" placeholder="Example: LilKsoo#1234 or 987654321098765432" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.) <span class="text-red-500">*</span></label>
-                        <input id="c-social" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-social" type="text" placeholder="Example: https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
-                        <input id="c-followers" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="c-followers" type="text" placeholder="Example: 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content and collaborate with other creators in the community..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitCreatorForm()" 
@@ -202,19 +203,19 @@
                 <div class="space-y-7">
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="s-roblox" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-roblox" type="text" placeholder="Example: StreetzKiller123" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="s-discord" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-discord" type="text" placeholder="Example: LilKsoo#1234 or 987654321098765432" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
-                        <input id="s-position" type="text" class="form-input w-full h-14 rounded-3xl px-6">
+                        <input id="s-position" type="text" placeholder="Example: Moderator or Content Manager" class="form-input w-full h-14 rounded-3xl px-6">
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" class="form-input w-full rounded-3xl p-6"></textarea>
+                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating large Discord servers and want to help build a positive community..." class="form-input w-full rounded-3xl p-6"></textarea>
                     </div>
 
                     <button onclick="submitStaffForm()" 
@@ -231,7 +232,10 @@
         <div class="text-center max-w-md px-6">
             <div class="text-8xl mb-6">🎉</div>
             <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400">Thank you! Your application has been received.</p>
+            <p class="text-slate-400 text-lg mb-8">
+                Please wait 24-48 hours for a response.<br>
+                <span class="text-red-400 font-medium">Do not ping the owners.</span>
+            </p>
             <button onclick="navigateTo('home')" 
                     class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
                 Return to Home
@@ -305,20 +309,13 @@
             return isValid;
         }
 
-        async function sendToDiscord(type) {
-            console.log(type + " application submitted");
-            // Your webhook code can go here
-        }
-
         function submitCreatorForm() {
             if (!validateForm('page-creator')) return;
-            sendToDiscord("creator");
             showConfirmation();
         }
 
         function submitStaffForm() {
             if (!validateForm('page-staff')) return;
-            sendToDiscord("staff");
             showConfirmation();
         }
 
