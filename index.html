@@ -1,410 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Pronto Studio Application Center</title>
+    <title>Prépa Brevet 2026 - Quiz Entraînement</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
+        :root {
+            --primary: 59 130 246;
+        }
         
         body {
-            font-family: 'Inter', system_ui, sans-serif;
-            -webkit-user-select: none;
-            user-select: none;
+            font-family: 'Inter', system-ui, sans-serif;
         }
-        .logo-font {
+        
+        .title-font {
             font-family: 'Space Grotesk', sans-serif;
         }
 
-        .main-bg {
-            background-image: url('https://media.discordapp.net/attachments/1481675942693965874/1489421948080488458/4189768043_11177482306_1775173994708.png?ex=69e0d688&is=69df8508&hm=910c083c3eddeca676e379f405b2951f9ea9e8ec4835fa7db6b0ae21f0ed6910&=&format=webp&quality=lossless&width=1086&height=571');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-        }
-
-        .main-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.92));
-            z-index: -1;
-        }
-
-        .lil-logo {
-            width: 52px;
-            height: 52px;
-            object-fit: cover;
-            border-radius: 18px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .lil-logo:hover {
-            transform: scale(1.15) rotate(8deg);
-            border-radius: 22px;
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
         }
 
-        .hero-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -3.5px;
-            line-height: 1.05;
-        }
-
-        .highlight-text {
-            background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s linear infinite;
-        }
-
-        @keyframes shine {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .form-input {
-            background-color: #0f172a !important;
-            color: #f1f5f9 !important;
-            border: 2px solid #475569 !important;
-            transition: all 0.3s ease;
+        .quiz-option {
+            transition: all 0.2s ease;
         }
         
-        .form-input:focus {
-            border-color: #60a5fa !important;
-            box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.35);
-            transform: scale(1.02);
-        }
-
-        .form-input.error {
-            border-color: #ef4444 !important;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.4);
-        }
-
-        .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
+        .quiz-option:hover {
+            background-color: rgb(249 250 251);
         }
         
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-            transition: all 0.5s ease;
+        .selected {
+            background-color: rgb(59 130 246);
+            color: white;
+            border-color: rgb(59 130 246);
         }
     </style>
 </head>
-<body class="main-bg text-slate-100 min-h-screen">
-
-    <!-- NAVBAR -->
-    <nav class="bg-slate-900/95 backdrop-blur-lg border-b border-slate-700 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-x-3 cursor-pointer" onclick="navigateTo('home')">
-                <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                     alt="Lil Logo" class="lil-logo">
-                <h1 class="logo-font text-2xl tracking-tighter hover:text-blue-400 transition-colors">
-                    Pronto Studio
-                </h1>
+<body class="bg-gray-50 text-gray-900">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-6 border-b">
+                <h1 class="title-font text-3xl font-bold tracking-tighter text-blue-600">Brevet 2026</h1>
+                <p class="text-sm text-gray-500 mt-1">Entraînement • 500+ questions</p>
             </div>
-
-            <div class="hidden md:flex gap-x-8 text-sm font-medium">
-                <button onclick="navigateTo('home')" class="hover:text-blue-400">Home</button>
-                <button onclick="navigateTo('creator')" class="hover:text-blue-400">Content Creator Application</button>
-                <button onclick="navigateTo('staff')" class="hover:text-blue-400">Staff Application</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- HOME PAGE -->
-    <div id="page-home" class="page active min-h-screen flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-6 py-20 text-center z-10">
-            <img src="https://media.discordapp.net/attachments/1486474461283876994/1494063707263729734/IMG_0369.png?ex=69e13ec2&is=69dfed42&hm=e2da0bfa1007bbd93d951f86932cdf8a6207a661535990e87aacbc0755574657&=&format=webp&quality=lossless&width=640&height=675" 
-                 alt="Lil Logo" class="mx-auto mb-8 w-44 h-44 rounded-3xl shadow-2xl">
-
-            <h1 class="hero-title text-5xl md:text-7xl tracking-[-4px] mb-6">
-                Welcome to <span class="highlight-text">Pronto Studio</span><br>Application Center
-            </h1>
             
-            <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-12">
-                Join the next generation of creators and staff in Streetz War 2 community.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button onclick="navigateTo('creator')" 
-                        class="bg-blue-600 hover:bg-blue-700 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
-                    Apply as Content Creator
-                </button>
-                <button onclick="navigateTo('staff')" 
-                        class="border-2 border-white/70 hover:bg-white/10 px-12 py-5 rounded-3xl font-semibold text-lg transition-all active:scale-95">
-                    Apply for Staff
-                </button>
-            </div>
-        </div>
-
-        <!-- FAQ Icon -->
-        <button onclick="toggleFAQ()" 
-                class="fixed bottom-16 left-8 w-12 h-12 bg-slate-900 hover:bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-xl shadow-lg transition-all hover:scale-110 z-50">
-            <i class="fa-solid fa-circle-info text-blue-400"></i>
-        </button>
-    </div>
-
-    <!-- CONTENT CREATOR FORM -->
-    <div id="page-creator" class="page hidden py-16 relative">
-        <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
-                <h2 class="text-3xl font-semibold mb-8 text-center">Content Creator Application</h2>
-                
-                <div class="space-y-7">
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="c-roblox" type="text" placeholder="Example: StreetzKiller123" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="c-discord" type="text" placeholder="Example: LilKsoo#1234 or 987654321098765432" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Social Links (TikTok, YouTube, etc.) <span class="text-red-500">*</span></label>
-                        <input id="c-social" type="text" placeholder="Example: https://tiktok.com/@yourusername" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Total Followers <span class="text-red-500">*</span></label>
-                        <input id="c-followers" type="text" placeholder="Example: 15K or 150000" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to join Pronto Studio? <span class="text-red-500">*</span></label>
-                        <textarea id="c-why" rows="4" placeholder="Example: I want to grow my content..." class="form-input w-full rounded-3xl p-6"></textarea>
-                    </div>
-
-                    <button onclick="submitCreatorForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
-                        Submit Content Creator Application
-                    </button>
+            <div class="p-4">
+                <div onclick="showHome()" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-gray-100 cursor-pointer mb-2">
+                    <i class="fa-solid fa-house w-5"></i>
+                    <span class="font-medium">Accueil</span>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- STAFF FORM -->
-    <div id="page-staff" class="page hidden py-16 relative">
-        <div class="max-w-2xl mx-auto px-6">
-            <div class="form-card bg-slate-900/95 backdrop-blur-xl rounded-3xl p-10">
-                <h2 class="text-3xl font-semibold mb-8 text-center">Staff Application</h2>
+            <div class="px-4">
+                <h2 class="px-4 text-xs font-semibold text-gray-500 mb-2 mt-6">MATIÈRES</h2>
                 
-                <div class="space-y-7">
+                <!-- Math -->
+                <div onclick="selectSubject('math')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
+                    <div class="w-9 h-9 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center font-bold">M</div>
                     <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Roblox User (Streetz War 2 Name) <span class="text-red-500">*</span></label>
-                        <input id="s-roblox" type="text" placeholder="Example: StreetzKiller123" class="form-input w-full h-14 rounded-3xl px-6">
+                        <div class="font-semibold">Mathématiques</div>
+                        <div class="text-xs text-gray-500">2 catégories</div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Discord Name or ID <span class="text-red-500">*</span></label>
-                        <input id="s-discord" type="text" placeholder="Example: LilKsoo#1234 or 987654321098765432" class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Position You're Applying For <span class="text-red-500">*</span></label>
-                        <input id="s-position" type="text" placeholder="Example: Moderator, Content Manager, Admin..." class="form-input w-full h-14 rounded-3xl px-6">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2 text-slate-300">Why do you want to become staff? <span class="text-red-500">*</span></label>
-                        <textarea id="s-why" rows="5" placeholder="Example: I have experience moderating..." class="form-input w-full rounded-3xl p-6"></textarea>
-                    </div>
+                </div>
 
-                    <button onclick="submitStaffForm()" 
-                            class="w-full h-14 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg mt-6 transition-all active:scale-95">
-                        Submit Staff Application
-                    </button>
+                <!-- Français -->
+                <div onclick="selectSubject('francais')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
+                    <div class="w-9 h-9 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center font-bold">F</div>
+                    <div class="font-semibold">Français</div>
+                </div>
+
+                <!-- Histoire -->
+                <div onclick="selectSubject('histoire')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
+                    <div class="w-9 h-9 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center font-bold">H</div>
+                    <div class="font-semibold">Histoire</div>
+                </div>
+
+                <!-- Physique -->
+                <div onclick="selectSubject('physique')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
+                    <div class="w-9 h-9 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center font-bold">P</div>
+                    <div class="font-semibold">Physique-Chimie</div>
+                </div>
+
+                <!-- SVT -->
+                <div onclick="selectSubject('svt')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
+                    <div class="w-9 h-9 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">S</div>
+                    <div class="font-semibold">SVT</div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- CONFIRMATION -->
-    <div id="confirmation-screen" class="page hidden min-h-screen flex items-center justify-center relative">
-        <div class="text-center max-w-md px-6">
-            <div class="text-8xl mb-6">🎉</div>
-            <h2 class="text-4xl font-semibold mb-4">Application Submitted Successfully!</h2>
-            <p class="text-slate-400 text-lg mb-8">
-                Please wait 24-48 hours for a response.<br>
-                <span class="text-red-400 font-medium">Do not ping the owners.</span>
-            </p>
-            <button onclick="navigateTo('home')" 
-                    class="mt-12 px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-3xl font-semibold text-lg">
-                Return to Home
-            </button>
-        </div>
-    </div>
-
-    <!-- Error Modal -->
-    <div id="error-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[110]">
-        <div class="bg-slate-900 border border-red-500/50 rounded-3xl p-8 max-w-sm w-full mx-4 text-center">
-            <div class="text-red-500 text-5xl mb-4">⚠️</div>
-            <h3 class="text-xl font-semibold mb-2 text-white">Missing Information</h3>
-            <p class="text-slate-400 mb-6">Please fill in all required fields before submitting.</p>
-            <button onclick="closeErrorModal()" 
-                    class="px-8 py-3 bg-red-600 hover:bg-red-700 rounded-2xl font-medium text-white transition-all">
-                Got it
-            </button>
-        </div>
-    </div>
-
-    <!-- FAQ Modal -->
-    <div id="faq-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-[100]">
-        <div class="faq-modal bg-slate-900 border border-slate-700 rounded-3xl p-8 max-w-md w-full mx-4">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-xl font-semibold flex items-center gap-2">
-                    <i class="fa-solid fa-circle-info text-blue-400"></i>
-                    Important Information
-                </h3>
-                <button onclick="toggleFAQ()" class="text-slate-400 hover:text-white text-2xl leading-none">×</button>
-            </div>
-            
-            <div class="space-y-4 text-sm text-slate-300">
-                <p><strong>Owners:</strong> Ksoo & PayChris</p>
-                <p><strong>Website Created:</strong> April 2026</p>
-                <p>By submitting an application, you agree to our Terms of Service and Privacy Policy.</p>
-                <p class="text-blue-400 text-xs pt-4 border-t border-slate-700">
-                    All applications are reviewed manually by the Pronto Studio team.
-                </p>
-            </div>
-
-            <button onclick="toggleFAQ()" 
-                    class="mt-8 w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-2xl font-medium">
-                Close
-            </button>
-        </div>
-    </div>
-
-    <script>
-        function navigateTo(page) {
-            document.querySelectorAll('.page').forEach(el => {
-                el.classList.remove('active');
-                el.style.display = 'none';
-            });
-
-            const targetPage = document.getElementById(`page-${page}`);
-            if (targetPage) {
-                targetPage.style.display = 'block';
-                setTimeout(() => targetPage.classList.add('active'), 10);
-            }
-        }
-
-        function toggleFAQ() {
-            document.getElementById('faq-modal').classList.toggle('hidden');
-        }
-
-        function closeErrorModal() {
-            document.getElementById('error-modal').classList.add('hidden');
-        }
-
-        function validateForm(pageId) {
-            const inputs = document.querySelectorAll(`#${pageId} input, #${pageId} textarea`);
-            let isValid = true;
-
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    input.classList.add('error');
-                    isValid = false;
-                } else {
-                    input.classList.remove('error');
-                }
-            });
-
-            if (!isValid) {
-                document.getElementById('error-modal').classList.remove('hidden');
-            }
-            return isValid;
-        }
-
-        async function sendToDiscord(data) {
-            try {
-                await fetch("https://discord.com/api/webhooks/1477127903736234157/mALJT5iM6LOD2lcpXyoWIQDha9FNbL7HjgL0AP8OExi19wNAQWcZ3yoFPd2eW6V_aO1Q", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: data.type === "creator" ? "New Content Creator Application" : "New Staff Application",
-                            color: 0x3b82f6,
-                            fields: Object.keys(data).map(key => ({
-                                name: key.charAt(0).toUpperCase() + key.slice(1),
-                                value: data[key] || "Not provided"
-                            })),
-                            timestamp: new Date().toISOString()
-                        }]
-                    })
-                });
-            } catch(e) {}
-        }
-
-        function submitCreatorForm() {
-            if (!validateForm('page-creator')) return;
-
-            const data = {
-                type: "creator",
-                roblox: document.getElementById("c-roblox").value,
-                discord: document.getElementById("c-discord").value,
-                social: document.getElementById("c-social").value,
-                followers: document.getElementById("c-followers").value,
-                why: document.getElementById("c-why").value
-            };
-
-            sendToDiscord(data);
-            clearForm('page-creator');   // Clear inputs after submit
-            showConfirmation();
-        }
-
-        function submitStaffForm() {
-            if (!validateForm('page-staff')) return;
-
-            const data = {
-                type: "staff",
-                roblox: document.getElementById("s-roblox").value,
-                discord: document.getElementById("s-discord").value,
-                position: document.getElementById("s-position").value,
-                why: document.getElementById("s-why").value
-            };
-
-            sendToDiscord(data);
-            clearForm('page-staff');   // Clear inputs after submit
-            showConfirmation();
-        }
-
-        function clearForm(pageId) {
-            const inputs = document.querySelectorAll(`#${pageId} input, #${pageId} textarea`);
-            inputs.forEach(input => input.value = '');
-        }
-
-        function showConfirmation() {
-            document.querySelectorAll('.page').forEach(el => {
-                el.classList.remove('active');
-                el.style.display = 'none';
-            });
-            
-            const conf = document.getElementById('confirmation-screen');
-            conf.style.display = 'flex';
-            setTimeout(() => conf.classList.add('active'), 10);
-
-            // Auto return to home after 4 seconds
-            setTimeout(() => {
-                navigateTo('home');
-            }, 4000);
-        }
-
-        // Close modals when clicking outside
-        document.getElementById('faq-modal').addEventListener('click', function(e) {
-            if (e.target === this) toggleFAQ();
-        });
-
-        document.getElementById('error-modal').addEventListener('click', function(e) {
-            if (e.target === this) closeErrorModal();
-        });
-
-        window.onload = () => navigateTo('home');
-    </script>
-</body>
-</html>
+            <div class="mt-auto p-4 border-t">
+                <div class="bg-blue-50 rounded-3xl p-5 text-center">
+                    <div class="
