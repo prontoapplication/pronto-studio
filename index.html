@@ -1,608 +1,416 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prépa Brevet 2026 - Quiz Entraînement</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-        
-        :root {
-            --primary: 59 130 246;
-        }
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-        }
-        
-        .title-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .card-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-
-        .quiz-option {
-            transition: all 0.2s ease;
-        }
-        
-        .quiz-option:hover {
-            background-color: rgb(249 250 251);
-        }
-        
-        .selected {
-            background-color: rgb(59 130 246);
-            color: white;
-            border-color: rgb(59 130 246);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision Brevet — 5ème → 3ème</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
+.header{background:#fff;border-bottom:1px solid #e5e5e5;padding:1rem 1.5rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.logo{width:38px;height:38px;background:#534AB7;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.header h1{font-size:18px;font-weight:600;color:#1a1a1a}
+.header .subtitle{font-size:13px;color:#888;margin-left:auto}
+.screen{padding:1.5rem;max-width:900px;margin:0 auto}
+.subjects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:1.5rem}
+.subject-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.25rem;cursor:pointer;transition:transform 0.15s,border-color 0.15s,box-shadow 0.15s}
+.subject-card:hover{transform:translateY(-3px);border-color:#534AB7;box-shadow:0 4px 20px rgba(83,74,183,0.12)}
+.subject-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px}
+.subject-card h3{font-size:15px;font-weight:600;margin-bottom:4px}
+.subject-card p{font-size:12px;color:#888;line-height:1.5}
+.page-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.page-sub{font-size:14px;color:#888;margin-bottom:1.5rem}
+.back-btn{background:#fff;border:1px solid #ddd;border-radius:8px;padding:7px 14px;font-size:14px;cursor:pointer;color:#1a1a1a;display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;transition:background 0.15s}
+.back-btn:hover{background:#f5f5f5}
+.mode-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:640px}
+.mode-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.25rem;cursor:pointer;transition:all 0.15s}
+.mode-card:hover{border-color:#534AB7;box-shadow:0 2px 12px rgba(83,74,183,0.1)}
+.mode-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.mode-card p{font-size:12px;color:#888;line-height:1.5}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:10px;font-weight:600}
+.progress-info{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:8px}
+.progress-bar{background:#eee;border-radius:4px;height:7px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#534AB7,#7F77DD);border-radius:4px;transition:width 0.4s}
+.question-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+.question-type{font-size:11px;font-weight:700;color:#534AB7;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px}
+.question-text{font-size:16px;font-weight:600;line-height:1.6;margin-bottom:1.5rem}
+.options{display:flex;flex-direction:column;gap:9px}
+.option-btn{background:#f8f8f8;border:1px solid #e5e5e5;border-radius:10px;padding:12px 16px;text-align:left;cursor:pointer;font-size:14px;color:#1a1a1a;transition:all 0.15s;display:flex;align-items:center;gap:12px}
+.option-btn:hover:not(:disabled){border-color:#534AB7;background:#EEEDFE}
+.option-btn.correct{border-color:#0F6E56!important;background:#E1F5EE!important;color:#085041!important;font-weight:600}
+.option-btn.wrong{border-color:#993C1D!important;background:#FAECE7!important;color:#4A1B0C!important}
+.option-btn:disabled{cursor:default}
+.option-letter{width:28px;height:28px;border-radius:50%;background:#fff;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all 0.15s}
+.feedback-card{border-radius:12px;padding:1.25rem;margin-top:1rem}
+.feedback-card.correct{background:#E1F5EE;border:1px solid #9FE1CB}
+.feedback-card.wrong{background:#FAECE7;border:1px solid #F5C4B3}
+.feedback-title{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.feedback-body{font-size:13px;line-height:1.7;color:#444}
+.feedback-example{margin-top:10px;background:#fff;border-radius:8px;padding:10px 14px;font-size:13px;border-left:3px solid #534AB7;color:#333}
+.math-display{font-family:monospace;font-size:15px;background:#f8f8f8;padding:8px 14px;border-radius:8px;margin:8px 0;text-align:center;color:#333;border:1px solid #eee}
+.next-btn{width:100%;background:#534AB7;color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;margin-top:1rem;transition:background 0.15s}
+.next-btn:hover{background:#3C3489}
+.score-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:2.5rem;text-align:center;max-width:480px;margin:2rem auto}
+.score-circle{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;margin:0 auto 1.5rem;border:4px solid}
+.stats-row{display:flex;gap:12px;margin:1.5rem 0}
+.stat-box{flex:1;background:#f8f8f8;border-radius:10px;padding:14px;text-align:center}
+.stat-box .val{font-size:24px;font-weight:800}
+.stat-box .lbl{font-size:11px;color:#888;margin-top:2px}
+.restart-btn{background:#534AB7;color:#fff;border:none;border-radius:9px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;margin:5px;transition:background 0.15s}
+.restart-btn:hover{background:#3C3489}
+.restart-btn.outline{background:#fff;color:#534AB7;border:1.5px solid #534AB7}
+.restart-btn.outline:hover{background:#EEEDFE}
+.auto-input-field{background:#f8f8f8;border:1.5px solid #ddd;border-radius:10px;padding:10px 14px;font-size:16px;width:100%;color:#1a1a1a;transition:border-color 0.15s;font-family:inherit}
+.auto-input-field:focus{outline:none;border-color:#534AB7;background:#fff}
+.validate-btn{background:#534AB7;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;white-space:nowrap}
+.validate-btn:hover{background:#3C3489}
+.quiz-container{max-width:680px}
+@media(max-width:600px){
+  .mode-cards{grid-template-columns:1fr}
+  .stats-row{flex-direction:column}
+  .screen{padding:1rem}
+}
+</style>
 </head>
-<body class="bg-gray-50 text-gray-900">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <div class="w-72 bg-white border-r border-gray-200 flex flex-col">
-            <div class="p-6 border-b">
-                <h1 class="title-font text-3xl font-bold tracking-tighter text-blue-600">Brevet 2026</h1>
-                <p class="text-sm text-gray-500 mt-1">Entraînement • 500+ questions</p>
-            </div>
-            
-            <div class="p-4">
-                <div onclick="showHome()" class="flex items-center gap-3 px-4 py-3 rounded-2xl hover:bg-gray-100 cursor-pointer mb-2">
-                    <i class="fa-solid fa-house w-5"></i>
-                    <span class="font-medium">Accueil</span>
-                </div>
-            </div>
+<body>
 
-            <div class="px-4">
-                <h2 class="px-4 text-xs font-semibold text-gray-500 mb-2 mt-6">MATIÈRES</h2>
-                
-                <!-- Math -->
-                <div onclick="selectSubject('math')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
-                    <div class="w-9 h-9 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center font-bold">M</div>
-                    <div>
-                        <div class="font-semibold">Mathématiques</div>
-                        <div class="text-xs text-gray-500">2 catégories</div>
-                    </div>
-                </div>
+<div class="header">
+  <div class="logo"><i class="ti ti-school"></i></div>
+  <div>
+    <h1>Révision Brevet</h1>
+  </div>
+  <span class="subtitle">5ème → 3ème</span>
+</div>
 
-                <!-- Français -->
-                <div onclick="selectSubject('francais')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
-                    <div class="w-9 h-9 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center font-bold">F</div>
-                    <div class="font-semibold">Français</div>
-                </div>
+<div id="main-screen" class="screen">
+  <div class="page-title">Choisir une matière</div>
+  <div class="page-sub">Sélectionne une matière pour commencer tes révisions</div>
+  <div class="subjects-grid" id="subjects-grid"></div>
+</div>
 
-                <!-- Histoire -->
-                <div onclick="selectSubject('histoire')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
-                    <div class="w-9 h-9 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center font-bold">H</div>
-                    <div class="font-semibold">Histoire</div>
-                </div>
+<div id="subject-screen" class="screen" style="display:none"></div>
+<div id="quiz-screen" class="screen" style="display:none"></div>
+<div id="score-screen" class="screen" style="display:none"></div>
 
-                <!-- Physique -->
-                <div onclick="selectSubject('physique')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
-                    <div class="w-9 h-9 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center font-bold">P</div>
-                    <div class="font-semibold">Physique-Chimie</div>
-                </div>
+<script>
+const SUBJECTS=[
+  {id:'math',name:'Mathématiques',emoji:'📐',color:'#EEEDFE',text:'#3C3489',desc:'Pythagore, Thalès, trigonométrie, algèbre...'},
+  {id:'french',name:'Français',emoji:'📝',color:'#E1F5EE',text:'#085041',desc:'Grammaire, rédaction, lecture analytique...'},
+  {id:'histoire',name:'Histoire',emoji:'🏛️',color:'#FAECE7',text:'#4A1B0C',desc:'Guerres mondiales, révolutions, 20e siècle...'},
+  {id:'geo',name:'Géographie',emoji:'🌍',color:'#E6F1FB',text:'#0C447C',desc:'Mondialisation, territoires, développement...'},
+  {id:'svt',name:'SVT',emoji:'🧬',color:'#EAF3DE',text:'#27500A',desc:'Génétique, évolution, corps humain...'},
+  {id:'physique',name:'Physique-Chimie',emoji:'⚗️',color:'#FBEAF0',text:'#4B1528',desc:'Lumière, forces, électricité, chimie...'},
+  {id:'emc',name:'EMC',emoji:'⚖️',color:'#FAEEDA',text:'#412402',desc:'Citoyenneté, démocratie, droits fondamentaux...'},
+];
 
-                <!-- SVT -->
-                <div onclick="selectSubject('svt')" class="group px-4 py-3 flex items-center gap-3 rounded-2xl hover:bg-blue-50 cursor-pointer">
-                    <div class="w-9 h-9 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold">S</div>
-                    <div class="font-semibold">SVT</div>
-                </div>
-            </div>
+const QUESTIONS={
+math:[
+  {type:'automatisme',q:'Calcule : 3² + 4²',a:'25',hint:'3²=9, 4²=16 → 9+16=25',explain:'On calcule chaque carré séparément puis on additionne.',example:'2² + 5² = 4 + 25 = 29'},
+  {type:'automatisme',q:'Simplifie : 15/25',a:'3/5',hint:'Diviser par le PGCD = 5 : 15÷5=3, 25÷5=5',explain:'Pour simplifier une fraction, divise numérateur et dénominateur par leur PGCD.',example:'18/24 → PGCD=6 → 3/4'},
+  {type:'automatisme',q:'Résous : 3x + 6 = 21',a:'x=5',hint:'3x = 21-6 = 15 → x = 15÷3',explain:'On isole x en effectuant les opérations inverses.',example:'2x + 4 = 12 → 2x = 8 → x = 4'},
+  {type:'automatisme',q:'Calcule : (-3) × (-4)',a:'12',hint:'(−) × (−) = (+)',explain:'Le produit de deux nombres négatifs est positif.',example:'(-5) × (-2) = +10'},
+  {type:'automatisme',q:'Quelle est la valeur de π arrondie au centième ?',a:'3.14',hint:'π ≈ 3.14159...',explain:'π est un nombre irrationnel. On utilise souvent 3.14 ou 22/7 comme approximation.',example:'Circonférence = 2πr → avec r=5 : C ≈ 31.4'},
+  {type:'automatisme',q:'Calcule : √144',a:'12',hint:'12 × 12 = 144',explain:'La racine carrée d\'un nombre est le nombre qui, multiplié par lui-même, donne ce nombre.',example:'√25=5, √64=8, √100=10, √169=13'},
+  {type:'automatisme',q:'Donne le résultat de : 2³',a:'8',hint:'2×2×2',explain:'2³ = 2 × 2 × 2 = 8. La puissance indique combien de fois on multiplie le nombre par lui-même.',example:'3³=27, 4³=64, 5²=25'},
+  {type:'automatisme',q:'Quel est le PGCD de 12 et 18 ?',a:'6',hint:'Diviseurs de 12 : 1,2,3,4,6,12. Diviseurs de 18 : 1,2,3,6,9,18',explain:'Le PGCD (Plus Grand Commun Diviseur) est le plus grand entier qui divise les deux nombres.',example:'PGCD(20,30)=10 car 20=2×10 et 30=3×10'},
+  {type:'automatisme',q:'Convertis 2.5 km en mètres',a:'2500',hint:'1 km = 1000 m → 2.5 × 1000',explain:'Pour convertir des km en m, on multiplie par 1000.',example:'3.7 km = 3700 m ; 0.5 km = 500 m'},
+  {type:'automatisme',q:'Calcule 15% de 200',a:'30',hint:'15/100 × 200 = 0.15 × 200',explain:'Pour calculer un pourcentage : multiplier par le pourcentage divisé par 100.',example:'20% de 150 = 0.20 × 150 = 30'},
+  {type:'automatisme',q:'Résous : 5x - 10 = 0',a:'x=2',hint:'5x = 10 → x = 10÷5',explain:'On isole x : 5x = 10 → x = 2.',example:'4x - 8 = 0 → 4x = 8 → x = 2'},
+  {type:'automatisme',q:'Calcule l\'aire d\'un rectangle de 6cm × 4cm',a:'24',hint:'Aire = longueur × largeur',explain:'Aire rectangle = l × L = 6 × 4 = 24 cm²',example:'Rectangle 8×5 : A = 40 cm²'},
+  {type:'mcq',cat:'Théorème de Pythagore',q:'Dans un triangle ABC rectangle en A, AB=3 cm et AC=4 cm. Quelle est la longueur de BC ?',opts:['5 cm','7 cm','12 cm','6 cm'],ans:0,explain:'BC² = AB² + AC² = 9 + 16 = 25 → BC = 5 cm. Le triplet (3,4,5) est le plus classique !',example:'Triangle 6-8-? : BC² = 36+64=100 → BC=10 cm'},
+  {type:'mcq',cat:'Réciproque de Pythagore',q:'Un triangle a des côtés 5, 12 et 13. Est-il rectangle ?',opts:['Oui, car 5²+12²=13²','Non, les côtés ne conviennent pas','Oui, car 5+12=17','On ne peut pas savoir'],ans:0,explain:'5²+12² = 25+144 = 169 = 13². La réciproque de Pythagore confirme que ce triangle est rectangle.',example:'Triplets pythagoriciens : (3,4,5), (5,12,13), (6,8,10), (8,15,17)'},
+  {type:'mcq',cat:'Théorème de Thalès',q:'Dans le triangle ABC, D sur AB et E sur AC, DE∥BC. Si AD=4, DB=2 et AE=6, quelle est EC ?',opts:['3','2','4','6'],ans:0,explain:'Par Thalès : AD/DB = AE/EC → 4/2 = 6/EC → EC = 6×2/4 = 3',example:'Méthode : identifier les segments parallèles, poser le rapport, résoudre.'},
+  {type:'mcq',cat:'Trigonométrie',q:'Dans un triangle rectangle, sin(angle) = opposé / ?',opts:['Hypoténuse','Adjacent','Hypoténuse²','Opposé²'],ans:0,explain:'SOH-CAH-TOA : Sin=Opposé/Hypoténuse, Cos=Adjacent/Hypoténuse, Tan=Opposé/Adjacent',example:'Angle 30° : sin(30°)=0.5. Si hypoténuse=10, côté opposé=5'},
+  {type:'mcq',cat:'Trigonométrie',q:'Un triangle rectangle a un angle de 35° et une hypoténuse de 10 cm. Quel est le côté opposé à 35° ?',opts:['5.74 cm','8.19 cm','7 cm','3.5 cm'],ans:0,explain:'sin(35°) = opposé/10 → opposé = 10×sin(35°) ≈ 5.74 cm',example:'Pour trouver un côté : identifier sin/cos/tan selon les côtés connus.'},
+  {type:'mcq',cat:'Algèbre',q:"Résous : x² - 9 = 0",opts:['x=3 ou x=-3','x=9','x=3','x=0'],ans:0,explain:"x²=9 → x=3 ou x=-3. Une équation du 2e degré peut avoir 2 solutions !",example:'x²-25=0 → x=5 ou x=-5'},
+  {type:'mcq',cat:'Algèbre',q:'Développe : (x+3)(x-2)',opts:['x²+x-6','x²-x-6','x²+x+6','x²-6'],ans:0,explain:'(x+3)(x-2) = x²-2x+3x-6 = x²+x-6 (double distributivité)',example:'(a+b)(c+d)=ac+ad+bc+bd. Mémo : FOIL'},
+  {type:'mcq',cat:'Identités remarquables',q:"Laquelle est une identité remarquable correcte ?",opts:['(a+b)²=a²+2ab+b²','(a+b)²=a²+b²','(a-b)²=a²+b²','(a+b)(a-b)=a²+b²'],ans:0,explain:'Les 3 identités : (a+b)²=a²+2ab+b², (a-b)²=a²-2ab+b², (a+b)(a-b)=a²-b²',example:'(x+5)²=x²+10x+25'},
+  {type:'mcq',cat:'Géométrie',q:"Quelle est l'aire d'un disque de rayon 7 cm ?",opts:['49π cm²','14π cm²','7π cm²','98π cm²'],ans:0,explain:"Aire = πr² = π×7² = 49π ≈ 153.94 cm²",example:"Rayon 5 : A=25π≈78.5 cm²"},
+  {type:'mcq',cat:'Géométrie',q:'Le volume dune sphère de rayon r est :',opts:['(4/3)πr³','πr²h','(1/3)πr²h','2πr²'],ans:0,explain:'V=(4/3)πr³. Pour r=3 : V=36π≈113.1 cm³',example:'Rayon 6 : V=288π≈904.8 cm³'},
+  {type:'mcq',cat:'Probabilités',q:'Urne : 3 rouges, 5 bleues, 2 vertes. Probabilité de tirer rouge ?',opts:['3/10','1/3','3/5','1/10'],ans:0,explain:'P(rouge)=3/10=0.3',example:'P(bleu)=5/10=1/2. Somme de toutes les probabilités = 1'},
+  {type:'mcq',cat:'Statistiques',q:'La médiane de [2, 5, 7, 10, 14] est :',opts:['7','5','10','7.6'],ans:0,explain:'Médiane = valeur du milieu (3e sur 5) = 7',example:'[3,6,8,11,15] → médiane=8. Nb pair : moyenne des 2 du milieu'},
+  {type:'mcq',cat:'Fonctions',q:'f(x)=2x+3. Quelle est f(4) ?',opts:['11','14','10','8'],ans:0,explain:'f(4)=2×4+3=11',example:'f(0)=3 (ordonnée à l\'origine)'},
+  {type:'mcq',cat:'Fonctions',q:"La courbe de f(x)=ax passe toujours par :",opts:["L'origine (0,0)","(1,0)","(0,1)","(a,a)"],ans:0,explain:"f(0)=a×0=0 → passe par (0,0)",example:"f(x)=3x → passe par (0,0) et (1,3)"},
+  {type:'mcq',cat:'Proportionnalité',q:"4 stylos coûtent 6€. Combien coûtent 10 stylos ?",opts:['15€','12€','14€','16€'],ans:0,explain:"Prix unitaire=1.50€ → 10×1.50=15€",example:"Règle de trois : 4→6€, 10→? = 10×6/4=15€"},
+  {type:'mcq',cat:'Géométrie',q:'Quelle est la formule de la circonférence d\'un cercle ?',opts:['2πr','πr²','2πr²','πd²'],ans:0,explain:'Circonférence = 2πr = πd (d = diamètre = 2r)',example:'r=5 : C=2π×5=10π≈31.4 cm'},
+  {type:'mcq',cat:'Nombres relatifs',q:'Calcule : -8 + 5 - (-3)',opts:['0','6','-6','10'],ans:0,explain:'-8+5-(-3)=-8+5+3=-8+8=0. Soustraire un négatif revient à ajouter.',example:'-10+4-(-6)=-10+4+6=0'},
+  {type:'mcq',cat:'Fractions',q:'Calcule : 1/3 + 1/4',opts:['7/12','2/7','1/7','5/12'],ans:0,explain:'Dénominateur commun 12 : 4/12 + 3/12 = 7/12',example:'1/2+1/3 = 3/6+2/6 = 5/6'},
+],
 
-            <div class="mt-auto p-4 border-t">
-                <div class="bg-blue-50 rounded-3xl p-5 text-center">
-                    <div class="text-blue-600 font-medium">Progression</div>
-                    <div id="progress-text" class="text-4xl font-bold text-blue-600 my-2">0%</div>
-                    <div class="h-2 bg-blue-100 rounded-full overflow-hidden">
-                        <div id="progress-bar" class="h-full w-0 bg-blue-600 rounded-full transition-all"></div>
-                    </div>
-                    <div class="text-xs text-gray-500 mt-2">Questions réussies aujourd'hui</div>
-                </div>
-            </div>
-        </div>
+french:[
+  {type:'mcq',cat:'Grammaire',q:'Quel est le COD dans : "Marie mange une pomme" ?',opts:['Une pomme','Marie','Mange','Aucun'],ans:0,explain:'COD : "Mange quoi ?" → une pomme. Réponse directe au verbe sans préposition.',example:'"Il lit un livre" → COD=un livre'},
+  {type:'mcq',cat:'Conjugaison',q:'Quel est le temps de : "Nous avions mangé" ?',opts:['Plus-que-parfait','Imparfait','Passé composé','Passé simple'],ans:0,explain:'Auxiliaire à l\'imparfait + participe passé = plus-que-parfait.',example:'"Il était parti avant que j\'arrive" → était parti = plus-que-parfait'},
+  {type:'mcq',cat:'Conjugaison',q:'"Je chantais" est à quel temps ?',opts:['Imparfait','Passé simple','Conditionnel','Présent'],ans:0,explain:'L\'imparfait exprime une action passée répétée, habituelle ou décrivant le contexte. Terminaison en -ais, -ais, -ait, -ions, -iez, -aient.',example:'"Quand j\'étais enfant, je jouais souvent dehors"'},
+  {type:'mcq',cat:'Figures de style',q:'Quelle figure est : "Il pleut des cordes" ?',opts:['Hyperbole','Métaphore','Comparaison','Oxymore'],ans:0,explain:"L'hyperbole = exagération pour effet. \"Des cordes\" exagère l'intensité.",example:'"Je meurs de faim", "Il court comme le vent"'},
+  {type:'mcq',cat:'Figures de style',q:'"La lune est un astre d\'argent" — quelle figure ?',opts:['Métaphore','Comparaison','Allitération','Personnification'],ans:0,explain:'Métaphore : assimile directement sans "comme". Comparaison utiliserait "comme" ou "tel".',example:'Méta: "La vie est un voyage". Compar: "La vie est COMME un voyage"'},
+  {type:'mcq',cat:'Figures de style',q:'Qu\'est-ce qu\'un oxymore ?',opts:['Association de deux termes contradictoires','Répétition d\'un son','Exagération','Comparaison sans outil'],ans:0,explain:'Oxymore = deux mots de sens opposés placés ensemble pour créer un effet poétique.',example:'"Cette obscure clarté" (Corneille), "un silence assourdissant"'},
+  {type:'mcq',cat:'Types de textes',q:'Un texte argumentatif vise à :',opts:['Convaincre le lecteur','Raconter une histoire','Décrire un lieu','Expliquer un phénomène'],ans:0,explain:'Texte argumentatif : thèse + arguments + exemples pour convaincre.',example:'Structure : intro → 2-3 arguments → conclusion/réfutation'},
+  {type:'mcq',cat:'Rédaction',q:'Quelle est la structure d\'un développement construit ?',opts:['Intro + 2-3 parties + conclusion','Seulement une intro','Un paragraphe de description','Aucune structure fixe'],ans:0,explain:'Développement construit = intro (pose le sujet) + parties (avec arguments+exemples) + conclusion (répond à la problématique).',example:'"Nous verrons d\'abord... puis... enfin..."'},
+  {type:'mcq',cat:'Orthographe',q:'Accord du participe passé : "Les lettres que j\'ai ___ (écrire)"',opts:['Écrites','Écrit','Écrits','Écrite'],ans:0,explain:'Avec avoir, le PP s\'accorde avec le COD si celui-ci est AVANT le verbe. "que"=les lettres (fém. plur.) est avant → écrites.',example:'"La chanson que j\'ai chantée" → COD fém. avant → -e'},
+  {type:'mcq',cat:'Lecture',q:'Qu\'est-ce qu\'un narrateur homodiégétique ?',opts:['Un narrateur qui participe à l\'histoire (je)','Un narrateur externe omniscient','Un personnage secondaire','Un narrateur invisible'],ans:0,explain:'Homodiégétique = présent dans l\'histoire, utilise "je". Hétérodiégétique = extérieur, utilise "il/elle".',example:'"Je marchais dans la rue..." = homo. "Paul marchait..." = hétéro'},
+  {type:'mcq',cat:'Poésie',q:'Combien de syllabes a un alexandrin ?',opts:['12','8','10','14'],ans:0,explain:"L'alexandrin = vers de 12 syllabes, pilier de la poésie classique.",example:'"Je le vis, je rougis, je pâlis à sa vue" (Racine, Phèdre)'},
+  {type:'mcq',cat:'Vocabulaire',q:'Quel est l\'antonyme de "bénévole" ?',opts:['Salarié','Volontaire','Altruiste','Généreux'],ans:0,explain:'Bénévole = travaille sans salaire, de façon volontaire. Antonyme = salarié (qui est payé).',example:'"Elle est bénévole dans une association" ≠ "Il est salarié dans une entreprise"'},
+  {type:'mcq',cat:'Grammaire',q:'Quel est le sujet dans : "Pendant l\'orage, les enfants tremblaient" ?',opts:['Les enfants','L\'orage','Pendant','Tremblaient'],ans:0,explain:'Le sujet = celui/ce qui fait l\'action. "Qui est-ce qui tremblait ?" → les enfants.',example:'"La pluie tombe" → sujet = la pluie'},
+  {type:'mcq',cat:'Conjugaison',q:'Au futur simple, "nous allons" devient :',opts:['Nous irons','Nous allerons','Nous ailerons','Nous allirons'],ans:0,explain:'Aller au futur est irrégulier : ir- (radical) + -ons = irons. Comme venir→viendrons, faire→ferons.',example:'Je irai, tu iras, il ira, nous irons, vous irez, ils iront'},
+  {type:'mcq',cat:'Types de textes',q:'Qu\'est-ce qu\'une thèse dans un texte argumentatif ?',opts:['L\'opinion principale défendue par l\'auteur','Un exemple','La conclusion','Une anecdote'],ans:0,explain:'La thèse = position/opinion que l\'auteur défend. Les arguments soutiennent la thèse, les exemples illustrent les arguments.',example:'Thèse: "Le sport est bénéfique pour la santé" → arguments → exemples'},
+],
 
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col">
-            <!-- Top Bar -->
-            <div class="h-16 border-b bg-white px-8 flex items-center justify-between">
-                <div id="page-title" class="font-semibold text-xl">Accueil</div>
-                <div class="flex items-center gap-6">
-                    <div class="flex items-center gap-2 bg-gray-100 rounded-full px-4 py-1.5 text-sm">
-                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span>500+ questions prêtes</span>
-                    </div>
-                    <button onclick="startRandomQuiz()" 
-                            class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-2xl font-medium transition">
-                        <i class="fa-solid fa-dice"></i>
-                        Quiz aléatoire
-                    </button>
-                </div>
-            </div>
+histoire:[
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'En quelle année a commencé la Première Guerre Mondiale ?',opts:['1914','1918','1912','1916'],ans:0,explain:'La PGM débute le 28 juillet 1914, après l\'assassinat de l\'archiduc François-Ferdinand à Sarajevo le 28 juin 1914.',example:'1914 début → 1916 Verdun → 1917 USA entrent → 11 nov. 1918 armistice'},
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Qu\'est-ce que la guerre des tranchées ?',opts:['Guerre de position où soldats vivent dans des fossés creusés','Guerre navale','Guerre aérienne','Guerre coloniale'],ans:0,explain:'Guerre des tranchées = guerre de position. Les "poilus" vivaient dans des tranchées. Conditions terribles : boue, gaz, obus, rats.',example:'Front Ouest = ligne de tranchées Belgique→Suisse. Verdun (1916) : 700 000 morts en 10 mois'},
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Le traité de Versailles (1919) imposait à l\'Allemagne :',opts:['Réparations, perte de territoires, limitation de l\'armée','Alliance avec la France','Partage de colonies','Aucune condition'],ans:0,explain:'Traité de Versailles : clause de culpabilité (art.231), 132 milliards de marks-or, perte d\'Alsace-Lorraine, armée limitée à 100 000 hommes.',example:'Ces conditions → ressentiment → montée du nazisme'},
+  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Qui était Adolf Hitler ?',opts:['Chancelier puis Führer d\'Allemagne nazie','Président de Vichy','Général américain','Chef soviétique'],ans:0,explain:'Hitler, chef du NSDAP (parti nazi), chancelier en 1933, Führer en 1934. Régime totalitaire et raciste.',example:'Totalitarisme nazi : parti unique, propagande, Gestapo, antisémitisme'},
+  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Qu\'est-ce que la Shoah ?',opts:['Extermination systématique des Juifs par les nazis','Une bataille décisive','Le débarquement allié','L\'armistice de 1945'],ans:0,explain:'La Shoah = génocide de 6 millions de Juifs. Solution finale décidée à Wannsee (1942) : déportation vers camps d\'extermination (Auschwitz, Treblinka...).',example:'Étapes : lois Nuremberg (1935) → Kristallnacht (1938) → ghettos → camps'},
+  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Le débarquement du 6 juin 1944 a eu lieu en :',opts:['Normandie','Bretagne','Provence','Alsace'],ans:0,explain:'D-Day = opération Overlord. 150 000+ soldats alliés sur 5 plages (Utah, Omaha, Gold, Juno, Sword). Tournant décisif.',example:'Paris libéré le 25 août 1944. Omaha Beach = plage américaine la plus meurtrière'},
+  {type:'mcq',cat:'Révolution française',q:'En quelle année est prise la Bastille ?',opts:['1789','1793','1776','1815'],ans:0,explain:'Le 14 juillet 1789 : prise de la Bastille, symbole de l\'absolutisme royal. Début de la Révolution française.',example:'1789→DDHC→1792 Ire République→1793 Terreur→1799 Bonaparte'},
+  {type:'mcq',cat:'20e siècle',q:'Qu\'est-ce que la guerre froide ?',opts:['Tension USA-URSS sans conflit direct (1947-1991)','Guerre dans les pays nordiques','La Guerre de Corée','Conflit France-Allemagne'],ans:0,explain:'Guerre Froide = rivalité idéologique USA (capitalisme) vs URSS (communisme) sans affrontement direct.',example:'Berlin (1948-1949), Mur de Berlin (1961-89), crise Cuba (1962)'},
+  {type:'mcq',cat:'20e siècle',q:'Quand tombe le mur de Berlin ?',opts:['1989','1991','1979','1968'],ans:0,explain:'Mur de Berlin tombe le 9 novembre 1989. Séparait Berlin-Ouest (capitaliste) de Berlin-Est (communiste) depuis 1961.',example:'1961 construction → 1989 chute → 1990 réunification → 1991 dissolution URSS'},
+  {type:'mcq',cat:'20e siècle',q:'Qu\'est-ce que le régime de Vichy ?',opts:['Gouvernement français collaborant avec l\'Allemagne nazie (1940-1944)','Un gouvernement républicain','Un gouvernement de résistance','Un gouvernement provisoire'],ans:0,explain:'Régime de Vichy : après la défaite de 1940, le maréchal Pétain signe l\'armistice et collabore avec l\'Allemagne. Fin de la IIIe République.',example:'De Gaulle à Londres fonde la France Libre le 18 juin 1940 (Appel)'},
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Qu\'est-ce qu\'un "poilu" ?',opts:['Surnom des soldats français de la PGM','Un général','Un espion','Un civil'],ans:0,explain:'"Poilu" = surnom affectueux des soldats français pendant la PGM. Ils vivaient dans les tranchées dans des conditions extrêmes.',example:'Symbole de la résistance et du sacrifice. Monument aux morts dans chaque commune française.'},
+  {type:'mcq',cat:'Histoire des arts',q:'Qui a peint "Guernica" et pourquoi ?',opts:['Picasso, en réponse au bombardement de Guernica en 1937','Dali, en hommage à la paix','Monet, pendant la PGM','Warhol, au Pop Art'],ans:0,explain:'Guernica (1937) = œuvre de Pablo Picasso dénonçant le bombardement de la ville basque de Guernica par les forces nazies pendant la guerre d\'Espagne.',example:'Chef-d\'œuvre du cubisme engagé. Symbole universel contre la guerre et la barbarie.'},
+],
 
-            <!-- Content Area -->
-            <div id="main-content" class="flex-1 p-8 overflow-auto">
-                <!-- Home View -->
-                <div id="home-view">
-                    <h2 class="text-4xl font-bold title-font tracking-tight mb-2">Prêt pour le Brevet ?</h2>
-                    <p class="text-gray-600 text-lg">Entraîne-toi avec des questions réalistes du Brevet 2026</p>
-                    
-                    <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
-                        <div onclick="selectSubject('math')" class="card-hover bg-white border border-gray-200 rounded-3xl p-8 cursor-pointer">
-                            <div class="flex justify-between items-start">
-                                <div class="text-5xl">📐</div>
-                                <div class="text-right">
-                                    <div class="font-mono text-sm text-blue-500">120 questions</div>
-                                </div>
-                            </div>
-                            <div class="mt-8">
-                                <div class="font-bold text-2xl">Mathématiques</div>
-                                <div class="text-sm text-gray-500">Automatismes • Géométrie • Algèbre</div>
-                            </div>
-                        </div>
-                        
-                        <div onclick="selectSubject('francais')" class="card-hover bg-white border border-gray-200 rounded-3xl p-8 cursor-pointer">
-                            <div class="flex justify-between items-start">
-                                <div class="text-5xl">📖</div>
-                                <div class="text-right">
-                                    <div class="font-mono text-sm text-purple-500">90 questions</div>
-                                </div>
-                            </div>
-                            <div class="mt-8">
-                                <div class="font-bold text-2xl">Français</div>
-                                <div class="text-sm text-gray-500">Grammaire • Compréhension • Rédaction</div>
-                            </div>
-                        </div>
-                        
-                        <div onclick="selectSubject('histoire')" class="card-hover bg-white border border-gray-200 rounded-3xl p-8 cursor-pointer">
-                            <div class="flex justify-between items-start">
-                                <div class="text-5xl">🏛️</div>
-                                <div class="text-right">
-                                    <div class="font-mono text-sm text-amber-500">100 questions</div>
-                                </div>
-                            </div>
-                            <div class="mt-8">
-                                <div class="font-bold text-2xl">Histoire-Géo</div>
-                                <div class="text-sm text-gray-500">XXe siècle • Institutions</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+geo:[
+  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce que la mondialisation ?',opts:['Interdépendance croissante des économies et sociétés mondiales','L\'uniformisation des cultures','La création de l\'ONU','La décolonisation'],ans:0,explain:'Mondialisation = intensification des échanges (biens, services, capitaux, personnes, idées) à l\'échelle mondiale.',example:'FMN (firmes multinationales) comme Apple, Toyota : production dans plusieurs pays'},
+  {type:'mcq',cat:'Développement',q:'Qu\'est-ce que l\'IDH ?',opts:['Indice de Développement Humain','Indice de Déforestation Habituelle','Indicateur de Dette des États','Indice de Dépense des Ménages'],ans:0,explain:'IDH (0 à 1) : espérance de vie + éducation + revenu/habitant. Créé par l\'ONU.',example:'Norvège 0.96 (très élevé), Burundi 0.43 (faible)'},
+  {type:'mcq',cat:'Population',q:'Combien d\'habitants compte la Terre environ ?',opts:['8 milliards','10 milliards','5 milliards','7 milliards'],ans:0,explain:'En 2024, ~8 milliards d\'habitants. Prévision : 9-10 milliards en 2050.',example:'Asie = 60% de la population. Chine et Inde > 1.4 milliard chacune'},
+  {type:'mcq',cat:'Environnement',q:'Qu\'est-ce que le développement durable ?',opts:['Développement répondant aux besoins présents sans compromettre l\'avenir','Croissance économique maximale','Suppression de l\'industrie','Aide aux pays pauvres'],ans:0,explain:'Définition Brundtland (1987). 3 piliers : économique, social, environnemental.',example:'Énergies renouvelables, agriculture bio, transports en commun'},
+  {type:'mcq',cat:'Territoires français',q:'Combien de DROM possède la France ?',opts:['5','3','7','4'],ans:0,explain:'5 DROM : Guadeloupe, Martinique, Guyane, La Réunion, Mayotte. Régions françaises à part entière.',example:'La Martinique est un DROM depuis 1946. Applique le droit français avec adaptations fiscales.'},
+  {type:'mcq',cat:'Espaces urbains',q:'Qu\'appelle-t-on une mégalopole ?',opts:['Regroupement de mégapoles formant un couloir urbain continu','Ville de plus d\'un million d\'habitants','Capitale d\'un pays','Quartier d\'affaires'],ans:0,explain:'Mégalopole = ensemble de villes géantes reliées. Ex : BosWash (Boston-Washington), Tokaïdo (Japon).',example:'Village < bourg < ville < métropole < mégapole (>10M) < mégalopole'},
+  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce qu\'une FTN (firme transnationale) ?',opts:['Entreprise qui produit et vend dans plusieurs pays','Une organisation internationale','Une banque mondiale','Un syndicat international'],ans:0,explain:'FTN (aussi FMN) = entreprise dont l\'activité s\'étend sur plusieurs pays. Siège dans un pays, filiales ailleurs.',example:'Toyota : conçu au Japon, assemblé en France, vendu partout. Même chose pour Apple, Nestlé...'},
+  {type:'mcq',cat:'Géographie physique',q:'Qu\'est-ce que le réchauffement climatique ?',opts:['Augmentation de la température moyenne de la Terre due aux GES','Un phénomène naturel cyclique uniquement','La pollution de l\'air uniquement','Une théorie non prouvée'],ans:0,explain:'Le réchauffement climatique est causé par l\'augmentation des gaz à effet de serre (CO2, méthane...) due aux activités humaines.',example:'Conséquences : fonte des glaces, montée des eaux, événements climatiques extrêmes'},
+  {type:'mcq',cat:'Inégalités mondiales',q:'Qu\'est-ce que le "Nord" et le "Sud" en géographie ?',opts:['Distinction entre pays développés (Nord) et pays en développement (Sud)','Une division géographique stricte','Les pays froids vs pays chauds','Les pays producteurs vs consommateurs'],ans:0,explain:'Nord = pays riches/développés (Europe, Amérique du Nord, Japon...). Sud = pays en développement (Afrique, grande partie Asie, Amérique latine). Ce n\'est pas une frontière géographique stricte.',example:'Australie et Nouvelle-Zélande sont dans le "Nord" malgré leur position.'},
+],
 
-                <!-- Subject View -->
-                <div id="subject-view" class="hidden">
-                    <button onclick="goBack()" class="flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6">
-                        <i class="fa-solid fa-arrow-left"></i> Retour
-                    </button>
-                    
-                    <div id="subject-header" class="mb-8"></div>
-                    
-                    <div id="categories-container" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
-                </div>
+svt:[
+  {type:'mcq',cat:'Génétique',q:'Qu\'est-ce qu\'un gène ?',opts:['Séquence d\'ADN portant une information héréditaire','Une protéine','Une cellule','Un organe'],ans:0,explain:'Un gène = séquence d\'ADN qui code pour une protéine ou caractéristique. Portés par les chromosomes.',example:'Gène couleur des yeux, des cheveux... ~20 000 gènes chez l\'humain'},
+  {type:'mcq',cat:'Génétique',q:'Combien de chromosomes a une cellule humaine normale ?',opts:['46 (23 paires)','48','23','44'],ans:0,explain:'46 chromosomes (23 paires). Gamètes = 23 (haploïdes). Trisomie 21 = 47 chromosomes.',example:'23 chr maternels + 23 paternels = 46. Chromosomes sexuels : XX (femme), XY (homme)'},
+  {type:'mcq',cat:'Évolution',q:'Qu\'est-ce que la sélection naturelle ?',opts:['Les individus les mieux adaptés survivent et se reproduisent davantage','Modification volontaire des espèces','Extinction des espèces','Domestication des animaux'],ans:0,explain:'Darwin (1859) : variations avantageuses → meilleure survie → reproduction → transmission. Sur millions d\'années → nouvelles espèces.',example:'Phalène du bouleau : forme sombre favorisée par l\'industrialisation (camouflage)'},
+  {type:'mcq',cat:'Corps humain',q:'Quel organe produit de l\'insuline ?',opts:['Le pancréas','Le foie','Les reins','L\'estomac'],ans:0,explain:'Pancréas → insuline (cellules β). L\'insuline permet aux cellules d\'absorber le glucose. Défaut → diabète.',example:'Après repas : glycémie↑ → pancréas sécrète insuline → cellules absorbent glucose → glycémie normale'},
+  {type:'mcq',cat:'Écosystèmes',q:'Qu\'est-ce qu\'une chaîne alimentaire ?',opts:['Relation de nutrition entre êtres vivants','Réseau de supermarchés','Liste des espèces d\'un milieu','Cycle de l\'eau'],ans:0,explain:'Chaîne : herbe→lapin→renard→décomposeurs. La matière/énergie circule du producteur vers les consommateurs.',example:'Chaîne marine : phytoplancton→crevette→sardine→thon→requin'},
+  {type:'mcq',cat:'Microbiologie',q:'Quelle est la différence entre bactérie et virus ?',opts:['Bactérie = cellule vivante, virus ≠ cellule','Aucune différence','Le virus est plus grand','La bactérie ne cause pas de maladie'],ans:0,explain:'Bactérie = être unicellulaire (procaryote) → antibiotiques. Virus = fragment ADN/ARN + capside → antiviraux/vaccins.',example:'Bactéries : angine, tuberculose. Virus : grippe, COVID, rhume'},
+  {type:'mcq',cat:'Reproduction',q:'Qu\'est-ce que la méiose ?',opts:['Division cellulaire produisant des gamètes à 23 chromosomes','Division cellulaire normale','Fusion de deux cellules','Mort cellulaire programmée'],ans:0,explain:'Méiose = division spéciale qui produit les gamètes (spermatozoïdes, ovules) avec 23 chromosomes au lieu de 46.',example:'Méiose → gamètes (23 chr). Fécondation : 23+23=46 → cellule-œuf normale'},
+  {type:'mcq',cat:'Immunologie',q:'Quel est le rôle des anticorps ?',opts:['Neutraliser des antigènes (agents pathogènes)','Produire de l\'insuline','Transporter l\'oxygène','Digérer les aliments'],ans:0,explain:'Anticorps = protéines produites par les lymphocytes B. Ils reconnaissent et neutralisent les antigènes (virus, bactéries...)',example:'Vaccination : on introduit un antigène affaibli → le corps produit des anticorps → immunité'},
+  {type:'mcq',cat:'Nutrition',q:'Quel nutriment est la principale source d\'énergie du corps ?',opts:['Les glucides (sucres)','Les lipides (graisses)','Les protéines','Les vitamines'],ans:0,explain:'Les glucides sont la principale source d\'énergie rapide. Le glucose est le carburant préféré des cellules, notamment du cerveau.',example:'Pain, riz, pâtes, sucre = glucides. Le glycogène stocké dans le foie est une réserve de glucose.'},
+],
 
-                <!-- Quiz View -->
-                <div id="quiz-view" class="hidden">
-                    <div class="flex justify-between items-center mb-8">
-                        <div class="flex items-center gap-4">
-                            <div id="quiz-subject-badge" class="px-5 py-1.5 rounded-3xl text-sm font-medium"></div>
-                            <div id="quiz-progress" class="font-mono text-sm text-gray-500">1/10</div>
-                        </div>
-                        <button onclick="endQuiz()" 
-                                class="text-red-500 hover:text-red-600 flex items-center gap-2 text-sm font-medium">
-                            <i class="fa-solid fa-xmark"></i> Quitter
-                        </button>
-                    </div>
-                    
-                    <div id="question-container" class="max-w-2xl mx-auto"></div>
-                    
-                    <div class="flex justify-between mt-10 max-w-2xl mx-auto">
-                        <button onclick="prevQuestion()" 
-                                id="prev-btn"
-                                class="hidden px-6 py-3 border border-gray-300 rounded-2xl font-medium">Précédent</button>
-                        <button onclick="nextQuestion()" 
-                                id="next-btn"
-                                class="px-8 py-3 bg-blue-600 text-white rounded-2xl font-medium ml-auto">Suivant</button>
-                    </div>
-                </div>
+physique:[
+  {type:'mcq',cat:'Lumière et optique',q:'Quelle est la vitesse de la lumière dans le vide ?',opts:['300 000 km/s','150 000 km/s','3 000 km/s','30 000 km/s'],ans:0,explain:'c ≈ 3×10⁸ m/s = 300 000 km/s. Vitesse maximale dans l\'univers (Einstein).',example:'1 an-lumière ≈ 9 461 milliards de km. Soleil→Terre : 8 minutes'},
+  {type:'mcq',cat:'Forces et mouvement',q:'La pesanteur sur Terre est approximativement :',opts:['10 N/kg','9.81 N/kg','1 N/kg','100 N/kg'],ans:0,explain:'g ≈ 9.81 N/kg (ou 10 arrondi). Poids P = m × g.',example:'Sur la Lune g≈1.6 N/kg → astronaute 70kg pèse 112N vs 700N sur Terre'},
+  {type:'mcq',cat:'Électricité',q:'Quelle est la loi d\'Ohm ?',opts:['U = R × I','U = I / R','R = U × I','I = U × R'],ans:0,explain:'U (Volts) = R (Ohms) × I (Ampères). Loi fondamentale des circuits électriques.',example:'R=10Ω, I=2A → U=20V. U=12V, R=4Ω → I=3A'},
+  {type:'mcq',cat:'Chimie',q:'L\'eau (H₂O) est composée de :',opts:['2 atomes H et 1 atome O','1 atome H et 2 atomes O','2 atomes H et 2 atomes O','1 atome de chaque'],ans:0,explain:'H₂O : 2 hydrogènes + 1 oxygène. Le 2 en indice = 2 atomes d\'hydrogène.',example:'CO₂=1C+2O. NaCl=1Na+1Cl. CH₄=1C+4H'},
+  {type:'mcq',cat:'Chimie',q:'Lors d\'une réaction chimique, la masse :',opts:['Se conserve (Lavoisier)','Augmente','Diminue','Peut varier'],ans:0,explain:'Loi de conservation de la masse (Lavoisier, 1789) : "Rien ne se perd, rien ne se crée, tout se transforme".',example:'H₂+O→H₂O : 2g+16g=18g. Même masse avant et après'},
+  {type:'mcq',cat:'Énergie',q:'L\'unité de l\'énergie dans le SI est :',opts:['Le joule (J)','Le watt (W)','Le newton (N)','L\'ampère (A)'],ans:0,explain:'Énergie en joules (J). Watt = puissance (W=J/s). P=E/t.',example:'Ampoule 60W pendant 1h : E=60×3600=216 000 J'},
+  {type:'mcq',cat:'Lumière et optique',q:'La lumière blanche est composée de :',opts:['Toutes les couleurs du spectre visible','Uniquement du blanc','Des rayons X','De la chaleur'],ans:0,explain:'La lumière blanche = mélange de toutes les couleurs visibles (rouge→violet). Le prisme décompose la lumière en arc-en-ciel.',example:'Arc-en-ciel = décomposition de la lumière blanche par les gouttes d\'eau'},
+  {type:'mcq',cat:'Forces et mouvement',q:'Quelle est la formule du poids ?',opts:['P = m × g','P = m / g','P = m + g','P = g / m'],ans:0,explain:'Poids P (en Newtons) = masse m (en kg) × intensité de la pesanteur g (en N/kg).',example:'Objet de 5 kg sur Terre : P = 5 × 10 = 50 N'},
+  {type:'mcq',cat:'Chimie',q:'Qu\'est-ce qu\'un atome ?',opts:['La plus petite particule d\'un élément chimique','Une molécule','Un composé chimique','Un gaz'],ans:0,explain:'L\'atome = plus petite partie d\'un élément. Il est composé d\'un noyau (protons+neutrons) entouré d\'électrons.',example:'Atome H : 1 proton + 1 électron. Atome O : 8 protons + 8 électrons'},
+],
 
-                <!-- Results View -->
-                <div id="results-view" class="hidden max-w-2xl mx-auto">
-                    <div class="text-center py-12">
-                        <div id="score-circle" class="mx-auto w-48 h-48 rounded-full border-8 border-blue-100 flex items-center justify-center text-6xl font-bold"></div>
-                        <h2 class="text-3xl font-bold mt-6" id="results-title"></h2>
-                        <p id="results-subtitle" class="text-gray-500 mt-2"></p>
-                        
-                        <div class="mt-10 grid grid-cols-3 gap-6 text-center">
-                            <div>
-                                <div class="text-3xl font-bold text-green-600" id="correct-count">0</div>
-                                <div class="text-sm text-gray-500">Correctes</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold text-red-600" id="wrong-count">0</div>
-                                <div class="text-sm text-gray-500">Erreurs</div>
-                            </div>
-                            <div>
-                                <div class="text-3xl font-bold text-blue-600" id="time-spent">0s</div>
-                                <div class="text-sm text-gray-500">Temps</div>
-                            </div>
-                        </div>
-                        
-                        <button onclick="restartSameQuiz()" 
-                                class="mt-12 px-10 py-4 bg-blue-600 text-white rounded-3xl font-medium flex items-center gap-3 mx-auto">
-                            <i class="fa-solid fa-rotate"></i>
-                            Recommencer ce quiz
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+emc:[
+  {type:'mcq',cat:'Citoyenneté',q:'À quel âge peut-on voter en France ?',opts:['18 ans','21 ans','16 ans','20 ans'],ans:0,explain:'Majorité électorale à 18 ans depuis 1974 (avant : 21 ans). Droit civique fondamental.',example:'Scrutin proportionnel, majoritaire, référendum... différentes formes de vote'},
+  {type:'mcq',cat:'Institutions',q:'Qui est le chef de l\'État en France ?',opts:['Le Président de la République','Le Premier ministre','Le Président du Sénat','Le Garde des Sceaux'],ans:0,explain:'Président = élu au suffrage universel direct pour 5 ans (quinquennat). Nomme le Premier ministre.',example:'Pouvoirs : dissolution AN, référendum, article 16 (pouvoirs exceptionnels)'},
+  {type:'mcq',cat:'Droits fondamentaux',q:'Quel texte proclame les droits fondamentaux en France depuis 1789 ?',opts:['Déclaration des Droits de l\'Homme et du Citoyen','La Constitution','Le Code civil','La Charte de l\'environnement'],ans:0,explain:'DDHC du 26 août 1789 : liberté, égalité, fraternité. 17 articles. Intégrée au bloc de constitutionnalité.',example:'Article 1 : "Les hommes naissent libres et égaux en droits". Art.11 : liberté d\'expression'},
+  {type:'mcq',cat:'Démocratie',q:'Qu\'est-ce que la séparation des pouvoirs ?',opts:['Exécutif, législatif et judiciaire sont distincts','Le pouvoir partagé entre régions','La démocratie directe','Le fédéralisme'],ans:0,explain:'Montesquieu (1748) : séparer les pouvoirs pour éviter la tyrannie.',example:'Sans séparation = dictature. Chaque pouvoir contrôle les autres (checks and balances)'},
+  {type:'mcq',cat:'Laïcité',q:'La laïcité en France signifie :',opts:['Neutralité de l\'État vis-à-vis des religions','Interdiction des religions','Obligation de croire en Dieu','Fusion État-Église'],ans:0,explain:'Loi de 1905 : séparation Église/État. L\'État ne reconnaît ni ne subventionne aucun culte. Liberté de conscience.',example:'À l\'école publique : les agents (profs) restent neutres, mais les élèves peuvent exprimer leurs convictions'},
+  {type:'mcq',cat:'ONU',q:'L\'ONU a été fondée en :',opts:['1945','1919','1939','1918'],ans:0,explain:'ONU = 1945, après la 2e GM, par 51 États. Aujourd\'hui 193 membres. Objectif : paix, droits de l\'Homme, développement.',example:'Conseil de sécurité : 5 membres permanents avec droit de veto (USA, Russie, Chine, France, RU)'},
+  {type:'mcq',cat:'Institutions',q:'Qu\'est-ce que le Parlement français ?',opts:['L\'Assemblée nationale + le Sénat','Uniquement l\'Assemblée nationale','Le gouvernement','La Cour de cassation'],ans:0,explain:'Parlement = Assemblée nationale (577 députés, élus pour 5 ans) + Sénat (348 sénateurs, élus pour 6 ans). Rôle : voter les lois, contrôler le gouvernement.',example:'Si désaccord entre AN et Sénat → commission mixte ou dernier mot à l\'AN'},
+  {type:'mcq',cat:'Droits et devoirs',q:'Quel est l\'âge de la majorité civile en France ?',opts:['18 ans','16 ans','21 ans','17 ans'],ans:0,explain:'La majorité civile est fixée à 18 ans en France. Elle donne l\'accès à tous les droits civiques et la pleine capacité juridique.',example:'Avant 18 ans : mineur sous autorité parentale. À 18 ans : peut voter, contracter, travailler sans autorisation'},
+  {type:'mcq',cat:'Valeurs républicaines',q:'Que signifie "Liberté, Égalité, Fraternité" ?',opts:['La devise de la République française','Un texte de loi','Un article de la Constitution','Une déclaration de l\'ONU'],ans:0,explain:'Devise de la République française, issue de la Révolution de 1789. Inscrite dans la Constitution.',example:'Liberté = droits individuels ; Égalité = même droits pour tous ; Fraternité = solidarité nationale'},
+]
+};
+
+let currentSubject=null,currentMode=null,currentQs=[],currentIdx=0,score=0,answered=false;
+
+function shuffle(arr){return[...arr].sort(()=>Math.random()-0.5)}
+
+function getQuestions(subj,mode,n=12){
+  let all=QUESTIONS[subj]||[];
+  if(mode==='automatisme')all=all.filter(q=>q.type==='automatisme');
+  else if(mode==='qcm')all=all.filter(q=>q.type==='mcq');
+  return shuffle(all).slice(0,n);
+}
+
+function hide(id){document.getElementById(id).style.display='none'}
+function show(id){document.getElementById(id).style.display='block'}
+
+function showMain(){
+  show('main-screen');hide('subject-screen');hide('quiz-screen');hide('score-screen');
+}
+
+function showSubject(subj){
+  currentSubject=subj;
+  const s=SUBJECTS.find(x=>x.id===subj);
+  const sc=document.getElementById('subject-screen');
+  sc.innerHTML=`
+    <button class="back-btn" onclick="showMain()"><i class="ti ti-arrow-left"></i> Retour</button>
+    <div class="page-title">${s.emoji} ${s.name}</div>
+    <div class="page-sub">Choisis ton mode de révision</div>
+    <div class="mode-cards">
+      ${subj==='math'?`<div class="mode-card" onclick="startQuiz('${subj}','automatisme')">
+        <span class="badge" style="background:#EEEDFE;color:#3C3489">⚡ Calcul rapide</span>
+        <h3>Automatismes</h3>
+        <p>Calculs rapides à saisir — entraîne ta fluidité de calcul</p>
+      </div>`:''}
+      <div class="mode-card" onclick="startQuiz('${subj}','qcm')">
+        <span class="badge" style="background:#E1F5EE;color:#085041">🧠 QCM</span>
+        <h3>Questions de cours</h3>
+        <p>Questions à choix multiple avec explications détaillées</p>
+      </div>
+      <div class="mode-card" onclick="startQuiz('${subj}','all')">
+        <span class="badge" style="background:#FAECE7;color:#4A1B0C">🎯 Entraînement</span>
+        <h3>Mode mixte</h3>
+        <p>Mélange de toutes les questions — comme un vrai contrôle</p>
+      </div>
     </div>
+  `;
+  hide('main-screen');show('subject-screen');hide('quiz-screen');hide('score-screen');
+}
 
-    <script>
-        // ====================== QUESTION BANKS ======================
-        let questionBank = {
-            math: {
-                name: "Mathématiques",
-                icon: "📐",
-                color: "blue",
-                categories: [
-                    {
-                        id: "automatisme",
-                        name: "Automatismes (sans calculatrice)",
-                        questions: [
-                            {
-                                q: "Calcule mentalement : 15 × 12",
-                                options: ["165", "180", "195", "210"],
-                                answer: 1
-                            },
-                            {
-                                q: "Quelle est la valeur de 8³ ?",
-                                options: ["256", "512", "1024", "64"],
-                                answer: 1
-                            },
-                            {
-                                q: "Simplifie : 2/5 + 3/10",
-                                options: ["1/2", "7/10", "1", "3/5"],
-                                answer: 1
-                            },
-                            {
-                                q: "Le périmètre d'un carré de côté 7 cm est :",
-                                options: ["14 cm", "28 cm", "49 cm", "21 cm"],
-                                answer: 1
-                            }
-                        ]
-                    },
-                    {
-                        id: "general",
-                        name: "Mathématiques Générales",
-                        questions: [
-                            {
-                                q: "Résous : 3x + 5 = 17",
-                                options: ["x = 3", "x = 4", "x = 5", "x = 6"],
-                                answer: 1
-                            },
-                            {
-                                q: "L'aire d'un rectangle de 8 cm par 5 cm est :",
-                                options: ["13 cm²", "26 cm²", "40 cm²", "80 cm²"],
-                                answer: 2
-                            }
-                        ]
-                    }
-                ]
-            },
-            francais: {
-                name: "Français",
-                icon: "📖",
-                color: "purple",
-                categories: [{
-                    id: "general",
-                    name: "Français",
-                    questions: [
-                        {
-                            q: "Quel est le contraire de 'éphémère' ?",
-                            options: ["Durable", "Rapide", "Fragile", "Ancien"],
-                            answer: 0
-                        },
-                        {
-                            q: "Identifie le COD dans : 'Je lis un livre passionnant.'",
-                            options: ["Je", "lis", "un livre passionnant", "passionnant"],
-                            answer: 2
-                        }
-                    ]
-                }]
-            },
-            histoire: {
-                name: "Histoire-Géographie",
-                icon: "🏛️",
-                color: "amber",
-                categories: [{
-                    id: "general",
-                    name: "Histoire-Géographie",
-                    questions: [
-                        {
-                            q: "En quelle année a eu lieu la prise de la Bastille ?",
-                            options: ["1789", "1792", "1799", "1815"],
-                            answer: 0
-                        },
-                        {
-                            q: "Quel est le rôle principal de l'ONU ?",
-                            options: ["Maintenir la paix", "Gérer l'économie mondiale", "Organiser les JO", "Réguler le climat"],
-                            answer: 0
-                        }
-                    ]
-                }]
-            },
-            physique: {
-                name: "Physique-Chimie",
-                icon: "⚡",
-                color: "red",
-                categories: [{
-                    id: "general",
-                    name: "Physique-Chimie",
-                    questions: [
-                        {
-                            q: "Quelle est l'unité de la tension électrique ?",
-                            options: ["Ampère", "Volt", "Ohm", "Watt"],
-                            answer: 1
-                        },
-                        {
-                            q: "Le pH d'une solution acide est :",
-                            options: [">7", "<7", "=7", "Impossible à dire"],
-                            answer: 1
-                        }
-                    ]
-                }]
-            },
-            svt: {
-                name: "SVT",
-                icon: "🌿",
-                color: "emerald",
-                categories: [{
-                    id: "general",
-                    name: "SVT",
-                    questions: [
-                        {
-                            q: "Quel est l'organe principal de la photosynthèse ?",
-                            options: ["La racine", "La tige", "La feuille", "La fleur"],
-                            answer: 2
-                        },
-                        {
-                            q: "Les mitochondries sont le siège de :",
-                            options: ["La photosynthèse", "La respiration cellulaire", "La digestion", "La reproduction"],
-                            answer: 1
-                        }
-                    ]
-                }]
-            }
-        };
+function startQuiz(subj,mode){
+  currentMode=mode;currentIdx=0;score=0;answered=false;
+  currentQs=getQuestions(subj,mode);
+  if(!currentQs.length){alert('Pas assez de questions pour ce mode !');return;}
+  hide('subject-screen');show('quiz-screen');
+  renderQuestion();
+}
 
-        // Current state
-        let currentSubject = null;
-        let currentCategory = null;
-        let currentQuiz = [];
-        let currentQuestionIndex = 0;
-        let userAnswers = [];
-        let quizStartTime = null;
+function renderQuestion(){
+  answered=false;
+  const q=currentQs[currentIdx];
+  const s=SUBJECTS.find(x=>x.id===currentSubject);
+  const pct=Math.round((currentIdx/currentQs.length)*100);
+  let content=q.type==='automatisme'?renderAuto(q):renderMCQ(q);
+  document.getElementById('quiz-screen').innerHTML=`
+    <button class="back-btn" onclick="showSubject('${currentSubject}')"><i class="ti ti-arrow-left"></i> Quitter</button>
+    <div class="quiz-container">
+      <div class="progress-info"><span>${s.emoji} ${s.name}</span><span>Question ${currentIdx+1} / ${currentQs.length}</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      ${content}
+    </div>
+  `;
+  if(q.type==='automatisme'){
+    const inp=document.getElementById('auto-ans');
+    if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')submitAuto()};}
+  }
+}
 
-        // Tailwind script already loaded
-        function initTailwind() {
-            // Already included via CDN
-        }
+function renderMCQ(q){
+  return`<div class="question-card">
+    <div class="question-type">${q.cat||'Question'}</div>
+    <div class="question-text">${q.q}</div>
+    <div class="options">${q.opts.map((o,i)=>`
+      <button class="option-btn" id="opt-${i}" onclick="selectAnswer(${i})">
+        <span class="option-letter">${'ABCD'[i]}</span>${o}
+      </button>`).join('')}
+    </div>
+    <div id="feedback-area"></div>
+  </div>`;
+}
 
-        function selectSubject(subjectKey) {
-            currentSubject = questionBank[subjectKey];
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('subject-view').classList.remove('hidden');
-            document.getElementById('quiz-view').classList.add('hidden');
-            document.getElementById('results-view').classList.add('hidden');
-            
-            document.getElementById('page-title').textContent = currentSubject.name;
-            
-            const header = document.getElementById('subject-header');
-            header.innerHTML = `
-                <div class="flex items-center gap-4">
-                    <span class="text-6xl">${currentSubject.icon}</span>
-                    <div>
-                        <h1 class="title-font text-5xl font-bold">${currentSubject.name}</h1>
-                        <p class="text-gray-500">Choisis une catégorie pour commencer un quiz de 10 questions</p>
-                    </div>
-                </div>
-            `;
-            
-            const container = document.getElementById('categories-container');
-            container.innerHTML = '';
-            
-            currentSubject.categories.forEach(cat => {
-                const div = document.createElement('div');
-                div.className = `bg-white border border-gray-200 rounded-3xl p-8 card-hover cursor-pointer`;
-                div.innerHTML = `
-                    <div class="flex justify-between">
-                        <div>
-                            <div class="uppercase tracking-widest text-xs font-medium text-gray-400">${cat.name}</div>
-                            <div class="text-2xl font-semibold mt-2">${cat.questions.length * 5}+ questions</div>
-                        </div>
-                    </div>
-                    <button onclick="startQuiz('${subjectKey}', '${cat.id}'); event.stopImmediatePropagation();" 
-                            class="mt-8 w-full py-4 bg-gray-900 text-white rounded-2xl font-medium hover:bg-black transition">
-                        Commencer le quiz (10 questions)
-                    </button>
-                `;
-                container.appendChild(div);
-            });
-        }
+function renderAuto(q){
+  return`<div class="question-card">
+    <div class="question-type">⚡ Automatisme</div>
+    <div class="question-text">${q.q}</div>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+      <input class="auto-input-field" type="text" id="auto-ans" placeholder="Ta réponse..."/>
+      <button class="validate-btn" onclick="submitAuto()">Valider</button>
+    </div>
+    <div id="feedback-area"></div>
+  </div>`;
+}
 
-        function startQuiz(subjectKey, categoryId) {
-            currentSubject = questionBank[subjectKey];
-            currentCategory = currentSubject.categories.find(c => c.id === categoryId);
-            
-            // Generate 10 questions (repeat pool if needed)
-            currentQuiz = [];
-            const pool = [...currentCategory.questions];
-            
-            for (let i = 0; i < 10; i++) {
-                if (pool.length === 0) pool.push(...currentCategory.questions);
-                const idx = Math.floor(Math.random() * pool.length);
-                currentQuiz.push(pool[idx]);
-                pool.splice(idx, 1);
-            }
-            
-            userAnswers = new Array(10).fill(null);
-            currentQuestionIndex = 0;
-            quizStartTime = Date.now();
-            
-            document.getElementById('subject-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.remove('hidden');
-            
-            document.getElementById('quiz-subject-badge').innerHTML = `
-                <span class="px-4 py-1 bg-${currentSubject.color}-100 text-${currentSubject.color}-700 rounded-3xl text-sm font-medium">
-                    ${currentSubject.name} • ${currentCategory.name}
-                </span>
-            `;
-            
-            showCurrentQuestion();
-        }
+function submitAuto(){
+  if(answered)return;
+  const q=currentQs[currentIdx];
+  const val=(document.getElementById('auto-ans').value||'').trim().toLowerCase().replace(/\s/g,'');
+  const correct=q.a.toLowerCase().replace(/\s/g,'');
+  const ok=val===correct||val===correct.replace(/[^0-9.]/g,'');
+  answered=true;
+  if(ok)score++;
+  document.getElementById('auto-ans').disabled=true;
+  showFeedback(ok,q);
+}
 
-        function showCurrentQuestion() {
-            const q = currentQuiz[currentQuestionIndex];
-            const container = document.getElementById('question-container');
-            
-            let optionsHTML = '';
-            q.options.forEach((opt, idx) => {
-                optionsHTML += `
-                    <div onclick="selectAnswer(${idx})" 
-                         id="option-${idx}"
-                         class="quiz-option border-2 border-gray-200 hover:border-blue-300 rounded-3xl p-6 mb-4 cursor-pointer text-lg">
-                        ${opt}
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = `
-                <div class="bg-white rounded-3xl p-10 shadow-sm">
-                    <div class="flex justify-between text-sm mb-6 text-gray-500">
-                        <span>Question ${currentQuestionIndex + 1} sur 10</span>
-                    </div>
-                    <h3 class="text-2xl leading-relaxed font-medium">${q.q}</h3>
-                    <div class="mt-10">
-                        ${optionsHTML}
-                    </div>
-                </div>
-            `;
-            
-            // Restore previous answer if any
-            if (userAnswers[currentQuestionIndex] !== null) {
-                const selected = document.getElementById(`option-${userAnswers[currentQuestionIndex]}`);
-                if (selected) selected.classList.add('selected', 'border-blue-500');
-            }
-            
-            updateQuizProgress();
-        }
+function selectAnswer(idx){
+  if(answered)return;
+  answered=true;
+  const q=currentQs[currentIdx];
+  const ok=idx===q.ans;
+  if(ok)score++;
+  document.querySelectorAll('.option-btn').forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===q.ans)btn.classList.add('correct');
+    else if(i===idx&&!ok)btn.classList.add('wrong');
+  });
+  showFeedback(ok,q);
+}
 
-        function selectAnswer(optionIndex) {
-            userAnswers[currentQuestionIndex] = optionIndex;
-            
-            // Visual feedback
-            for (let i = 0; i < 4; i++) {
-                const el = document.getElementById(`option-${i}`);
-                if (el) {
-                    el.classList.remove('selected', 'border-blue-500');
-                    if (i === optionIndex) {
-                        el.classList.add('selected', 'border-blue-500');
-                    }
-                }
-            }
-        }
+function showFeedback(ok,q){
+  document.getElementById('feedback-area').innerHTML=`
+    <div class="feedback-card ${ok?'correct':'wrong'}" style="margin-top:1rem">
+      <div class="feedback-title">
+        <i class="ti ti-${ok?'circle-check':'circle-x'}" style="font-size:20px"></i>
+        ${ok?'Bravo ! Bonne réponse 🎉':'Pas tout à fait...'}
+        ${q.type==='automatisme'&&!ok?`<span style="font-size:13px;font-weight:400"> — Réponse : <strong>${q.a}</strong></span>`:''}
+      </div>
+      <div class="feedback-body">
+        <strong>📖 Explication :</strong><br>${q.explain}
+        ${q.hint?`<div class="math-display">${q.hint}</div>`:''}
+        <div class="feedback-example"><strong>💡 Exemple :</strong><br>${q.example}</div>
+      </div>
+    </div>
+    <button class="next-btn" onclick="nextQuestion()">
+      ${currentIdx+1<currentQs.length?'Question suivante →':'Voir mes résultats 🏁'}
+    </button>
+  `;
+}
 
-        function updateQuizProgress() {
-            document.getElementById('quiz-progress').textContent = `${currentQuestionIndex + 1}/10`;
-        }
+function nextQuestion(){
+  currentIdx++;
+  if(currentIdx>=currentQs.length){showScore();return;}
+  renderQuestion();
+}
 
-        function nextQuestion() {
-            if (currentQuestionIndex < 9) {
-                currentQuestionIndex++;
-                showCurrentQuestion();
-            } else {
-                finishQuiz();
-            }
-        }
+function showScore(){
+  const s=SUBJECTS.find(x=>x.id===currentSubject);
+  const pct=Math.round((score/currentQs.length)*100);
+  const color=pct>=70?'#0F6E56':pct>=50?'#854F0B':'#993C1D';
+  const bg=pct>=70?'#E1F5EE':pct>=50?'#FAEEDA':'#FAECE7';
+  const msg=pct>=80?'Excellent ! Tu es prêt(e) ! 🏆':pct>=60?'Bien ! Continue à réviser 💪':pct>=40?'Courage, il faut encore travailler ça 📚':'Il faut reprendre ce chapitre depuis le début 🔄';
+  hide('quiz-screen');show('score-screen');
+  document.getElementById('score-screen').innerHTML=`
+    <div class="score-card">
+      <div class="score-circle" style="border-color:${color};background:${bg};color:${color}">${pct}%</div>
+      <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">${s.emoji} ${s.name}</h2>
+      <p style="color:#888;font-size:14px;margin-bottom:1.5rem">${msg}</p>
+      <div class="stats-row">
+        <div class="stat-box"><div class="val" style="color:#0F6E56">${score}</div><div class="lbl">Bonnes réponses</div></div>
+        <div class="stat-box"><div class="val" style="color:#993C1D">${currentQs.length-score}</div><div class="lbl">Erreurs</div></div>
+        <div class="stat-box"><div class="val">${currentQs.length}</div><div class="lbl">Total</div></div>
+      </div>
+      <div>
+        <button class="restart-btn" onclick="startQuiz('${currentSubject}','${currentMode}')">🔄 Recommencer</button>
+        <button class="restart-btn outline" onclick="showSubject('${currentSubject}')">Changer de mode</button>
+        <button class="restart-btn outline" onclick="showMain()">🏠 Accueil</button>
+      </div>
+    </div>
+  `;
+}
 
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showCurrentQuestion();
-            }
-        }
-
-        function finishQuiz() {
-            const timeSpent = Math.floor((Date.now() - quizStartTime) / 1000);
-            let correct = 0;
-            
-            currentQuiz.forEach((q, i) => {
-                if (userAnswers[i] === q.answer) correct++;
-            });
-            
-            const percentage = Math.round((correct / 10) * 100);
-            
-            document.getElementById('quiz-view').classList.add('hidden');
-            document.getElementById('results-view').classList.remove('hidden');
-            
-            const circle = document.getElementById('score-circle');
-            circle.style.borderColor = percentage > 70 ? '#10b981' : '#eab308';
-            circle.textContent = percentage + '%';
-            
-            document.getElementById('results-title').textContent = percentage >= 80 ? "Excellent !" : percentage >= 60 ? "Pas mal !" : "Continue à t'entraîner";
-            document.getElementById('results-subtitle').textContent = `Quiz ${currentCategory.name}`;
-            
-            document.getElementById('correct-count').textContent = correct;
-            document.getElementById('wrong-count').textContent = 10 - correct;
-            document.getElementById('time-spent').textContent = timeSpent + "s";
-        }
-
-        function endQuiz() {
-            if (confirm("Quitter le quiz ? Tes réponses seront perdues.")) {
-                document.getElementById('quiz-view').classList.add('hidden');
-                document.getElementById('subject-view').classList.remove('hidden');
-            }
-        }
-
-        function restartSameQuiz() {
-            startQuiz(Object.keys(questionBank).find(key => questionBank[key] === currentSubject), currentCategory.id);
-        }
-
-        function showHome() {
-            document.getElementById('home-view').classList.remove('hidden');
-            document.getElementById('subject-view').classList.add('hidden');
-            document.getElementById('quiz-view').classList.add('hidden');
-            document.getElementById('results-view').classList.add('hidden');
-            document.getElementById('page-title').textContent = 'Accueil';
-        }
-
-        function goBack() {
-            showHome();
-        }
-
-        function startRandomQuiz() {
-            const keys = Object.keys(questionBank);
-            const randomKey = keys[Math.floor(Math.random() * keys.length)];
-            const subject = questionBank[randomKey];
-            const cat = subject.categories[0];
-            startQuiz(randomKey, cat.id);
-        }
-
-        // Initialize
-        window.onload = function() {
-            initTailwind();
-            // Show home by default
-            console.log("%c✅ Site Brevet 2026 prêt ! Ajoute plus de questions dans l'objet questionBank.", "color: #3b82f6; font-size: 14px");
-        };
-    </script>
+// Build subject grid
+const grid=document.getElementById('subjects-grid');
+SUBJECTS.forEach(s=>{
+  const card=document.createElement('div');
+  card.className='subject-card';
+  card.onclick=()=>showSubject(s.id);
+  card.innerHTML=`
+    <div class="icon" style="background:${s.color}">${s.emoji}</div>
+    <h3>${s.name}</h3>
+    <p>${s.desc}</p>
+  `;
+  grid.appendChild(card);
+});
+</script>
 </body>
 </html>
