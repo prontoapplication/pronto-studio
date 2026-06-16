@@ -3,414 +3,767 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Révision Brevet — 5ème → 3ème</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>Révision Brevet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+:root{
+  --blue1:#0a0e2a;--blue2:#0d1740;--blue3:#112266;--accent:#4f8cff;--accent2:#a78bfa;
+  --glow:#4f8cff;--white:#fff;--gray:#b0bcd4;--card:#131c3e;--border:#1e2d5a;
+  --green:#22d48a;--red:#ff5a7e;--yellow:#ffd76e;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
-.header{background:#fff;border-bottom:1px solid #e5e5e5;padding:1rem 1.5rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.logo{width:38px;height:38px;background:#534AB7;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
-.header h1{font-size:18px;font-weight:600;color:#1a1a1a}
-.header .subtitle{font-size:13px;color:#888;margin-left:auto}
-.screen{padding:1.5rem;max-width:900px;margin:0 auto}
-.subjects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:1.5rem}
-.subject-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.25rem;cursor:pointer;transition:transform 0.15s,border-color 0.15s,box-shadow 0.15s}
-.subject-card:hover{transform:translateY(-3px);border-color:#534AB7;box-shadow:0 4px 20px rgba(83,74,183,0.12)}
-.subject-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:12px}
-.subject-card h3{font-size:15px;font-weight:600;margin-bottom:4px}
-.subject-card p{font-size:12px;color:#888;line-height:1.5}
-.page-title{font-size:22px;font-weight:700;margin-bottom:4px}
-.page-sub{font-size:14px;color:#888;margin-bottom:1.5rem}
-.back-btn{background:#fff;border:1px solid #ddd;border-radius:8px;padding:7px 14px;font-size:14px;cursor:pointer;color:#1a1a1a;display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;transition:background 0.15s}
-.back-btn:hover{background:#f5f5f5}
-.mode-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:640px}
-.mode-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.25rem;cursor:pointer;transition:all 0.15s}
-.mode-card:hover{border-color:#534AB7;box-shadow:0 2px 12px rgba(83,74,183,0.1)}
-.mode-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
-.mode-card p{font-size:12px;color:#888;line-height:1.5}
-.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;margin-bottom:10px;font-weight:600}
-.progress-info{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:8px}
-.progress-bar{background:#eee;border-radius:4px;height:7px;margin-bottom:1.5rem;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,#534AB7,#7F77DD);border-radius:4px;transition:width 0.4s}
-.question-card{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:1.5rem;margin-bottom:1rem}
-.question-type{font-size:11px;font-weight:700;color:#534AB7;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px}
-.question-text{font-size:16px;font-weight:600;line-height:1.6;margin-bottom:1.5rem}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--blue1);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+/* ========== ANIMATED BG ========== */
+.bg-anim{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.28;animation:blobMove 14s ease-in-out infinite alternate}
+.blob1{width:520px;height:520px;background:radial-gradient(circle,#2563eb,#6d28d9);top:-120px;left:-100px;animation-delay:0s}
+.blob2{width:400px;height:400px;background:radial-gradient(circle,#0ea5e9,#7c3aed);bottom:-80px;right:-80px;animation-delay:-5s}
+.blob3{width:300px;height:300px;background:radial-gradient(circle,#4f8cff,#a78bfa);top:40%;left:50%;animation-delay:-9s}
+@keyframes blobMove{0%{transform:translate(0,0) scale(1)}100%{transform:translate(60px,40px) scale(1.12)}}
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(79,140,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(79,140,255,.06) 1px,transparent 1px);background-size:48px 48px}
+
+/* ========== SCREENS ========== */
+.screen{position:relative;z-index:1}
+
+/* ========== WELCOME SCREEN ========== */
+#welcome-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem}
+.welcome-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(79,140,255,.13);border:1px solid rgba(79,140,255,.3);border-radius:999px;padding:6px 18px;font-size:13px;color:#a5c4ff;margin-bottom:2rem;backdrop-filter:blur(8px)}
+.welcome-badge span{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.welcome-title{font-size:clamp(2.5rem,8vw,5.5rem);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:1.5rem;position:relative}
+.glow-text{background:linear-gradient(135deg,#fff 30%,#a5c4ff 60%,#c4b5fd 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(79,140,255,.5))}
+.glow-sub{font-size:clamp(1rem,3vw,1.4rem);color:var(--accent);font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:1rem;text-shadow:0 0 20px rgba(79,140,255,.8)}
+.welcome-desc{font-size:1.05rem;color:var(--gray);max-width:520px;line-height:1.7;margin-bottom:3rem}
+.enter-btn{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:16px;padding:18px 52px;font-size:1.1rem;font-weight:700;cursor:pointer;letter-spacing:.5px;box-shadow:0 0 40px rgba(79,140,255,.4),0 4px 24px rgba(0,0,0,.3);transition:all .2s;position:relative;overflow:hidden}
+.enter-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .2s}
+.enter-btn:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(79,140,255,.6),0 8px 32px rgba(0,0,0,.4)}
+.enter-btn:hover::before{opacity:1}
+.stars{position:absolute;inset:0;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s)}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(0)}50%{opacity:var(--op,.8);transform:scale(1)}}
+
+/* ========== MAIN APP ========== */
+#app-screen{display:none;min-height:100vh}
+.app-header{padding:1.25rem 2rem;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,14,42,.6);position:sticky;top:0;z-index:100}
+.app-logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 0 16px rgba(79,140,255,.4)}
+.app-title{font-size:17px;font-weight:700;color:#fff}
+.app-subtitle{font-size:13px;color:var(--gray)}
+.header-score{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray)}
+.score-pill{background:rgba(79,140,255,.15);border:1px solid rgba(79,140,255,.3);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:600;color:#a5c4ff}
+
+/* ========== SUBJECT TABS ========== */
+.subjects-nav{padding:1.5rem 2rem 0;max-width:1100px;margin:0 auto}
+.subjects-nav h2{font-size:13px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+.tabs-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:0}
+.tab-btn{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--gray);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{border-color:rgba(79,140,255,.4);color:#a5c4ff;background:rgba(79,140,255,.08)}
+.tab-btn.active{background:linear-gradient(135deg,rgba(37,99,235,.25),rgba(124,58,237,.2));border-color:rgba(79,140,255,.6);color:#fff;box-shadow:0 0 12px rgba(79,140,255,.2)}
+.tab-divider{height:1px;background:var(--border);margin:1rem 2rem 0;max-width:calc(1100px - 4rem)}
+
+/* ========== SUBJECT CONTENT ========== */
+.subject-content{padding:1.5rem 2rem;max-width:1100px;margin:0 auto}
+.subject-header{display:flex;align-items:center;gap:16px;margin-bottom:1.5rem;padding:1.5rem;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:16px}
+.subject-icon-big{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.subject-title-group h2{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.subject-title-group p{font-size:13px;color:var(--gray);line-height:1.5}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:2rem}
+.mode-card{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:14px;padding:1.25rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.mode-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .2s;background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(124,58,237,.08))}
+.mode-card:hover{border-color:rgba(79,140,255,.5);transform:translateY(-2px);box-shadow:0 4px 24px rgba(79,140,255,.12)}
+.mode-card:hover::before{opacity:1}
+.mode-badge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;display:inline-block;margin-bottom:10px;letter-spacing:.3px}
+.mode-card h3{font-size:15px;font-weight:700;color:#fff;margin-bottom:5px}
+.mode-card p{font-size:12px;color:var(--gray);line-height:1.5}
+.q-count{font-size:11px;color:var(--accent);margin-top:8px;font-weight:600}
+
+/* ========== QUIZ ========== */
+.quiz-wrap{padding:1.5rem 2rem;max-width:720px;margin:0 auto}
+.back-btn{background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:10px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;color:var(--gray);display:inline-flex;align-items:center;gap:6px;margin-bottom:1.25rem;transition:all .15s}
+.back-btn:hover{color:#fff;border-color:rgba(79,140,255,.4);background:rgba(79,140,255,.08)}
+.progress-row{display:flex;justify-content:space-between;font-size:12px;color:var(--gray);margin-bottom:8px}
+.progress-bar{background:rgba(255,255,255,.08);border-radius:4px;height:6px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:4px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.q-card{background:rgba(19,28,62,.8);border:1px solid var(--border);border-radius:18px;padding:1.75rem;margin-bottom:1rem;backdrop-filter:blur(8px)}
+.q-cat{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.q-cat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent)}
+.q-text{font-size:16px;font-weight:600;line-height:1.65;color:#fff;margin-bottom:1.5rem}
 .options{display:flex;flex-direction:column;gap:9px}
-.option-btn{background:#f8f8f8;border:1px solid #e5e5e5;border-radius:10px;padding:12px 16px;text-align:left;cursor:pointer;font-size:14px;color:#1a1a1a;transition:all 0.15s;display:flex;align-items:center;gap:12px}
-.option-btn:hover:not(:disabled){border-color:#534AB7;background:#EEEDFE}
-.option-btn.correct{border-color:#0F6E56!important;background:#E1F5EE!important;color:#085041!important;font-weight:600}
-.option-btn.wrong{border-color:#993C1D!important;background:#FAECE7!important;color:#4A1B0C!important}
-.option-btn:disabled{cursor:default}
-.option-letter{width:28px;height:28px;border-radius:50%;background:#fff;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all 0.15s}
-.feedback-card{border-radius:12px;padding:1.25rem;margin-top:1rem}
-.feedback-card.correct{background:#E1F5EE;border:1px solid #9FE1CB}
-.feedback-card.wrong{background:#FAECE7;border:1px solid #F5C4B3}
-.feedback-title{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.feedback-body{font-size:13px;line-height:1.7;color:#444}
-.feedback-example{margin-top:10px;background:#fff;border-radius:8px;padding:10px 14px;font-size:13px;border-left:3px solid #534AB7;color:#333}
-.math-display{font-family:monospace;font-size:15px;background:#f8f8f8;padding:8px 14px;border-radius:8px;margin:8px 0;text-align:center;color:#333;border:1px solid #eee}
-.next-btn{width:100%;background:#534AB7;color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;margin-top:1rem;transition:background 0.15s}
-.next-btn:hover{background:#3C3489}
-.score-card{background:#fff;border:1px solid #e5e5e5;border-radius:16px;padding:2.5rem;text-align:center;max-width:480px;margin:2rem auto}
-.score-circle{width:110px;height:110px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:800;margin:0 auto 1.5rem;border:4px solid}
+.opt{background:rgba(255,255,255,.05);border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;text-align:left;cursor:pointer;font-size:14px;font-weight:500;color:#d4dff5;transition:all .15s;display:flex;align-items:center;gap:12px;font-family:inherit}
+.opt:hover:not(:disabled){border-color:rgba(79,140,255,.5);background:rgba(79,140,255,.08);color:#fff}
+.opt-letter{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .15s}
+.opt.correct{border-color:var(--green)!important;background:rgba(34,212,138,.1)!important;color:var(--green)!important}
+.opt.correct .opt-letter{background:rgba(34,212,138,.2);border-color:var(--green);color:var(--green)}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,90,126,.08)!important;color:var(--red)!important}
+.opt.wrong .opt-letter{background:rgba(255,90,126,.15);border-color:var(--red);color:var(--red)}
+.opt:disabled{cursor:default}
+
+/* ========== FEEDBACK ========== */
+.feedback{border-radius:16px;padding:1.25rem 1.5rem;margin-top:1.25rem;animation:feedIn .3s cubic-bezier(.4,0,.2,1)}
+@keyframes feedIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.feedback.correct-fb{background:rgba(34,212,138,.08);border:1.5px solid rgba(34,212,138,.3)}
+.feedback.wrong-fb{background:rgba(255,90,126,.06);border:1.5px solid rgba(255,90,126,.25)}
+.fb-head{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;margin-bottom:12px}
+.fb-head.ok{color:var(--green)}
+.fb-head.nope{color:var(--red)}
+.fb-icon{font-size:22px}
+.fb-section{margin-top:12px}
+.fb-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;opacity:.7}
+.fb-body{font-size:13px;line-height:1.75;color:#c8d8f5}
+.fb-tip{margin-top:12px;background:rgba(79,140,255,.1);border:1px solid rgba(79,140,255,.25);border-radius:10px;padding:11px 14px}
+.fb-tip .fb-label{color:var(--accent)}
+.fb-correction{margin-top:10px;background:rgba(255,90,126,.08);border:1px solid rgba(255,90,126,.2);border-radius:10px;padding:11px 14px}
+.fb-correction .fb-label{color:var(--red)}
+.fb-example{margin-top:10px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:10px;padding:11px 14px}
+.fb-example .fb-label{color:var(--accent2)}
+.math-box{font-family:monospace;font-size:14px;background:rgba(255,255,255,.06);border:1px solid var(--border);border-radius:8px;padding:9px 14px;margin:8px 0;text-align:center;color:#a5c4ff}
+.next-btn{width:100%;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:12px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:1.25rem;transition:all .2s;letter-spacing:.2px;font-family:inherit}
+.next-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 4px 20px rgba(79,140,255,.35)}
+
+/* ========== AUTO INPUT ========== */
+.auto-row{display:flex;gap:10px;margin-top:14px}
+.auto-input{flex:1;background:rgba(255,255,255,.06);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;font-size:15px;color:#fff;font-family:inherit;transition:border-color .15s}
+.auto-input:focus{outline:none;border-color:rgba(79,140,255,.6);background:rgba(79,140,255,.06)}
+.auto-input::placeholder{color:rgba(255,255,255,.2)}
+.submit-btn{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .2s}
+.submit-btn:hover{opacity:.9}
+
+/* ========== SCORE ========== */
+.score-wrap{padding:2rem;max-width:520px;margin:0 auto;text-align:center}
+.score-circle{width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 2rem;border:3px solid;position:relative}
+.score-circle::before{content:'';position:absolute;inset:-8px;border-radius:50%;opacity:.15;filter:blur(12px)}
+.score-pct{font-size:34px;font-weight:900;line-height:1}
+.score-label{font-size:12px;font-weight:600;opacity:.7;margin-top:4px}
+.score-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.score-msg{font-size:14px;color:var(--gray);margin-bottom:2rem;line-height:1.6}
 .stats-row{display:flex;gap:12px;margin:1.5rem 0}
-.stat-box{flex:1;background:#f8f8f8;border-radius:10px;padding:14px;text-align:center}
-.stat-box .val{font-size:24px;font-weight:800}
-.stat-box .lbl{font-size:11px;color:#888;margin-top:2px}
-.restart-btn{background:#534AB7;color:#fff;border:none;border-radius:9px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;margin:5px;transition:background 0.15s}
-.restart-btn:hover{background:#3C3489}
-.restart-btn.outline{background:#fff;color:#534AB7;border:1.5px solid #534AB7}
-.restart-btn.outline:hover{background:#EEEDFE}
-.auto-input-field{background:#f8f8f8;border:1.5px solid #ddd;border-radius:10px;padding:10px 14px;font-size:16px;width:100%;color:#1a1a1a;transition:border-color 0.15s;font-family:inherit}
-.auto-input-field:focus{outline:none;border-color:#534AB7;background:#fff}
-.validate-btn{background:#534AB7;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;transition:background 0.15s;white-space:nowrap}
-.validate-btn:hover{background:#3C3489}
-.quiz-container{max-width:680px}
+.stat-box{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.stat-val{font-size:26px;font-weight:800}
+.stat-lbl{font-size:11px;color:var(--gray);margin-top:3px;font-weight:500}
+.score-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:1.5rem}
+.score-btn{border-radius:10px;padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s;border:none}
+.score-btn.primary{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff}
+.score-btn.primary:hover{opacity:.9;transform:translateY(-1px)}
+.score-btn.ghost{background:rgba(255,255,255,.06);color:var(--gray);border:1px solid var(--border)}
+.score-btn.ghost:hover{color:#fff;border-color:rgba(79,140,255,.4)}
+
+/* ========== CONFETTI BURST ========== */
+.confetti-piece{position:fixed;pointer-events:none;z-index:999;width:8px;height:8px;border-radius:2px;animation:confettiFall 1.2s ease-in forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(300px) rotate(720deg)}}
+
 @media(max-width:600px){
-  .mode-cards{grid-template-columns:1fr}
-  .stats-row{flex-direction:column}
-  .screen{padding:1rem}
+  .app-header{padding:1rem}
+  .subjects-nav,.subject-content,.quiz-wrap{padding:1rem}
+  .mode-grid{grid-template-columns:1fr}
+  .auto-row{flex-direction:column}
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="logo"><i class="ti ti-school"></i></div>
-  <div>
-    <h1>Révision Brevet</h1>
+<!-- Animated background -->
+<div class="bg-anim">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+  <div class="grid-lines"></div>
+</div>
+
+<!-- ===== WELCOME SCREEN ===== -->
+<div id="welcome-screen" class="screen">
+  <div class="stars" id="stars"></div>
+  <div class="welcome-badge">
+    <span></span>
+    Révision Brevet · 5ème → 3ème
   </div>
-  <span class="subtitle">5ème → 3ème</span>
+  <h1 class="welcome-title">
+    <div class="glow-sub">Bienvenue sur</div>
+    <span class="glow-text">BrevApp</span>
+  </h1>
+  <p class="welcome-desc">
+    Révise toutes tes matières du brevet avec des quiz interactifs, des explications claires et des conseils après chaque question.
+  </p>
+  <button class="enter-btn" onclick="enterApp()">
+    🚀 Commencer la révision
+  </button>
 </div>
 
-<div id="main-screen" class="screen">
-  <div class="page-title">Choisir une matière</div>
-  <div class="page-sub">Sélectionne une matière pour commencer tes révisions</div>
-  <div class="subjects-grid" id="subjects-grid"></div>
-</div>
+<!-- ===== APP SCREEN ===== -->
+<div id="app-screen">
+  <div class="app-header">
+    <div class="app-logo">📚</div>
+    <div>
+      <div class="app-title">BrevApp</div>
+      <div class="app-subtitle">5ème → 3ème</div>
+    </div>
+    <div class="header-score">
+      <span id="header-info" style="color:var(--gray);font-size:13px">Choisis une matière</span>
+    </div>
+  </div>
 
-<div id="subject-screen" class="screen" style="display:none"></div>
-<div id="quiz-screen" class="screen" style="display:none"></div>
-<div id="score-screen" class="screen" style="display:none"></div>
+  <!-- Subject Tabs -->
+  <div id="tabs-section">
+    <div class="subjects-nav">
+      <h2>Matières</h2>
+      <div class="tabs-row" id="tabs-row"></div>
+    </div>
+    <div class="tab-divider"></div>
+    <div class="subject-content" id="subject-content"></div>
+  </div>
+
+  <!-- Quiz section -->
+  <div id="quiz-section" style="display:none">
+    <div class="quiz-wrap" id="quiz-wrap"></div>
+  </div>
+
+  <!-- Score section -->
+  <div id="score-section" style="display:none">
+    <div class="score-wrap" id="score-wrap"></div>
+  </div>
+</div>
 
 <script>
+// ---- Stars ----
+const starsEl=document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');s.className='star';
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;--op:${.3+Math.random()*.7}`;
+  starsEl.appendChild(s);
+}
+
+function enterApp(){
+  document.getElementById('welcome-screen').style.display='none';
+  document.getElementById('app-screen').style.display='block';
+  renderTabs();
+  showSubject('math');
+}
+
+// ---- DATA ----
 const SUBJECTS=[
-  {id:'math',name:'Mathématiques',emoji:'📐',color:'#EEEDFE',text:'#3C3489',desc:'Pythagore, Thalès, trigonométrie, algèbre...'},
-  {id:'french',name:'Français',emoji:'📝',color:'#E1F5EE',text:'#085041',desc:'Grammaire, rédaction, lecture analytique...'},
-  {id:'histoire',name:'Histoire',emoji:'🏛️',color:'#FAECE7',text:'#4A1B0C',desc:'Guerres mondiales, révolutions, 20e siècle...'},
-  {id:'geo',name:'Géographie',emoji:'🌍',color:'#E6F1FB',text:'#0C447C',desc:'Mondialisation, territoires, développement...'},
-  {id:'svt',name:'SVT',emoji:'🧬',color:'#EAF3DE',text:'#27500A',desc:'Génétique, évolution, corps humain...'},
-  {id:'physique',name:'Physique-Chimie',emoji:'⚗️',color:'#FBEAF0',text:'#4B1528',desc:'Lumière, forces, électricité, chimie...'},
-  {id:'emc',name:'EMC',emoji:'⚖️',color:'#FAEEDA',text:'#412402',desc:'Citoyenneté, démocratie, droits fondamentaux...'},
+  {id:'math',name:'Maths',emoji:'📐',color:'#1e2a5a',accent:'#4f8cff',desc:'Pythagore, Thalès, trigonométrie, algèbre, fonctions...'},
+  {id:'french',name:'Français',emoji:'📝',color:'#1a2d1a',accent:'#22d48a',desc:'Grammaire, conjugaison, figures de style, rédaction...'},
+  {id:'histoire',name:'Histoire',emoji:'🏛️',color:'#2d1a1a',accent:'#ff7e5a',desc:'Guerres mondiales, Révolution, guerre froide...'},
+  {id:'geo',name:'Géographie',emoji:'🌍',color:'#0e2233',accent:'#38bdf8',desc:'Mondialisation, IDH, territoires, développement durable...'},
+  {id:'svt',name:'SVT',emoji:'🧬',color:'#162213',accent:'#86efac',desc:'Génétique, évolution, corps humain, écosystèmes...'},
+  {id:'physique',name:'Physique-Chimie',emoji:'⚗️',color:'#1e0e2d',accent:'#c084fc',desc:'Lumière, forces, loi d\'Ohm, réactions chimiques...'},
+  {id:'emc',name:'EMC',emoji:'⚖️',color:'#2a1e00',accent:'#fbbf24',desc:'Citoyenneté, institutions, droits fondamentaux, laïcité...'},
 ];
 
 const QUESTIONS={
 math:[
-  {type:'automatisme',q:'Calcule : 3² + 4²',a:'25',hint:'3²=9, 4²=16 → 9+16=25',explain:'On calcule chaque carré séparément puis on additionne.',example:'2² + 5² = 4 + 25 = 29'},
-  {type:'automatisme',q:'Simplifie : 15/25',a:'3/5',hint:'Diviser par le PGCD = 5 : 15÷5=3, 25÷5=5',explain:'Pour simplifier une fraction, divise numérateur et dénominateur par leur PGCD.',example:'18/24 → PGCD=6 → 3/4'},
-  {type:'automatisme',q:'Résous : 3x + 6 = 21',a:'x=5',hint:'3x = 21-6 = 15 → x = 15÷3',explain:'On isole x en effectuant les opérations inverses.',example:'2x + 4 = 12 → 2x = 8 → x = 4'},
-  {type:'automatisme',q:'Calcule : (-3) × (-4)',a:'12',hint:'(−) × (−) = (+)',explain:'Le produit de deux nombres négatifs est positif.',example:'(-5) × (-2) = +10'},
-  {type:'automatisme',q:'Quelle est la valeur de π arrondie au centième ?',a:'3.14',hint:'π ≈ 3.14159...',explain:'π est un nombre irrationnel. On utilise souvent 3.14 ou 22/7 comme approximation.',example:'Circonférence = 2πr → avec r=5 : C ≈ 31.4'},
-  {type:'automatisme',q:'Calcule : √144',a:'12',hint:'12 × 12 = 144',explain:'La racine carrée d\'un nombre est le nombre qui, multiplié par lui-même, donne ce nombre.',example:'√25=5, √64=8, √100=10, √169=13'},
-  {type:'automatisme',q:'Donne le résultat de : 2³',a:'8',hint:'2×2×2',explain:'2³ = 2 × 2 × 2 = 8. La puissance indique combien de fois on multiplie le nombre par lui-même.',example:'3³=27, 4³=64, 5²=25'},
-  {type:'automatisme',q:'Quel est le PGCD de 12 et 18 ?',a:'6',hint:'Diviseurs de 12 : 1,2,3,4,6,12. Diviseurs de 18 : 1,2,3,6,9,18',explain:'Le PGCD (Plus Grand Commun Diviseur) est le plus grand entier qui divise les deux nombres.',example:'PGCD(20,30)=10 car 20=2×10 et 30=3×10'},
-  {type:'automatisme',q:'Convertis 2.5 km en mètres',a:'2500',hint:'1 km = 1000 m → 2.5 × 1000',explain:'Pour convertir des km en m, on multiplie par 1000.',example:'3.7 km = 3700 m ; 0.5 km = 500 m'},
-  {type:'automatisme',q:'Calcule 15% de 200',a:'30',hint:'15/100 × 200 = 0.15 × 200',explain:'Pour calculer un pourcentage : multiplier par le pourcentage divisé par 100.',example:'20% de 150 = 0.20 × 150 = 30'},
-  {type:'automatisme',q:'Résous : 5x - 10 = 0',a:'x=2',hint:'5x = 10 → x = 10÷5',explain:'On isole x : 5x = 10 → x = 2.',example:'4x - 8 = 0 → 4x = 8 → x = 2'},
-  {type:'automatisme',q:'Calcule l\'aire d\'un rectangle de 6cm × 4cm',a:'24',hint:'Aire = longueur × largeur',explain:'Aire rectangle = l × L = 6 × 4 = 24 cm²',example:'Rectangle 8×5 : A = 40 cm²'},
-  {type:'mcq',cat:'Théorème de Pythagore',q:'Dans un triangle ABC rectangle en A, AB=3 cm et AC=4 cm. Quelle est la longueur de BC ?',opts:['5 cm','7 cm','12 cm','6 cm'],ans:0,explain:'BC² = AB² + AC² = 9 + 16 = 25 → BC = 5 cm. Le triplet (3,4,5) est le plus classique !',example:'Triangle 6-8-? : BC² = 36+64=100 → BC=10 cm'},
-  {type:'mcq',cat:'Réciproque de Pythagore',q:'Un triangle a des côtés 5, 12 et 13. Est-il rectangle ?',opts:['Oui, car 5²+12²=13²','Non, les côtés ne conviennent pas','Oui, car 5+12=17','On ne peut pas savoir'],ans:0,explain:'5²+12² = 25+144 = 169 = 13². La réciproque de Pythagore confirme que ce triangle est rectangle.',example:'Triplets pythagoriciens : (3,4,5), (5,12,13), (6,8,10), (8,15,17)'},
-  {type:'mcq',cat:'Théorème de Thalès',q:'Dans le triangle ABC, D sur AB et E sur AC, DE∥BC. Si AD=4, DB=2 et AE=6, quelle est EC ?',opts:['3','2','4','6'],ans:0,explain:'Par Thalès : AD/DB = AE/EC → 4/2 = 6/EC → EC = 6×2/4 = 3',example:'Méthode : identifier les segments parallèles, poser le rapport, résoudre.'},
-  {type:'mcq',cat:'Trigonométrie',q:'Dans un triangle rectangle, sin(angle) = opposé / ?',opts:['Hypoténuse','Adjacent','Hypoténuse²','Opposé²'],ans:0,explain:'SOH-CAH-TOA : Sin=Opposé/Hypoténuse, Cos=Adjacent/Hypoténuse, Tan=Opposé/Adjacent',example:'Angle 30° : sin(30°)=0.5. Si hypoténuse=10, côté opposé=5'},
-  {type:'mcq',cat:'Trigonométrie',q:'Un triangle rectangle a un angle de 35° et une hypoténuse de 10 cm. Quel est le côté opposé à 35° ?',opts:['5.74 cm','8.19 cm','7 cm','3.5 cm'],ans:0,explain:'sin(35°) = opposé/10 → opposé = 10×sin(35°) ≈ 5.74 cm',example:'Pour trouver un côté : identifier sin/cos/tan selon les côtés connus.'},
-  {type:'mcq',cat:'Algèbre',q:"Résous : x² - 9 = 0",opts:['x=3 ou x=-3','x=9','x=3','x=0'],ans:0,explain:"x²=9 → x=3 ou x=-3. Une équation du 2e degré peut avoir 2 solutions !",example:'x²-25=0 → x=5 ou x=-5'},
-  {type:'mcq',cat:'Algèbre',q:'Développe : (x+3)(x-2)',opts:['x²+x-6','x²-x-6','x²+x+6','x²-6'],ans:0,explain:'(x+3)(x-2) = x²-2x+3x-6 = x²+x-6 (double distributivité)',example:'(a+b)(c+d)=ac+ad+bc+bd. Mémo : FOIL'},
-  {type:'mcq',cat:'Identités remarquables',q:"Laquelle est une identité remarquable correcte ?",opts:['(a+b)²=a²+2ab+b²','(a+b)²=a²+b²','(a-b)²=a²+b²','(a+b)(a-b)=a²+b²'],ans:0,explain:'Les 3 identités : (a+b)²=a²+2ab+b², (a-b)²=a²-2ab+b², (a+b)(a-b)=a²-b²',example:'(x+5)²=x²+10x+25'},
-  {type:'mcq',cat:'Géométrie',q:"Quelle est l'aire d'un disque de rayon 7 cm ?",opts:['49π cm²','14π cm²','7π cm²','98π cm²'],ans:0,explain:"Aire = πr² = π×7² = 49π ≈ 153.94 cm²",example:"Rayon 5 : A=25π≈78.5 cm²"},
-  {type:'mcq',cat:'Géométrie',q:'Le volume dune sphère de rayon r est :',opts:['(4/3)πr³','πr²h','(1/3)πr²h','2πr²'],ans:0,explain:'V=(4/3)πr³. Pour r=3 : V=36π≈113.1 cm³',example:'Rayon 6 : V=288π≈904.8 cm³'},
-  {type:'mcq',cat:'Probabilités',q:'Urne : 3 rouges, 5 bleues, 2 vertes. Probabilité de tirer rouge ?',opts:['3/10','1/3','3/5','1/10'],ans:0,explain:'P(rouge)=3/10=0.3',example:'P(bleu)=5/10=1/2. Somme de toutes les probabilités = 1'},
-  {type:'mcq',cat:'Statistiques',q:'La médiane de [2, 5, 7, 10, 14] est :',opts:['7','5','10','7.6'],ans:0,explain:'Médiane = valeur du milieu (3e sur 5) = 7',example:'[3,6,8,11,15] → médiane=8. Nb pair : moyenne des 2 du milieu'},
-  {type:'mcq',cat:'Fonctions',q:'f(x)=2x+3. Quelle est f(4) ?',opts:['11','14','10','8'],ans:0,explain:'f(4)=2×4+3=11',example:'f(0)=3 (ordonnée à l\'origine)'},
-  {type:'mcq',cat:'Fonctions',q:"La courbe de f(x)=ax passe toujours par :",opts:["L'origine (0,0)","(1,0)","(0,1)","(a,a)"],ans:0,explain:"f(0)=a×0=0 → passe par (0,0)",example:"f(x)=3x → passe par (0,0) et (1,3)"},
-  {type:'mcq',cat:'Proportionnalité',q:"4 stylos coûtent 6€. Combien coûtent 10 stylos ?",opts:['15€','12€','14€','16€'],ans:0,explain:"Prix unitaire=1.50€ → 10×1.50=15€",example:"Règle de trois : 4→6€, 10→? = 10×6/4=15€"},
-  {type:'mcq',cat:'Géométrie',q:'Quelle est la formule de la circonférence d\'un cercle ?',opts:['2πr','πr²','2πr²','πd²'],ans:0,explain:'Circonférence = 2πr = πd (d = diamètre = 2r)',example:'r=5 : C=2π×5=10π≈31.4 cm'},
-  {type:'mcq',cat:'Nombres relatifs',q:'Calcule : -8 + 5 - (-3)',opts:['0','6','-6','10'],ans:0,explain:'-8+5-(-3)=-8+5+3=-8+8=0. Soustraire un négatif revient à ajouter.',example:'-10+4-(-6)=-10+4+6=0'},
-  {type:'mcq',cat:'Fractions',q:'Calcule : 1/3 + 1/4',opts:['7/12','2/7','1/7','5/12'],ans:0,explain:'Dénominateur commun 12 : 4/12 + 3/12 = 7/12',example:'1/2+1/3 = 3/6+2/6 = 5/6'},
+  // AUTOMATISMES
+  {type:'auto',cat:'Automatisme',q:'Calcule : 7² − 5²',a:'24',hint:'7²=49, 5²=25 → 49−25=24',explain:'On calcule les carrés séparément, puis on soustrait.',tip:'Retiens : a²−b² = (a+b)(a−b). Ici (7+5)(7−5)=12×2=24 !',example:'6²−4² = 36−16 = 20'},
+  {type:'auto',cat:'Automatisme',q:'Simplifie la fraction : 24/36',a:'2/3',hint:'PGCD(24,36)=12 → 24÷12=2, 36÷12=3',explain:'Pour simplifier, on divise le numérateur et le dénominateur par leur PGCD.',tip:'Astuce : si les deux nombres sont pairs, divise par 2 jusqu\'à ce qu\'ils ne le soient plus.',example:'18/27 → PGCD=9 → 2/3'},
+  {type:'auto',cat:'Automatisme',q:'Résous : 4x + 8 = 28',a:'x=5',hint:'4x = 28−8 = 20 → x = 20÷4',explain:'Pour résoudre une équation, on isole x en effectuant la même opération des deux côtés.',tip:'Toujours vérifier : 4×5+8 = 20+8 = 28 ✓',example:'3x + 6 = 21 → 3x = 15 → x = 5'},
+  {type:'auto',cat:'Automatisme',q:'Calcule : (−4) × 7',a:'-28',hint:'(−) × (+) = (−)',explain:'Un nombre négatif multiplié par un positif donne un nombre négatif.',tip:'Règle des signes : (−)×(−)=(+) et (−)×(+)=(−)',example:'(−3)×8 = −24 ; (−5)×(−4) = +20'},
+  {type:'auto',cat:'Automatisme',q:'Calcule : √196',a:'14',hint:'14 × 14 = 196',explain:'La racine carrée de 196 est 14, car 14²=196.',tip:'Connais tes carrés par cœur : 12²=144, 13²=169, 14²=196, 15²=225',example:'√225=15, √169=13'},
+  {type:'auto',cat:'Automatisme',q:'Quel est le PGCD de 16 et 24 ?',a:'8',hint:'16=2⁴, 24=2³×3 → PGCD=2³=8',explain:'Le PGCD est le plus grand entier qui divise les deux nombres.',tip:'Méthode : liste les diviseurs ou utilise la décomposition en facteurs premiers.',example:'PGCD(20,30)=10 car 20=2×10, 30=3×10'},
+  {type:'auto',cat:'Automatisme',q:'Calcule 20% de 350',a:'70',hint:'20% = 20÷100 = 0.2 → 0.2×350',explain:'Pour calculer un pourcentage, on multiplie par le taux divisé par 100.',tip:'Astuce rapide : 20% = 2×10%. 10% de 350 = 35, donc 20% = 70.',example:'15% de 200 = 0.15×200 = 30'},
+  {type:'auto',cat:'Automatisme',q:'Convertis 3.2 km en mètres',a:'3200',hint:'1 km = 1000 m → 3.2 × 1000',explain:'Pour passer des km aux m, on multiplie par 1000.',tip:'Conversions à maîtriser : ×1000 pour km→m, ×100 pour m→cm, ×10 pour cm→mm',example:'0.75 km = 750 m ; 4.5 km = 4500 m'},
+  {type:'auto',cat:'Automatisme',q:'Calcule l\'aire d\'un rectangle : 9 cm × 7 cm',a:'63',hint:'Aire = longueur × largeur',explain:'L\'aire d\'un rectangle = longueur × largeur = 9 × 7 = 63 cm².',tip:'Ne confonds pas l\'aire (surface en cm²) avec le périmètre (contour en cm).',example:'Périmètre = 2×(9+7) = 32 cm ; Aire = 9×7 = 63 cm²'},
+  {type:'auto',cat:'Automatisme',q:'Calcule : 2⁵',a:'32',hint:'2×2×2×2×2',explain:'2⁵ = 2 multiplié 5 fois par lui-même = 32.',tip:'Puissances de 2 à connaître : 2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32, 2⁶=64',example:'3⁴ = 81 ; 5³ = 125'},
+  // QCM
+  {type:'mcq',cat:'Pythagore',q:'Triangle rectangle en A avec AB=6 cm et AC=8 cm. Quelle est BC ?',opts:['10 cm','14 cm','7 cm','48 cm'],ans:0,
+  explain:'Pythagore : BC² = AB² + AC² = 36 + 64 = 100 → BC = 10 cm',
+  tip:'Le triplet (6,8,10) est un multiple du triplet classique (3,4,5). Retiens-les !',
+  correction:'BC² = 6² + 8² = 36 + 64 = 100 → BC = √100 = 10 cm',
+  example:'Autres triplets : (5,12,13), (8,15,17), (7,24,25)'},
+  {type:'mcq',cat:'Réciproque de Pythagore',q:'Un triangle a des côtés 9, 40 et 41. Est-il rectangle ?',opts:['Oui, car 9²+40²=41²','Non','Oui, car 9+40=49','On ne peut pas savoir'],ans:0,
+  explain:'9²+40² = 81+1600 = 1681 = 41². La réciproque confirme que le triangle est rectangle !',
+  tip:'Pour vérifier si un triangle est rectangle : calcule a²+b² et compare à c² (c = plus grand côté).',
+  correction:'9²=81, 40²=1600, 41²=1681. Et 81+1600=1681 → OUI rectangle.',
+  example:'(5,12,13) : 25+144=169=13² ✓'},
+  {type:'mcq',cat:'Théorème de Thalès',q:'DE ∥ BC, AD=5, AB=8, AE=6. Quelle est AC ?',opts:['9.6','12','4','6.4'],ans:0,
+  explain:'Par Thalès : AD/AB = AE/AC → 5/8 = 6/AC → AC = 6×8/5 = 9.6',
+  tip:'Thalès : les rapports sont toujours égaux. Identifie d\'abord les triangles semblables.',
+  correction:'5/8 = 6/AC → AC = 48/5 = 9.6',
+  example:'Si AD/AB = AE/AC, alors aussi AD/DB = AE/EC'},
+  {type:'mcq',cat:'Trigonométrie',q:'Dans un triangle rectangle, cos(angle) = ?',opts:['Adjacent / Hypoténuse','Opposé / Hypoténuse','Opposé / Adjacent','Hypoténuse / Adjacent'],ans:0,
+  explain:'SOH-CAH-TOA : Sin=Opposé/Hyp, Cos=Adjacent/Hyp, Tan=Opposé/Adjacent',
+  tip:'Mémo : SOH-CAH-TOA. Récite-le jusqu\'à le connaître par cœur !',
+  correction:'Cos = Côté Adjacent / Hypoténuse (le côté "à côté" de l\'angle sur l\'hypoténuse)',
+  example:'Angle 60° : cos(60°)=0.5. Si hyp=10, adjacent=5'},
+  {type:'mcq',cat:'Trigonométrie',q:'Dans un triangle rectangle, angle=40°, hypoténuse=15 cm. Le côté opposé vaut ?',opts:['9.64 cm','11.49 cm','17.9 cm','7.5 cm'],ans:0,
+  explain:'sin(40°) = opposé/15 → opposé = 15 × sin(40°) ≈ 15 × 0.643 ≈ 9.64 cm',
+  tip:'Identifie d\'abord : quels côtés tu connais et cherches → choisis sin, cos ou tan.',
+  correction:'Angle donné + hypoténuse connue + cherche opposé → utilise sin. sin(40°)×15≈9.64',
+  example:'Avec angle=30°, hyp=20 : opposé = 20×sin(30°) = 20×0.5 = 10 cm'},
+  {type:'mcq',cat:'Algèbre',q:'Développe et réduis : (2x+3)(x−4)',opts:['2x²−5x−12','2x²+5x−12','2x²−5x+12','2x²−12'],ans:0,
+  explain:'Double distributivité : 2x×x + 2x×(−4) + 3×x + 3×(−4) = 2x²−8x+3x−12 = 2x²−5x−12',
+  tip:'Méthode FOIL : First (2x×x), Outer (2x×−4), Inner (3×x), Last (3×−4)',
+  correction:'2x²−8x+3x−12 = 2x²+(−8+3)x−12 = 2x²−5x−12',
+  example:'(x+2)(x+3) = x²+5x+6 ; (x−1)(x+5) = x²+4x−5'},
+  {type:'mcq',cat:'Identités remarquables',q:'Développe : (3x−2)²',opts:['9x²−12x+4','9x²+4','9x²−4','9x²+12x+4'],ans:0,
+  explain:'(a−b)² = a²−2ab+b². Ici a=3x, b=2 → 9x²−12x+4',
+  tip:'Les 3 identités : (a+b)²=a²+2ab+b², (a-b)²=a²-2ab+b², (a+b)(a-b)=a²-b²',
+  correction:'(3x)²−2×3x×2+2² = 9x²−12x+4',
+  example:'(x+5)²=x²+10x+25 ; (2x−1)²=4x²−4x+1'},
+  {type:'mcq',cat:'Probabilités',q:'Un sac : 4 billes rouges, 3 bleues, 3 vertes. P(bleue) = ?',opts:['3/10','1/3','3/7','3/4'],ans:0,
+  explain:'P(bleue) = 3/(4+3+3) = 3/10 = 0.3',
+  tip:'Probabilité = nombre de cas favorables / nombre de cas total. Toujours vérifier que la somme = 1.',
+  correction:'Total = 4+3+3 = 10. P(bleue) = 3/10',
+  example:'P(rouge)=4/10, P(verte)=3/10. Vérif : 4/10+3/10+3/10=10/10=1 ✓'},
+  {type:'mcq',cat:'Statistiques',q:'Moyenne de la série : 4, 8, 6, 12, 10',opts:['8','6','10','7'],ans:0,
+  explain:'Moyenne = somme / effectif = (4+8+6+12+10)/5 = 40/5 = 8',
+  tip:'Moyenne = on additionne tout, on divise par le nombre de valeurs. Ne pas confondre avec la médiane !',
+  correction:'4+8+6+12+10 = 40. 40÷5 = 8',
+  example:'Médiane de cette série : rangées [4,6,8,10,12] → médiane = 8 (valeur du milieu)'},
+  {type:'mcq',cat:'Fonctions',q:'f(x) = x² − 3x + 2. Quelle est f(3) ?',opts:['2','4','8','0'],ans:0,
+  explain:'f(3) = 3²−3×3+2 = 9−9+2 = 2',
+  tip:'Pour calculer f(a), remplace CHAQUE x par a dans la formule.',
+  correction:'f(3) = 9−9+2 = 2',
+  example:'f(0)=2, f(1)=0, f(2)=0 → les racines sont x=1 et x=2 !'},
+  {type:'mcq',cat:'Géométrie',q:'Volume d\'un cylindre de rayon 5 cm et hauteur 12 cm ?',opts:['300π cm³','60π cm³','120π cm³','25π cm³'],ans:0,
+  explain:'Volume cylindre = πr²h = π×25×12 = 300π ≈ 942 cm³',
+  tip:'Retiens les formules : cube=a³, parallélépipède=lLh, cylindre=πr²h, cône=(1/3)πr²h, sphère=(4/3)πr³',
+  correction:'V = π×5²×12 = π×25×12 = 300π cm³',
+  example:'Rayon 3, hauteur 10 : V = 9π×10 = 90π ≈ 283 cm³'},
 ],
 
 french:[
-  {type:'mcq',cat:'Grammaire',q:'Quel est le COD dans : "Marie mange une pomme" ?',opts:['Une pomme','Marie','Mange','Aucun'],ans:0,explain:'COD : "Mange quoi ?" → une pomme. Réponse directe au verbe sans préposition.',example:'"Il lit un livre" → COD=un livre'},
-  {type:'mcq',cat:'Conjugaison',q:'Quel est le temps de : "Nous avions mangé" ?',opts:['Plus-que-parfait','Imparfait','Passé composé','Passé simple'],ans:0,explain:'Auxiliaire à l\'imparfait + participe passé = plus-que-parfait.',example:'"Il était parti avant que j\'arrive" → était parti = plus-que-parfait'},
-  {type:'mcq',cat:'Conjugaison',q:'"Je chantais" est à quel temps ?',opts:['Imparfait','Passé simple','Conditionnel','Présent'],ans:0,explain:'L\'imparfait exprime une action passée répétée, habituelle ou décrivant le contexte. Terminaison en -ais, -ais, -ait, -ions, -iez, -aient.',example:'"Quand j\'étais enfant, je jouais souvent dehors"'},
-  {type:'mcq',cat:'Figures de style',q:'Quelle figure est : "Il pleut des cordes" ?',opts:['Hyperbole','Métaphore','Comparaison','Oxymore'],ans:0,explain:"L'hyperbole = exagération pour effet. \"Des cordes\" exagère l'intensité.",example:'"Je meurs de faim", "Il court comme le vent"'},
-  {type:'mcq',cat:'Figures de style',q:'"La lune est un astre d\'argent" — quelle figure ?',opts:['Métaphore','Comparaison','Allitération','Personnification'],ans:0,explain:'Métaphore : assimile directement sans "comme". Comparaison utiliserait "comme" ou "tel".',example:'Méta: "La vie est un voyage". Compar: "La vie est COMME un voyage"'},
-  {type:'mcq',cat:'Figures de style',q:'Qu\'est-ce qu\'un oxymore ?',opts:['Association de deux termes contradictoires','Répétition d\'un son','Exagération','Comparaison sans outil'],ans:0,explain:'Oxymore = deux mots de sens opposés placés ensemble pour créer un effet poétique.',example:'"Cette obscure clarté" (Corneille), "un silence assourdissant"'},
-  {type:'mcq',cat:'Types de textes',q:'Un texte argumentatif vise à :',opts:['Convaincre le lecteur','Raconter une histoire','Décrire un lieu','Expliquer un phénomène'],ans:0,explain:'Texte argumentatif : thèse + arguments + exemples pour convaincre.',example:'Structure : intro → 2-3 arguments → conclusion/réfutation'},
-  {type:'mcq',cat:'Rédaction',q:'Quelle est la structure d\'un développement construit ?',opts:['Intro + 2-3 parties + conclusion','Seulement une intro','Un paragraphe de description','Aucune structure fixe'],ans:0,explain:'Développement construit = intro (pose le sujet) + parties (avec arguments+exemples) + conclusion (répond à la problématique).',example:'"Nous verrons d\'abord... puis... enfin..."'},
-  {type:'mcq',cat:'Orthographe',q:'Accord du participe passé : "Les lettres que j\'ai ___ (écrire)"',opts:['Écrites','Écrit','Écrits','Écrite'],ans:0,explain:'Avec avoir, le PP s\'accorde avec le COD si celui-ci est AVANT le verbe. "que"=les lettres (fém. plur.) est avant → écrites.',example:'"La chanson que j\'ai chantée" → COD fém. avant → -e'},
-  {type:'mcq',cat:'Lecture',q:'Qu\'est-ce qu\'un narrateur homodiégétique ?',opts:['Un narrateur qui participe à l\'histoire (je)','Un narrateur externe omniscient','Un personnage secondaire','Un narrateur invisible'],ans:0,explain:'Homodiégétique = présent dans l\'histoire, utilise "je". Hétérodiégétique = extérieur, utilise "il/elle".',example:'"Je marchais dans la rue..." = homo. "Paul marchait..." = hétéro'},
-  {type:'mcq',cat:'Poésie',q:'Combien de syllabes a un alexandrin ?',opts:['12','8','10','14'],ans:0,explain:"L'alexandrin = vers de 12 syllabes, pilier de la poésie classique.",example:'"Je le vis, je rougis, je pâlis à sa vue" (Racine, Phèdre)'},
-  {type:'mcq',cat:'Vocabulaire',q:'Quel est l\'antonyme de "bénévole" ?',opts:['Salarié','Volontaire','Altruiste','Généreux'],ans:0,explain:'Bénévole = travaille sans salaire, de façon volontaire. Antonyme = salarié (qui est payé).',example:'"Elle est bénévole dans une association" ≠ "Il est salarié dans une entreprise"'},
-  {type:'mcq',cat:'Grammaire',q:'Quel est le sujet dans : "Pendant l\'orage, les enfants tremblaient" ?',opts:['Les enfants','L\'orage','Pendant','Tremblaient'],ans:0,explain:'Le sujet = celui/ce qui fait l\'action. "Qui est-ce qui tremblait ?" → les enfants.',example:'"La pluie tombe" → sujet = la pluie'},
-  {type:'mcq',cat:'Conjugaison',q:'Au futur simple, "nous allons" devient :',opts:['Nous irons','Nous allerons','Nous ailerons','Nous allirons'],ans:0,explain:'Aller au futur est irrégulier : ir- (radical) + -ons = irons. Comme venir→viendrons, faire→ferons.',example:'Je irai, tu iras, il ira, nous irons, vous irez, ils iront'},
-  {type:'mcq',cat:'Types de textes',q:'Qu\'est-ce qu\'une thèse dans un texte argumentatif ?',opts:['L\'opinion principale défendue par l\'auteur','Un exemple','La conclusion','Une anecdote'],ans:0,explain:'La thèse = position/opinion que l\'auteur défend. Les arguments soutiennent la thèse, les exemples illustrent les arguments.',example:'Thèse: "Le sport est bénéfique pour la santé" → arguments → exemples'},
+  {type:'mcq',cat:'Grammaire — Nature des mots',q:'Dans "Le chien aboie bruyamment", quel est le rôle de "bruyamment" ?',opts:['Adverbe de manière','Adjectif qualificatif','Complément d\'objet','Sujet'],ans:0,
+  explain:'"Bruyamment" modifie le verbe "aboie" → c\'est un adverbe de manière. Les adverbes sont invariables.',
+  tip:'Les adverbes se terminent souvent en -ment. Ils modifient un verbe, un adjectif ou un autre adverbe.',
+  correction:'"aboie" (verbe) + "bruyamment" (comment ?) → adverbe de manière',
+  example:'"Il court rapidement" → rapidement = adverbe. "Elle est très belle" → très = adverbe d\'intensité'},
+  {type:'mcq',cat:'Grammaire — Fonctions',q:'Quel est le COI dans : "Elle pense à ses vacances" ?',opts:['À ses vacances','Elle','Pense','Ses vacances'],ans:0,
+  explain:'COI = Complément d\'Objet Indirect. Il répond à "à quoi ?" ou "de quoi ?" après le verbe. Ici : "pense à quoi ?" → à ses vacances.',
+  tip:'COD = répond à "quoi?" directement. COI = répond à "à quoi?" ou "de quoi?" (avec préposition).',
+  correction:'"pense À quoi ?" → à ses vacances = COI (avec préposition "à")',
+  example:'"Je parle à mon ami" → à mon ami = COI. "Je mange une pomme" → une pomme = COD'},
+  {type:'mcq',cat:'Conjugaison',q:'"Nous eûmes chanté" est à quel temps ?',opts:['Passé antérieur','Plus-que-parfait','Passé simple','Conditionnel passé'],ans:0,
+  explain:'Passé antérieur = auxiliaire au passé simple + participe passé. Employé dans les subordonnées temporelles.',
+  tip:'Passé antérieur → toujours accompagné d\'une proposition principale au passé simple.',
+  correction:'"eûmes" = passé simple de "avoir" + "chanté" (participe passé) = passé antérieur',
+  example:'"Quand il eut fini, il sortit" → "eut fini" = passé antérieur, "sortit" = passé simple'},
+  {type:'mcq',cat:'Figures de style',q:'Quelle figure est : "La lune souriait doucement" ?',opts:['Personnification','Hyperbole','Métaphore','Comparaison'],ans:0,
+  explain:'Personnification = on attribue des caractéristiques humaines à une chose ou un animal. "Sourire" est une action humaine attribuée à la lune.',
+  tip:'Personnification : un objet fait une action humaine. Métaphore : on compare sans "comme".',
+  correction:'"sourire" est une action humaine → attribuée à "la lune" (objet) → personnification',
+  example:'"Le vent hurlait", "La mer furieuse avalait les bateaux" → personnifications'},
+  {type:'mcq',cat:'Figures de style',q:'Quelle figure est : "Je suis mort de fatigue" ?',opts:['Hyperbole','Métaphore','Litote','Oxymore'],ans:0,
+  explain:'Hyperbole = exagération intentionnelle pour produire un effet fort. "Mort de fatigue" exagère l\'état de fatigue.',
+  tip:'Hyperbole = exagérer. Litote = dire moins pour signifier plus ("Ce n\'est pas mal" = c\'est bien).',
+  correction:'"mort de fatigue" = exagération → hyperbole',
+  example:'"Je t\'ai dit mille fois !", "Il court aussi vite que l\'éclair" → hyperboles'},
+  {type:'mcq',cat:'Rédaction — Développement construit',q:'Dans une rédaction argumentative, à quoi sert l\'introduction ?',opts:['Présenter le sujet et annoncer le plan','Donner tous les arguments','Conclure la démonstration','Citer des exemples'],ans:0,
+  explain:'L\'introduction : 1. accroche le lecteur, 2. présente le sujet/contexte, 3. formule la problématique, 4. annonce le plan.',
+  tip:'Mémo intro : Accroche → Contexte → Problématique → Annonce du plan',
+  correction:'L\'introduction ne donne pas d\'arguments, elle prépare le lecteur à la démonstration.',
+  example:'"Nous verrons dans un premier temps... puis dans un second temps..."'},
+  {type:'mcq',cat:'Orthographe',q:'Accord correct : "Les robes que j\'ai ___" (acheter)',opts:['Achetées','Acheté','Achetés','Acheté(e)s'],ans:0,
+  explain:'COD avant le verbe avec avoir → accord du PP. "que" = "les robes" (féminin pluriel) placé AVANT "ai acheté" → achetées.',
+  tip:'Règle PP avec avoir : si COD est AVANT le verbe → accord. Si COD est APRÈS → pas d\'accord.',
+  correction:'"que" (=les robes, fém. plur.) est placé avant le verbe → achetées (fém. plur.)',
+  example:'"Les fruits que j\'ai mangés" ✓ / "J\'ai mangé des fruits" (pas d\'accord) ✓'},
+  {type:'mcq',cat:'Types de textes',q:'Quel procédé rend un texte descriptif plus vivant ?',opts:['Les figures de style (métaphores, comparaisons...)','Les chiffres et statistiques','La conjugaison au passé simple','Les dialogues uniquement'],ans:0,
+  explain:'Les figures de style enrichissent la description et permettent au lecteur de mieux visualiser la scène. Elles rendent le texte plus expressif.',
+  tip:'Dans une description : utilise les 5 sens (vue, ouïe, odorat, toucher, goût) + figures de style.',
+  correction:'Un texte descriptif s\'enrichit grâce aux comparaisons, métaphores, hyperboles...',
+  example:'"La mer était bleue" (plat) vs "La mer brillait comme un immense miroir de saphir" (vivant)'},
+  {type:'mcq',cat:'Lecture analytique',q:'Qu\'est-ce qu\'un roman de formation (Bildungsroman) ?',opts:['Roman où le héros évolue et grandit au fil de l\'histoire','Roman historique','Roman policier','Roman fantastique'],ans:0,
+  explain:'Le roman de formation (Bildungsroman) suit l\'évolution d\'un jeune personnage qui grandit, apprend et se construit une identité.',
+  tip:'Exemples classiques à connaître : Candide (Voltaire), Émile ou De l\'éducation (Rousseau).',
+  correction:'Bildungsroman = roman de "formation" ou d\'apprentissage. Le héros mûrit au fil du récit.',
+  example:'"Candide" de Voltaire, "Oliver Twist" de Dickens → héros qui grandissent'},
+  {type:'mcq',cat:'Poésie',q:'Qu\'est-ce qu\'une rime embrassée ?',opts:['Schéma ABBA','Schéma ABAB','Schéma AABB','Schéma AAAA'],ans:0,
+  explain:'Rimes embrassées : ABBA (la rime extérieure "embrasse" la rime intérieure). Rimes croisées : ABAB. Rimes suivies : AABB.',
+  tip:'Mémo : Em-bras-sée = les rimes s\'embrassent (s\'entourent) → ABBA',
+  correction:'ABBA : vers 1 et 4 riment (A), vers 2 et 3 riment (B) → les A "embrassent" les B',
+  example:'"Je suis venu calme orphelin..." (Verlaine) → ABBA'},
 ],
 
 histoire:[
-  {type:'mcq',cat:'1ère Guerre Mondiale',q:'En quelle année a commencé la Première Guerre Mondiale ?',opts:['1914','1918','1912','1916'],ans:0,explain:'La PGM débute le 28 juillet 1914, après l\'assassinat de l\'archiduc François-Ferdinand à Sarajevo le 28 juin 1914.',example:'1914 début → 1916 Verdun → 1917 USA entrent → 11 nov. 1918 armistice'},
-  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Qu\'est-ce que la guerre des tranchées ?',opts:['Guerre de position où soldats vivent dans des fossés creusés','Guerre navale','Guerre aérienne','Guerre coloniale'],ans:0,explain:'Guerre des tranchées = guerre de position. Les "poilus" vivaient dans des tranchées. Conditions terribles : boue, gaz, obus, rats.',example:'Front Ouest = ligne de tranchées Belgique→Suisse. Verdun (1916) : 700 000 morts en 10 mois'},
-  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Le traité de Versailles (1919) imposait à l\'Allemagne :',opts:['Réparations, perte de territoires, limitation de l\'armée','Alliance avec la France','Partage de colonies','Aucune condition'],ans:0,explain:'Traité de Versailles : clause de culpabilité (art.231), 132 milliards de marks-or, perte d\'Alsace-Lorraine, armée limitée à 100 000 hommes.',example:'Ces conditions → ressentiment → montée du nazisme'},
-  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Qui était Adolf Hitler ?',opts:['Chancelier puis Führer d\'Allemagne nazie','Président de Vichy','Général américain','Chef soviétique'],ans:0,explain:'Hitler, chef du NSDAP (parti nazi), chancelier en 1933, Führer en 1934. Régime totalitaire et raciste.',example:'Totalitarisme nazi : parti unique, propagande, Gestapo, antisémitisme'},
-  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Qu\'est-ce que la Shoah ?',opts:['Extermination systématique des Juifs par les nazis','Une bataille décisive','Le débarquement allié','L\'armistice de 1945'],ans:0,explain:'La Shoah = génocide de 6 millions de Juifs. Solution finale décidée à Wannsee (1942) : déportation vers camps d\'extermination (Auschwitz, Treblinka...).',example:'Étapes : lois Nuremberg (1935) → Kristallnacht (1938) → ghettos → camps'},
-  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Le débarquement du 6 juin 1944 a eu lieu en :',opts:['Normandie','Bretagne','Provence','Alsace'],ans:0,explain:'D-Day = opération Overlord. 150 000+ soldats alliés sur 5 plages (Utah, Omaha, Gold, Juno, Sword). Tournant décisif.',example:'Paris libéré le 25 août 1944. Omaha Beach = plage américaine la plus meurtrière'},
-  {type:'mcq',cat:'Révolution française',q:'En quelle année est prise la Bastille ?',opts:['1789','1793','1776','1815'],ans:0,explain:'Le 14 juillet 1789 : prise de la Bastille, symbole de l\'absolutisme royal. Début de la Révolution française.',example:'1789→DDHC→1792 Ire République→1793 Terreur→1799 Bonaparte'},
-  {type:'mcq',cat:'20e siècle',q:'Qu\'est-ce que la guerre froide ?',opts:['Tension USA-URSS sans conflit direct (1947-1991)','Guerre dans les pays nordiques','La Guerre de Corée','Conflit France-Allemagne'],ans:0,explain:'Guerre Froide = rivalité idéologique USA (capitalisme) vs URSS (communisme) sans affrontement direct.',example:'Berlin (1948-1949), Mur de Berlin (1961-89), crise Cuba (1962)'},
-  {type:'mcq',cat:'20e siècle',q:'Quand tombe le mur de Berlin ?',opts:['1989','1991','1979','1968'],ans:0,explain:'Mur de Berlin tombe le 9 novembre 1989. Séparait Berlin-Ouest (capitaliste) de Berlin-Est (communiste) depuis 1961.',example:'1961 construction → 1989 chute → 1990 réunification → 1991 dissolution URSS'},
-  {type:'mcq',cat:'20e siècle',q:'Qu\'est-ce que le régime de Vichy ?',opts:['Gouvernement français collaborant avec l\'Allemagne nazie (1940-1944)','Un gouvernement républicain','Un gouvernement de résistance','Un gouvernement provisoire'],ans:0,explain:'Régime de Vichy : après la défaite de 1940, le maréchal Pétain signe l\'armistice et collabore avec l\'Allemagne. Fin de la IIIe République.',example:'De Gaulle à Londres fonde la France Libre le 18 juin 1940 (Appel)'},
-  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Qu\'est-ce qu\'un "poilu" ?',opts:['Surnom des soldats français de la PGM','Un général','Un espion','Un civil'],ans:0,explain:'"Poilu" = surnom affectueux des soldats français pendant la PGM. Ils vivaient dans les tranchées dans des conditions extrêmes.',example:'Symbole de la résistance et du sacrifice. Monument aux morts dans chaque commune française.'},
-  {type:'mcq',cat:'Histoire des arts',q:'Qui a peint "Guernica" et pourquoi ?',opts:['Picasso, en réponse au bombardement de Guernica en 1937','Dali, en hommage à la paix','Monet, pendant la PGM','Warhol, au Pop Art'],ans:0,explain:'Guernica (1937) = œuvre de Pablo Picasso dénonçant le bombardement de la ville basque de Guernica par les forces nazies pendant la guerre d\'Espagne.',example:'Chef-d\'œuvre du cubisme engagé. Symbole universel contre la guerre et la barbarie.'},
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Quel événement déclenche directement la Première Guerre Mondiale ?',opts:['L\'assassinat de l\'archiduc François-Ferdinand à Sarajevo','La déclaration de guerre de la France','L\'invasion de la Belgique','La bataille de Verdun'],ans:0,
+  explain:'Le 28 juin 1914 : l\'archiduc François-Ferdinand (héritier d\'Autriche-Hongrie) est assassiné à Sarajevo par Gavrilo Princip (nationaliste serbe). Le jeu des alliances entraîne toute l\'Europe dans la guerre.',
+  tip:'Retiens la chaîne : assassinat → Autriche vs Serbie → jeu d\'alliances → guerre mondiale',
+  correction:'L\'assassinat de Sarajevo (28 juin 1914) → déclaration guerre Autriche-Serbie → alliances → PGM',
+  example:'Triple Alliance (Allemagne, Autriche, Italie) vs Triple Entente (France, Russie, Royaume-Uni)'},
+  {type:'mcq',cat:'1ère Guerre Mondiale',q:'Qu\'est-ce que le "bilan humain" de la 1ère Guerre Mondiale ?',opts:['~18 millions de morts (soldats + civils)','~1 million de morts','~50 millions de morts','~5 millions de morts'],ans:0,
+  explain:'La PGM = environ 10 millions de soldats tués + 8 millions de civils = ~18 millions de morts. Sans compter les blessés et mutilés ("gueules cassées").',
+  tip:'PGM : 18 millions de morts. WW2 : 60-70 millions. Ces chiffres montrent l\'ampleur des deux conflits.',
+  correction:'~18 millions de morts → conflit le plus meurtrier jusqu\'alors dans l\'histoire de l\'humanité',
+  example:'"Les gueules cassées" = soldats défigurés. Les monuments aux morts dans chaque village français'},
+  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Qu\'est-ce que l\'Appel du 18 juin 1940 ?',opts:['Discours de De Gaulle à Londres refusant la défaite','La déclaration de guerre de la France','L\'armistice signé par Pétain','Le débarquement en Normandie'],ans:0,
+  explain:'Le 18 juin 1940, le général de Gaulle lance un appel à la radio BBC depuis Londres pour refuser la capitulation et appeler les Français à continuer le combat. Il fonde la France Libre.',
+  tip:'18 juin 1940 = date clé ! De Gaulle dit NON à la défaite et OUI à la résistance.',
+  correction:'De Gaulle à Londres, BBC, 18 juin 1940 → "La France a perdu une bataille ! Mais la France n\'a pas perdu la guerre !"',
+  example:'Résistance intérieure (Jean Moulin, maquis) + France Libre (De Gaulle, FFL) = deux formes de résistance'},
+  {type:'mcq',cat:'2ème Guerre Mondiale',q:'Quand et où sont lancées les bombes atomiques américaines ?',opts:['Hiroshima (6 août) et Nagasaki (9 août) 1945','Tokyo 1945','Hiroshima et Berlin 1945','Nagasaki 1944'],ans:0,
+  explain:'Les USA larguent 2 bombes atomiques : "Little Boy" sur Hiroshima le 6 août 1945 et "Fat Man" sur Nagasaki le 9 août. Le Japon capitule le 15 août → fin de la WW2.',
+  tip:'Retiens : 6 août = Hiroshima, 9 août = Nagasaki, 15 août = capitulation japonaise',
+  correction:'Hiroshima 6/08/1945 : ~140 000 morts. Nagasaki 9/08/1945 : ~70 000 morts → fin WW2',
+  example:'Ces bombes ouvrent l\'ère nucléaire et la course aux armements de la Guerre Froide'},
+  {type:'mcq',cat:'Révolution française',q:'Que proclame la DDHC du 26 août 1789 ?',opts:['Les droits naturels et imprescriptibles de l\'homme : liberté, propriété, sûreté','La fin de la monarchie','La création de la République','La condamnation du roi'],ans:0,
+  explain:'La Déclaration des Droits de l\'Homme et du Citoyen (DDHC) proclame les droits fondamentaux. Art.1 : "Les hommes naissent libres et égaux en droits." Elle inspire encore nos constitutions.',
+  tip:'DDHC = 17 articles. Valeurs : Liberté, Égalité, Sûreté, Résistance à l\'oppression.',
+  correction:'La DDHC ne met pas fin à la monarchie (Louis XVI règne encore jusqu\'en 1792)',
+  example:'Article 4 : "La liberté consiste à pouvoir faire tout ce qui ne nuit pas à autrui"'},
+  {type:'mcq',cat:'20e siècle',q:'Quelle est la doctrine Truman (1947) ?',opts:['Les USA s\'engagent à aider tout pays menacé par le communisme','Accord de paix entre USA et URSS','La création de l\'ONU','Le plan Marshall'],ans:0,
+  explain:'Doctrine Truman (mars 1947) : les USA acceptent d\'aider militairement et économiquement tout pays menacé par le communisme. Début officiel de la Guerre Froide.',
+  tip:'Doctrine Truman + Plan Marshall = deux piliers de la politique anti-soviétique américaine en 1947',
+  correction:'La doctrine Truman et le Plan Marshall sont deux choses différentes mais complémentaires',
+  example:'Plan Marshall = aide économique à l\'Europe (13 milliards $). Doctrine Truman = aide politique/militaire'},
+  {type:'mcq',cat:'20e siècle',q:'Qu\'est-ce que la décolonisation ?',opts:['Processus par lequel les colonies accèdent à l\'indépendance (1945-1975)','La colonisation de l\'Afrique','La création d\'empires coloniaux','Le retour des colons en Europe'],ans:0,
+  explain:'Après 1945 : vague de décolonisation. Les peuples colonisés réclament l\'indépendance (ONU, nationalisme, affaiblissement des métropoles après la WW2). Décolonisation violente (Algérie) ou pacifique (Inde).',
+  tip:'Décolonisation pacifique : Inde (Gandhi, 1947). Violente : Algérie (1954-1962), Vietnam (1954).',
+  correction:'La décolonisation = gain d\'indépendance ≠ colonisation (conquête)',
+  example:'Algérie : guerre d\'indépendance 1954-1962. Inde : indépendance 1947 sous Gandhi (non-violence)'},
+  {type:'mcq',cat:'Histoire des arts',q:'Pourquoi le mémorial de la Shoah est-il important ?',opts:['Il commémore les 6 millions de Juifs assassinés par les nazis et transmet la mémoire','C\'est un musée d\'histoire militaire','Il célèbre la victoire des Alliés','Il honore la Résistance française'],ans:0,
+  explain:'Le mémorial de la Shoah (Paris) conserve les archives, transmet la mémoire des victimes et éduque contre l\'antisémitisme et les génocides. Le Devoir de mémoire est essentiel pour "Plus jamais ça".',
+  tip:'"Plus jamais ça" = devise qui rappelle l\'importance de ne jamais oublier les génocides.',
+  correction:'Le mémorial de la Shoah commémore le génocide juif, pas la victoire militaire',
+  example:'Musée de l\'Holocauste à Washington, Yad Vashem à Jérusalem → mémoriaux similaires'},
 ],
 
 geo:[
-  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce que la mondialisation ?',opts:['Interdépendance croissante des économies et sociétés mondiales','L\'uniformisation des cultures','La création de l\'ONU','La décolonisation'],ans:0,explain:'Mondialisation = intensification des échanges (biens, services, capitaux, personnes, idées) à l\'échelle mondiale.',example:'FMN (firmes multinationales) comme Apple, Toyota : production dans plusieurs pays'},
-  {type:'mcq',cat:'Développement',q:'Qu\'est-ce que l\'IDH ?',opts:['Indice de Développement Humain','Indice de Déforestation Habituelle','Indicateur de Dette des États','Indice de Dépense des Ménages'],ans:0,explain:'IDH (0 à 1) : espérance de vie + éducation + revenu/habitant. Créé par l\'ONU.',example:'Norvège 0.96 (très élevé), Burundi 0.43 (faible)'},
-  {type:'mcq',cat:'Population',q:'Combien d\'habitants compte la Terre environ ?',opts:['8 milliards','10 milliards','5 milliards','7 milliards'],ans:0,explain:'En 2024, ~8 milliards d\'habitants. Prévision : 9-10 milliards en 2050.',example:'Asie = 60% de la population. Chine et Inde > 1.4 milliard chacune'},
-  {type:'mcq',cat:'Environnement',q:'Qu\'est-ce que le développement durable ?',opts:['Développement répondant aux besoins présents sans compromettre l\'avenir','Croissance économique maximale','Suppression de l\'industrie','Aide aux pays pauvres'],ans:0,explain:'Définition Brundtland (1987). 3 piliers : économique, social, environnemental.',example:'Énergies renouvelables, agriculture bio, transports en commun'},
-  {type:'mcq',cat:'Territoires français',q:'Combien de DROM possède la France ?',opts:['5','3','7','4'],ans:0,explain:'5 DROM : Guadeloupe, Martinique, Guyane, La Réunion, Mayotte. Régions françaises à part entière.',example:'La Martinique est un DROM depuis 1946. Applique le droit français avec adaptations fiscales.'},
-  {type:'mcq',cat:'Espaces urbains',q:'Qu\'appelle-t-on une mégalopole ?',opts:['Regroupement de mégapoles formant un couloir urbain continu','Ville de plus d\'un million d\'habitants','Capitale d\'un pays','Quartier d\'affaires'],ans:0,explain:'Mégalopole = ensemble de villes géantes reliées. Ex : BosWash (Boston-Washington), Tokaïdo (Japon).',example:'Village < bourg < ville < métropole < mégapole (>10M) < mégalopole'},
-  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce qu\'une FTN (firme transnationale) ?',opts:['Entreprise qui produit et vend dans plusieurs pays','Une organisation internationale','Une banque mondiale','Un syndicat international'],ans:0,explain:'FTN (aussi FMN) = entreprise dont l\'activité s\'étend sur plusieurs pays. Siège dans un pays, filiales ailleurs.',example:'Toyota : conçu au Japon, assemblé en France, vendu partout. Même chose pour Apple, Nestlé...'},
-  {type:'mcq',cat:'Géographie physique',q:'Qu\'est-ce que le réchauffement climatique ?',opts:['Augmentation de la température moyenne de la Terre due aux GES','Un phénomène naturel cyclique uniquement','La pollution de l\'air uniquement','Une théorie non prouvée'],ans:0,explain:'Le réchauffement climatique est causé par l\'augmentation des gaz à effet de serre (CO2, méthane...) due aux activités humaines.',example:'Conséquences : fonte des glaces, montée des eaux, événements climatiques extrêmes'},
-  {type:'mcq',cat:'Inégalités mondiales',q:'Qu\'est-ce que le "Nord" et le "Sud" en géographie ?',opts:['Distinction entre pays développés (Nord) et pays en développement (Sud)','Une division géographique stricte','Les pays froids vs pays chauds','Les pays producteurs vs consommateurs'],ans:0,explain:'Nord = pays riches/développés (Europe, Amérique du Nord, Japon...). Sud = pays en développement (Afrique, grande partie Asie, Amérique latine). Ce n\'est pas une frontière géographique stricte.',example:'Australie et Nouvelle-Zélande sont dans le "Nord" malgré leur position.'},
+  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce qu\'un Centre d\'Impulsion Mondial (CIM) ?',opts:['Métropole concentrant pouvoir financier, décisionnel et culturel mondial','Une usine de production','Une organisation internationale','Un port commercial'],ans:0,
+  explain:'Les CIM (New York, Londres, Tokyo, Paris...) concentrent les sièges des FTN, les bourses mondiales, les centres culturels. Ils "pilotent" l\'économie mondiale.',
+  tip:'CIM = villes qui commandent la mondialisation. Retiens : New York, Londres, Tokyo = les 3 principaux.',
+  correction:'CIM ≠ simple grande ville : c\'est une ville qui concentre POUVOIR et DÉCISION à l\'échelle mondiale',
+  example:'New York : Wall Street + ONU + FTN + médias → CIM par excellence'},
+  {type:'mcq',cat:'Développement',q:'Qu\'est-ce que l\'espérance de vie à la naissance ?',opts:['Durée de vie moyenne estimée d\'un individu dans un pays donné','Le nombre de naissances par an','L\'âge moyen de la population','La durée de scolarisation'],ans:0,
+  explain:'L\'espérance de vie à la naissance = âge moyen auquel décèdent les habitants d\'un pays. Indicateur clé du développement humain (intégré à l\'IDH).',
+  tip:'Plus un pays est développé → meilleure santé → espérance de vie plus élevée.',
+  correction:'Espérance de vie ≠ âge moyen actuel de la population (qui dépend de la pyramide des âges)',
+  example:'Japon : ~84 ans (record mondial). Sierra Leone : ~54 ans. France : ~82 ans'},
+  {type:'mcq',cat:'Environnement',q:'Qu\'est-ce que l\'effet de serre naturel ?',opts:['Les gaz atmosphériques retiennent la chaleur du soleil, rendant la Terre habitable','La destruction de la couche d\'ozone','Le réchauffement climatique uniquement','La pollution industrielle'],ans:0,
+  explain:'L\'effet de serre NATUREL est indispensable à la vie : il maintient la température moyenne de la Terre à +15°C (sans lui : −18°C). Le problème = l\'AMPLIFICATION par les activités humaines.',
+  tip:'Attention : effet de serre naturel = bénéfique. Effet de serre renforcé par l\'homme = problème.',
+  correction:'L\'effet de serre naturel est une condition de vie sur Terre. C\'est son amplification qui pose problème.',
+  example:'GES (gaz à effet de serre) : CO₂, méthane, vapeur d\'eau. CO₂ augmente à cause de l\'industrie/transports'},
+  {type:'mcq',cat:'Population',q:'Qu\'est-ce que la transition démographique ?',opts:['Passage d\'une forte natalité/mortalité à une faible natalité/mortalité','L\'explosion démographique permanente','La diminution de la population','L\'urbanisation rapide'],ans:0,
+  explain:'Transition démographique : d\'abord mortalité baisse (progrès médical) → fort accroissement. Puis natalité baisse (développement, éducation) → stabilisation. Tous les pays passent par là.',
+  tip:'Phase 1 : forte natal. + forte mort. = stable. Phase 2 : mort. baisse = boom. Phase 3 : natal. baisse = stable.',
+  correction:'La transition démographique n\'est pas permanente : elle aboutit à un nouvel équilibre',
+  example:'Europe : transition achevée. Afrique subsaharienne : en cours de transition'},
+  {type:'mcq',cat:'Territoires',q:'Qu\'est-ce qu\'une métropole en géographie ?',opts:['Grande ville qui polarise un territoire et concentre fonctions économiques, culturelles, politiques','N\'importe quelle grande ville','La capitale d\'un pays','Un quartier d\'affaires'],ans:0,
+  explain:'Métropole = grande ville qui attire des habitants et des entreprises, concentre des fonctions de commandement et rayonne sur un espace régional ou national.',
+  tip:'Métropole ≠ capitale. Paris est à la fois les deux. Mais Lyon est métropole sans être capitale.',
+  correction:'Une métropole se définit par son influence et ses fonctions, pas uniquement sa taille',
+  example:'Lyon, Marseille, Bordeaux = métropoles régionales françaises'},
+  {type:'mcq',cat:'Mondialisation',q:'Qu\'est-ce que les flux migratoires ?',opts:['Déplacements de personnes d\'un pays/région vers un autre','Transport de marchandises','Mouvements de capitaux financiers','Échanges culturels'],ans:0,
+  explain:'Flux migratoires = déplacements de populations (émigration depuis le pays d\'origine, immigration vers le pays d\'accueil). Cause : économiques, politiques, climatiques.',
+  tip:'Émigrer = quitter son pays. Immigrer = arriver dans un nouveau pays. Migrer = se déplacer.',
+  correction:'Les flux migratoires concernent les personnes, pas les marchandises (flux commerciaux) ni l\'argent (flux financiers)',
+  example:'Flux Sud→Nord (Afrique→Europe) ; flux au sein du Sud (Mexique→USA) ; réfugiés climatiques'},
 ],
 
 svt:[
-  {type:'mcq',cat:'Génétique',q:'Qu\'est-ce qu\'un gène ?',opts:['Séquence d\'ADN portant une information héréditaire','Une protéine','Une cellule','Un organe'],ans:0,explain:'Un gène = séquence d\'ADN qui code pour une protéine ou caractéristique. Portés par les chromosomes.',example:'Gène couleur des yeux, des cheveux... ~20 000 gènes chez l\'humain'},
-  {type:'mcq',cat:'Génétique',q:'Combien de chromosomes a une cellule humaine normale ?',opts:['46 (23 paires)','48','23','44'],ans:0,explain:'46 chromosomes (23 paires). Gamètes = 23 (haploïdes). Trisomie 21 = 47 chromosomes.',example:'23 chr maternels + 23 paternels = 46. Chromosomes sexuels : XX (femme), XY (homme)'},
-  {type:'mcq',cat:'Évolution',q:'Qu\'est-ce que la sélection naturelle ?',opts:['Les individus les mieux adaptés survivent et se reproduisent davantage','Modification volontaire des espèces','Extinction des espèces','Domestication des animaux'],ans:0,explain:'Darwin (1859) : variations avantageuses → meilleure survie → reproduction → transmission. Sur millions d\'années → nouvelles espèces.',example:'Phalène du bouleau : forme sombre favorisée par l\'industrialisation (camouflage)'},
-  {type:'mcq',cat:'Corps humain',q:'Quel organe produit de l\'insuline ?',opts:['Le pancréas','Le foie','Les reins','L\'estomac'],ans:0,explain:'Pancréas → insuline (cellules β). L\'insuline permet aux cellules d\'absorber le glucose. Défaut → diabète.',example:'Après repas : glycémie↑ → pancréas sécrète insuline → cellules absorbent glucose → glycémie normale'},
-  {type:'mcq',cat:'Écosystèmes',q:'Qu\'est-ce qu\'une chaîne alimentaire ?',opts:['Relation de nutrition entre êtres vivants','Réseau de supermarchés','Liste des espèces d\'un milieu','Cycle de l\'eau'],ans:0,explain:'Chaîne : herbe→lapin→renard→décomposeurs. La matière/énergie circule du producteur vers les consommateurs.',example:'Chaîne marine : phytoplancton→crevette→sardine→thon→requin'},
-  {type:'mcq',cat:'Microbiologie',q:'Quelle est la différence entre bactérie et virus ?',opts:['Bactérie = cellule vivante, virus ≠ cellule','Aucune différence','Le virus est plus grand','La bactérie ne cause pas de maladie'],ans:0,explain:'Bactérie = être unicellulaire (procaryote) → antibiotiques. Virus = fragment ADN/ARN + capside → antiviraux/vaccins.',example:'Bactéries : angine, tuberculose. Virus : grippe, COVID, rhume'},
-  {type:'mcq',cat:'Reproduction',q:'Qu\'est-ce que la méiose ?',opts:['Division cellulaire produisant des gamètes à 23 chromosomes','Division cellulaire normale','Fusion de deux cellules','Mort cellulaire programmée'],ans:0,explain:'Méiose = division spéciale qui produit les gamètes (spermatozoïdes, ovules) avec 23 chromosomes au lieu de 46.',example:'Méiose → gamètes (23 chr). Fécondation : 23+23=46 → cellule-œuf normale'},
-  {type:'mcq',cat:'Immunologie',q:'Quel est le rôle des anticorps ?',opts:['Neutraliser des antigènes (agents pathogènes)','Produire de l\'insuline','Transporter l\'oxygène','Digérer les aliments'],ans:0,explain:'Anticorps = protéines produites par les lymphocytes B. Ils reconnaissent et neutralisent les antigènes (virus, bactéries...)',example:'Vaccination : on introduit un antigène affaibli → le corps produit des anticorps → immunité'},
-  {type:'mcq',cat:'Nutrition',q:'Quel nutriment est la principale source d\'énergie du corps ?',opts:['Les glucides (sucres)','Les lipides (graisses)','Les protéines','Les vitamines'],ans:0,explain:'Les glucides sont la principale source d\'énergie rapide. Le glucose est le carburant préféré des cellules, notamment du cerveau.',example:'Pain, riz, pâtes, sucre = glucides. Le glycogène stocké dans le foie est une réserve de glucose.'},
+  {type:'mcq',cat:'Génétique',q:'Qu\'est-ce qu\'une mutation génétique ?',opts:['Modification de la séquence d\'ADN','Division cellulaire','Fusion de deux cellules','Mort d\'un gène'],ans:0,
+  explain:'Une mutation = modification (ajout, suppression, substitution) d\'un ou plusieurs nucléotides dans la séquence d\'ADN. Peut être neutre, bénéfique ou nocive.',
+  tip:'Mutations : spontanées (erreurs de copie) ou induites (rayons UV, produits chimiques, radiations).',
+  correction:'Mutation ≠ maladie systématiquement. Certaines mutations sont neutres ou avantageuses.',
+  example:'Mutation avantageuse : résistance aux antibiotiques chez les bactéries. Nocive : cancer'},
+  {type:'mcq',cat:'Génétique',q:'Qu\'est-ce qu\'un allèle ?',opts:['Forme alternative d\'un même gène','Un chromosome entier','Une protéine','Une cellule souche'],ans:0,
+  explain:'Pour chaque gène, il existe différentes versions appelées allèles. Ex : gène couleur des yeux → allèle "bleu" ou "marron". On hérite d\'un allèle de chaque parent.',
+  tip:'Allèle dominant (s\'exprime toujours) vs allèle récessif (s\'exprime seulement si on a deux copies).',
+  correction:'Un gène = une position sur un chromosome. Un allèle = une version particulière de ce gène.',
+  example:'Groupe sanguin : allèles A, B, O. Couleur des yeux : marron dominant, bleu récessif'},
+  {type:'mcq',cat:'Corps humain',q:'Quel est le rôle du foie ?',opts:['Détoxification, production de bile, stockage du glycogène','Produire des hormones','Filtrer le sang (rôle du rein)','Digérer les protéines (rôle de l\'estomac)'],ans:0,
+  explain:'Le foie est le plus grand organe interne. Fonctions : détoxification (alcool, médicaments), production de bile (digestion des graisses), stockage du glycogène (réserve de sucre), synthèse de protéines sanguines.',
+  tip:'Foie = "usine chimique" du corps. Rein = "filtre". Pancréas = "insuline + enzymes digestives".',
+  correction:'Le foie NE produit PAS d\'insuline (pancréas) et ne filtre pas le sang (reins)',
+  example:'Sans foie, impossible de vivre plus de quelques jours → d\'où l\'importance des dons d\'organes'},
+  {type:'mcq',cat:'Écosystèmes',q:'Qu\'est-ce que la biodiversité ?',opts:['Diversité du vivant : espèces, gènes, écosystèmes','Nombre d\'arbres dans une forêt','Diversité culturelle humaine','La faune marine uniquement'],ans:0,
+  explain:'Biodiversité = diversité à 3 niveaux : 1) diversité des espèces, 2) diversité génétique au sein d\'une espèce, 3) diversité des écosystèmes. Elle est menacée par les activités humaines.',
+  tip:'On parle de "6e extinction de masse" : 1 million d\'espèces menacées selon l\'ONU (2019).',
+  correction:'La biodiversité n\'est pas que la faune ou la flore : c\'est la diversité de TOUT le vivant',
+  example:'La biodiversité est essentielle : pollinisation (abeilles), purification de l\'eau, régulation du climat'},
+  {type:'mcq',cat:'Microbiologie',q:'Comment les vaccins protègent-ils l\'organisme ?',opts:['Ils stimulent le système immunitaire pour qu\'il produise des anticorps sans déclencher la maladie','Ils tuent directement les virus','Ils remplacent les globules blancs','Ils empêchent les virus d\'entrer dans le corps'],ans:0,
+  explain:'Vaccin = introduction d\'un antigène inactivé ou affaibli → le système immunitaire produit des anticorps → mémoire immunitaire → si le vrai pathogène arrive, l\'organisme réagit rapidement.',
+  tip:'Vaccin ≠ médicament. Il PRÉVIENT la maladie, il ne la guérit pas.',
+  correction:'Les vaccins n\'agissent pas directement sur les virus : ils "entraînent" notre système immunitaire',
+  example:'Vaccins : BCG (tuberculose), DTP (diphtérie, tétanos, polio), ROR (rougeole, oreillons, rubéole)'},
+  {type:'mcq',cat:'Évolution',q:'Qu\'est-ce qu\'un organe vestigial ?',opts:['Organe qui a perdu sa fonction au cours de l\'évolution','Un organe vital','Un organe en formation','Un organe propre à l\'homme'],ans:0,
+  explain:'Organe vestigial = réduit et sans fonction chez une espèce actuelle, mais présent chez des ancêtres. Preuve de l\'évolution.',
+  tip:'Organes vestigiaux humains : appendice, coccyx (reste de queue), muscles auriculaires (pour bouger les oreilles).',
+  correction:'Vestigial ≠ inutile à jamais : certains organes vestigiaux ont été récupérés à d\'autres fins',
+  example:'La baleine a des os de membres postérieurs vestigiaux → preuve qu\'elle avait des ancêtres terrestres'},
+  {type:'mcq',cat:'Corps humain',q:'Quelle est la fonction des neurones ?',opts:['Transmettre des signaux électriques dans le système nerveux','Transporter l\'oxygène','Combattre les infections','Produire des hormones'],ans:0,
+  explain:'Les neurones sont les cellules du système nerveux. Ils transmettent des signaux électriques (influx nerveux) et communiquent entre eux via des synapses (connexions chimiques).',
+  tip:'Neurone = corps cellulaire + axone (envoie le signal) + dendrites (reçoivent le signal).',
+  correction:'Oxygène → globules rouges. Infections → globules blancs. Hormones → glandes endocrines.',
+  example:'Le cerveau humain : ~86 milliards de neurones. Vitesse influx nerveux : jusqu\'à 120 m/s'},
 ],
 
 physique:[
-  {type:'mcq',cat:'Lumière et optique',q:'Quelle est la vitesse de la lumière dans le vide ?',opts:['300 000 km/s','150 000 km/s','3 000 km/s','30 000 km/s'],ans:0,explain:'c ≈ 3×10⁸ m/s = 300 000 km/s. Vitesse maximale dans l\'univers (Einstein).',example:'1 an-lumière ≈ 9 461 milliards de km. Soleil→Terre : 8 minutes'},
-  {type:'mcq',cat:'Forces et mouvement',q:'La pesanteur sur Terre est approximativement :',opts:['10 N/kg','9.81 N/kg','1 N/kg','100 N/kg'],ans:0,explain:'g ≈ 9.81 N/kg (ou 10 arrondi). Poids P = m × g.',example:'Sur la Lune g≈1.6 N/kg → astronaute 70kg pèse 112N vs 700N sur Terre'},
-  {type:'mcq',cat:'Électricité',q:'Quelle est la loi d\'Ohm ?',opts:['U = R × I','U = I / R','R = U × I','I = U × R'],ans:0,explain:'U (Volts) = R (Ohms) × I (Ampères). Loi fondamentale des circuits électriques.',example:'R=10Ω, I=2A → U=20V. U=12V, R=4Ω → I=3A'},
-  {type:'mcq',cat:'Chimie',q:'L\'eau (H₂O) est composée de :',opts:['2 atomes H et 1 atome O','1 atome H et 2 atomes O','2 atomes H et 2 atomes O','1 atome de chaque'],ans:0,explain:'H₂O : 2 hydrogènes + 1 oxygène. Le 2 en indice = 2 atomes d\'hydrogène.',example:'CO₂=1C+2O. NaCl=1Na+1Cl. CH₄=1C+4H'},
-  {type:'mcq',cat:'Chimie',q:'Lors d\'une réaction chimique, la masse :',opts:['Se conserve (Lavoisier)','Augmente','Diminue','Peut varier'],ans:0,explain:'Loi de conservation de la masse (Lavoisier, 1789) : "Rien ne se perd, rien ne se crée, tout se transforme".',example:'H₂+O→H₂O : 2g+16g=18g. Même masse avant et après'},
-  {type:'mcq',cat:'Énergie',q:'L\'unité de l\'énergie dans le SI est :',opts:['Le joule (J)','Le watt (W)','Le newton (N)','L\'ampère (A)'],ans:0,explain:'Énergie en joules (J). Watt = puissance (W=J/s). P=E/t.',example:'Ampoule 60W pendant 1h : E=60×3600=216 000 J'},
-  {type:'mcq',cat:'Lumière et optique',q:'La lumière blanche est composée de :',opts:['Toutes les couleurs du spectre visible','Uniquement du blanc','Des rayons X','De la chaleur'],ans:0,explain:'La lumière blanche = mélange de toutes les couleurs visibles (rouge→violet). Le prisme décompose la lumière en arc-en-ciel.',example:'Arc-en-ciel = décomposition de la lumière blanche par les gouttes d\'eau'},
-  {type:'mcq',cat:'Forces et mouvement',q:'Quelle est la formule du poids ?',opts:['P = m × g','P = m / g','P = m + g','P = g / m'],ans:0,explain:'Poids P (en Newtons) = masse m (en kg) × intensité de la pesanteur g (en N/kg).',example:'Objet de 5 kg sur Terre : P = 5 × 10 = 50 N'},
-  {type:'mcq',cat:'Chimie',q:'Qu\'est-ce qu\'un atome ?',opts:['La plus petite particule d\'un élément chimique','Une molécule','Un composé chimique','Un gaz'],ans:0,explain:'L\'atome = plus petite partie d\'un élément. Il est composé d\'un noyau (protons+neutrons) entouré d\'électrons.',example:'Atome H : 1 proton + 1 électron. Atome O : 8 protons + 8 électrons'},
+  {type:'mcq',cat:'Lumière',q:'Qu\'est-ce que la réfraction de la lumière ?',opts:['Changement de direction de la lumière en passant d\'un milieu à un autre','Réflexion sur un miroir','Décomposition en couleurs','Absorption par un objet opaque'],ans:0,
+  explain:'Réfraction = déviation d\'un rayon lumineux quand il passe d\'un milieu à un autre (ex : air→eau). La vitesse change, donc le rayon change de direction. Loi de Snell-Descartes.',
+  tip:'Réfraction ≠ réflexion. Réflexion = rebond sur une surface. Réfraction = passage et déviation.',
+  correction:'La réfraction est liée au changement de MILIEU. La réflexion reste dans le même milieu.',
+  example:'Cuillère qui semble brisée dans un verre d\'eau = réfraction. Arc-en-ciel = réfraction+réflexion'},
+  {type:'mcq',cat:'Forces',q:'Que dit le principe d\'inertie (1ère loi de Newton) ?',opts:['Un corps reste en mouvement uniforme ou au repos si les forces se compensent','Un corps accélère toujours','Une force crée un mouvement circulaire','La force = masse × accélération'],ans:0,
+  explain:'1ère loi de Newton : si la somme des forces est nulle → le corps reste immobile ou en mouvement rectiligne uniforme (MRU). Toute modification du mouvement implique une force.',
+  tip:'Newton 1 = inertie. Newton 2 = F=ma. Newton 3 = action-réaction.',
+  correction:'F=ma c\'est la 2e loi de Newton, pas la 1ère (principe d\'inertie)',
+  example:'Une bille sur table sans frottement → elle roule indéfiniment. Avec frottement → elle s\'arrête'},
+  {type:'mcq',cat:'Électricité',q:'Comment calcule-t-on la puissance électrique ?',opts:['P = U × I','P = U / I','P = R × I','P = U² / R²'],ans:0,
+  explain:'Puissance électrique P (en Watts) = Tension U (en Volts) × Intensité I (en Ampères). En combinant avec U=RI : P=RI²=U²/R.',
+  tip:'Trois formules équivalentes : P=UI, P=RI², P=U²/R. Utilise celle où tu connais déjà les deux grandeurs.',
+  correction:'P=UI est la formule de base. P=RI² et P=U²/R s\'obtiennent en remplaçant U ou I avec la loi d\'Ohm',
+  example:'Bouilloire 2200W sous 220V : I = P/U = 2200/220 = 10A'},
+  {type:'mcq',cat:'Chimie',q:'Qu\'est-ce qu\'une réaction d\'oxydation ?',opts:['Réaction avec le dioxygène (O₂)','Dissolution dans l\'eau','Réaction acide-base','Fusion d\'un métal'],ans:0,
+  explain:'Oxydation = combinaison d\'une substance avec le dioxygène. Exemples : combustion (rapide) ou rouille (lente). La corrosion du fer : 4Fe + 3O₂ → 2Fe₂O₃',
+  tip:'Oxydation = contact avec O₂. Combustion = oxydation rapide avec flamme. Corrosion = oxydation lente.',
+  correction:'La dissolution dans l\'eau est un phénomène physique, pas une oxydation.',
+  example:'Pomme coupée qui brunit, fer qui rouille, bois qui brûle → toutes des oxydations'},
+  {type:'mcq',cat:'Chimie',q:'Qu\'est-ce qu\'un acide selon Brønsted-Lowry ?',opts:['Un composé qui cède des protons (H⁺)','Un composé qui accepte des électrons','Un composé basique','Un sel neutre'],ans:0,
+  explain:'Selon Brønsted-Lowry : acide = cède un proton H⁺. Base = accepte un proton H⁺. Exemple : HCl (acide) → H⁺ + Cl⁻',
+  tip:'pH < 7 = acide. pH = 7 = neutre. pH > 7 = basique. Plus le pH est bas, plus l\'acide est fort.',
+  correction:'En chimie du lycée, on considère surtout la définition d\'Arrhénius (H⁺ en solution) ou de Brønsted',
+  example:'Acides : HCl, H₂SO₄, vinaigre. Bases : NaOH, NH₃, bicarbonate de soude'},
+  {type:'mcq',cat:'Énergie',q:'Quelle est la différence entre énergie renouvelable et non-renouvelable ?',opts:['Renouvelable = se reconstitue naturellement, non-renouvelable = stock limité','Renouvelable = plus chère','Non-renouvelable = moins polluante','Il n\'y a pas de différence'],ans:0,
+  explain:'Énergies renouvelables : solaire, éolien, hydraulique, biomasse, géothermie → inépuisables à l\'échelle humaine. Fossiles (pétrole, gaz, charbon) → stock limité, formation sur des millions d\'années.',
+  tip:'Renouvelable ≠ toujours propre. La biomasse (bois) émet du CO₂. Mais elle se renouvelle.',
+  correction:'L\'énergie renouvelable n\'est pas forcément moins chère (ex : solaire nécessite installation)',
+  example:'France : 20% d\'énergies renouvelables (hydraulique surtout) + 70% nucléaire (non-renouvelable mais faible carbone)'},
 ],
 
 emc:[
-  {type:'mcq',cat:'Citoyenneté',q:'À quel âge peut-on voter en France ?',opts:['18 ans','21 ans','16 ans','20 ans'],ans:0,explain:'Majorité électorale à 18 ans depuis 1974 (avant : 21 ans). Droit civique fondamental.',example:'Scrutin proportionnel, majoritaire, référendum... différentes formes de vote'},
-  {type:'mcq',cat:'Institutions',q:'Qui est le chef de l\'État en France ?',opts:['Le Président de la République','Le Premier ministre','Le Président du Sénat','Le Garde des Sceaux'],ans:0,explain:'Président = élu au suffrage universel direct pour 5 ans (quinquennat). Nomme le Premier ministre.',example:'Pouvoirs : dissolution AN, référendum, article 16 (pouvoirs exceptionnels)'},
-  {type:'mcq',cat:'Droits fondamentaux',q:'Quel texte proclame les droits fondamentaux en France depuis 1789 ?',opts:['Déclaration des Droits de l\'Homme et du Citoyen','La Constitution','Le Code civil','La Charte de l\'environnement'],ans:0,explain:'DDHC du 26 août 1789 : liberté, égalité, fraternité. 17 articles. Intégrée au bloc de constitutionnalité.',example:'Article 1 : "Les hommes naissent libres et égaux en droits". Art.11 : liberté d\'expression'},
-  {type:'mcq',cat:'Démocratie',q:'Qu\'est-ce que la séparation des pouvoirs ?',opts:['Exécutif, législatif et judiciaire sont distincts','Le pouvoir partagé entre régions','La démocratie directe','Le fédéralisme'],ans:0,explain:'Montesquieu (1748) : séparer les pouvoirs pour éviter la tyrannie.',example:'Sans séparation = dictature. Chaque pouvoir contrôle les autres (checks and balances)'},
-  {type:'mcq',cat:'Laïcité',q:'La laïcité en France signifie :',opts:['Neutralité de l\'État vis-à-vis des religions','Interdiction des religions','Obligation de croire en Dieu','Fusion État-Église'],ans:0,explain:'Loi de 1905 : séparation Église/État. L\'État ne reconnaît ni ne subventionne aucun culte. Liberté de conscience.',example:'À l\'école publique : les agents (profs) restent neutres, mais les élèves peuvent exprimer leurs convictions'},
-  {type:'mcq',cat:'ONU',q:'L\'ONU a été fondée en :',opts:['1945','1919','1939','1918'],ans:0,explain:'ONU = 1945, après la 2e GM, par 51 États. Aujourd\'hui 193 membres. Objectif : paix, droits de l\'Homme, développement.',example:'Conseil de sécurité : 5 membres permanents avec droit de veto (USA, Russie, Chine, France, RU)'},
-  {type:'mcq',cat:'Institutions',q:'Qu\'est-ce que le Parlement français ?',opts:['L\'Assemblée nationale + le Sénat','Uniquement l\'Assemblée nationale','Le gouvernement','La Cour de cassation'],ans:0,explain:'Parlement = Assemblée nationale (577 députés, élus pour 5 ans) + Sénat (348 sénateurs, élus pour 6 ans). Rôle : voter les lois, contrôler le gouvernement.',example:'Si désaccord entre AN et Sénat → commission mixte ou dernier mot à l\'AN'},
-  {type:'mcq',cat:'Droits et devoirs',q:'Quel est l\'âge de la majorité civile en France ?',opts:['18 ans','16 ans','21 ans','17 ans'],ans:0,explain:'La majorité civile est fixée à 18 ans en France. Elle donne l\'accès à tous les droits civiques et la pleine capacité juridique.',example:'Avant 18 ans : mineur sous autorité parentale. À 18 ans : peut voter, contracter, travailler sans autorisation'},
-  {type:'mcq',cat:'Valeurs républicaines',q:'Que signifie "Liberté, Égalité, Fraternité" ?',opts:['La devise de la République française','Un texte de loi','Un article de la Constitution','Une déclaration de l\'ONU'],ans:0,explain:'Devise de la République française, issue de la Révolution de 1789. Inscrite dans la Constitution.',example:'Liberté = droits individuels ; Égalité = même droits pour tous ; Fraternité = solidarité nationale'},
+  {type:'mcq',cat:'Démocratie',q:'Qu\'est-ce que le suffrage universel ?',opts:['Droit de vote accordé à tous les citoyens majeurs sans distinction','Droit de vote réservé aux propriétaires','Droit de vote uniquement pour les hommes','Vote par représentants uniquement'],ans:0,
+  explain:'Suffrage universel = tout citoyen majeur peut voter, quels que soient son sexe, sa fortune, son niveau d\'éducation. En France : hommes depuis 1848, femmes depuis 1944.',
+  tip:'Suffrage universel ≠ suffrage censitaire (réservé aux propriétaires, avant 1848 en France).',
+  correction:'Le suffrage universel en France inclut les femmes depuis 1944 seulement',
+  example:'En France : suffrage universel direct (président, députés) et indirect (sénateurs élus par grands électeurs)'},
+  {type:'mcq',cat:'Institutions',q:'Qu\'est-ce que le Conseil constitutionnel ?',opts:['Institution qui vérifie que les lois respectent la Constitution','Le gouvernement','Le Parlement','La Cour de cassation'],ans:0,
+  explain:'Le Conseil constitutionnel = "gardien de la Constitution". Il vérifie que les lois votées par le Parlement sont conformes à la Constitution. 9 membres, nommés pour 9 ans.',
+  tip:'Séparation des pouvoirs : législatif (Parlement), exécutif (gouvernement), judiciaire (tribunaux + Conseil constit.).',
+  correction:'Le Conseil constitutionnel n\'est pas un tribunal ordinaire : il juge les lois, pas les personnes',
+  example:'QPC (Question Prioritaire de Constitutionnalité) : tout citoyen peut saisir le CC via un procès'},
+  {type:'mcq',cat:'Droits',q:'Qu\'est-ce que la Convention Européenne des Droits de l\'Homme (1950) ?',opts:['Traité garantissant les droits fondamentaux aux citoyens européens','La Constitution de l\'UE','Un accord commercial','La Charte de l\'ONU'],ans:0,
+  explain:'La CEDH (signée en 1950, entrée en vigueur 1953) protège les droits fondamentaux dans les pays membres du Conseil de l\'Europe. La Cour européenne des droits de l\'Homme (CEDH) à Strasbourg l\'applique.',
+  tip:'Conseil de l\'Europe ≠ Union Européenne. Le Conseil de l\'Europe a 46 membres (plus large).',
+  correction:'La CEDH est liée au Conseil de l\'Europe, pas à l\'UE (qui a sa propre Charte des droits fondamentaux)',
+  example:'Un citoyen peut saisir la CEDH si son pays viole ses droits → arrêts contraignants'},
+  {type:'mcq',cat:'Citoyenneté',q:'Qu\'est-ce que l\'engagement associatif ?',opts:['Participation bénévole à la vie d\'une association pour un intérêt collectif','Travailler pour l\'État','Voter aux élections','Payer ses impôts'],ans:0,
+  explain:'L\'engagement associatif = participer bénévolement à la vie d\'une association (sport, culture, humanitaire, etc.) dans un but d\'intérêt général. Forme d\'exercice de la citoyenneté.',
+  tip:'En France : loi 1901 sur les associations. 1,5 million d\'associations. 20 millions de bénévoles.',
+  correction:'L\'engagement associatif est bénévole (non rémunéré) ≠ emploi salarié',
+  example:'Croix-Rouge, Médecins sans frontières, associations sportives locales = toutes des associations'},
+  {type:'mcq',cat:'Valeurs républicaines',q:'Que signifie la fraternité comme valeur républicaine ?',opts:['Solidarité entre citoyens et responsabilité envers les plus vulnérables','Amitié entre les pays','Égalité des sexes','Liberté de conscience'],ans:0,
+  explain:'Fraternité = lien de solidarité entre citoyens. Elle justifie la protection sociale (Sécu, chômage, aides sociales), le service public universel, et les devoirs envers la communauté.',
+  tip:'Liberté = droits individuels. Égalité = mêmes droits pour tous. Fraternité = solidarité collective.',
+  correction:'La fraternité dépasse la simple amitié : c\'est une valeur juridique et sociale inscrite dans la Constitution',
+  example:'Sécurité sociale, aide au logement, RSA = expressions concrètes de la fraternité républicaine'},
+  {type:'mcq',cat:'Libertés fondamentales',q:'Qu\'est-ce que la liberté de la presse ?',opts:['Droit des journalistes de publier sans censure préalable de l\'État','Liberté de diffuser n\'importe quelle information','Absence de toute réglementation des médias','Contrôle de l\'information par l\'État'],ans:0,
+  explain:'Liberté de la presse = les journalistes peuvent écrire et publier sans que l\'État censure à l\'avance. Mais elle est encadrée : interdiction de diffamer, de révéler des secrets d\'État, de violer la vie privée.',
+  tip:'Liberté de la presse ≠ impunité totale. Les journalistes ont des droits ET des responsabilités.',
+  correction:'La liberté de la presse interdit la censure PRÉALABLE, mais pas les poursuites après publication si abus',
+  example:'RSF (Reporters sans frontières) classe chaque année les pays selon leur liberté de presse'},
 ]
 };
 
-let currentSubject=null,currentMode=null,currentQs=[],currentIdx=0,score=0,answered=false;
+let activeSubject='math',currentMode=null,currentQs=[],currentIdx=0,score=0,answered=false;
 
 function shuffle(arr){return[...arr].sort(()=>Math.random()-0.5)}
 
-function getQuestions(subj,mode,n=12){
-  let all=QUESTIONS[subj]||[];
-  if(mode==='automatisme')all=all.filter(q=>q.type==='automatisme');
-  else if(mode==='qcm')all=all.filter(q=>q.type==='mcq');
-  return shuffle(all).slice(0,n);
+function renderTabs(){
+  const row=document.getElementById('tabs-row');
+  row.innerHTML='';
+  SUBJECTS.forEach(s=>{
+    const btn=document.createElement('button');
+    btn.className='tab-btn'+(s.id===activeSubject?' active':'');
+    btn.innerHTML=`${s.emoji} ${s.name}`;
+    btn.onclick=()=>showSubject(s.id);
+    row.appendChild(btn);
+  });
 }
 
-function hide(id){document.getElementById(id).style.display='none'}
-function show(id){document.getElementById(id).style.display='block'}
-
-function showMain(){
-  show('main-screen');hide('subject-screen');hide('quiz-screen');hide('score-screen');
-}
-
-function showSubject(subj){
-  currentSubject=subj;
-  const s=SUBJECTS.find(x=>x.id===subj);
-  const sc=document.getElementById('subject-screen');
-  sc.innerHTML=`
-    <button class="back-btn" onclick="showMain()"><i class="ti ti-arrow-left"></i> Retour</button>
-    <div class="page-title">${s.emoji} ${s.name}</div>
-    <div class="page-sub">Choisis ton mode de révision</div>
-    <div class="mode-cards">
-      ${subj==='math'?`<div class="mode-card" onclick="startQuiz('${subj}','automatisme')">
-        <span class="badge" style="background:#EEEDFE;color:#3C3489">⚡ Calcul rapide</span>
-        <h3>Automatismes</h3>
-        <p>Calculs rapides à saisir — entraîne ta fluidité de calcul</p>
-      </div>`:''}
-      <div class="mode-card" onclick="startQuiz('${subj}','qcm')">
-        <span class="badge" style="background:#E1F5EE;color:#085041">🧠 QCM</span>
-        <h3>Questions de cours</h3>
-        <p>Questions à choix multiple avec explications détaillées</p>
+function showSubject(id){
+  activeSubject=id;
+  document.getElementById('tabs-section').style.display='block';
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('score-section').style.display='none';
+  renderTabs();
+  const s=SUBJECTS.find(x=>x.id===id);
+  const allQ=QUESTIONS[id]||[];
+  const autoQ=allQ.filter(q=>q.type==='auto');
+  const mcqQ=allQ.filter(q=>q.type==='mcq');
+  document.getElementById('subject-content').innerHTML=`
+    <div class="subject-header">
+      <div class="subject-icon-big" style="background:${s.color}">${s.emoji}</div>
+      <div class="subject-title-group">
+        <h2>${s.name}</h2>
+        <p>${s.desc}</p>
       </div>
-      <div class="mode-card" onclick="startQuiz('${subj}','all')">
-        <span class="badge" style="background:#FAECE7;color:#4A1B0C">🎯 Entraînement</span>
-        <h3>Mode mixte</h3>
-        <p>Mélange de toutes les questions — comme un vrai contrôle</p>
+    </div>
+    <div class="mode-grid">
+      ${id==='math'?`<div class="mode-card" onclick="startQuiz('${id}','auto')">
+        <span class="mode-badge" style="background:rgba(79,140,255,.15);color:#a5c4ff">⚡ Calcul rapide</span>
+        <h3>Automatismes</h3>
+        <p>Calcule et réponds en direct — entraîne ta fluidité</p>
+        <div class="q-count">${autoQ.length} exercices disponibles</div>
+      </div>`:''}
+      <div class="mode-card" onclick="startQuiz('${id}','mcq')">
+        <span class="mode-badge" style="background:rgba(34,212,138,.12);color:#22d48a">🧠 QCM</span>
+        <h3>Questions de cours</h3>
+        <p>Questions à choix multiple avec explications + conseils</p>
+        <div class="q-count">${mcqQ.length} questions disponibles</div>
+      </div>
+      <div class="mode-card" onclick="startQuiz('${id}','all')">
+        <span class="mode-badge" style="background:rgba(251,191,36,.12);color:#fbbf24">🎯 Mixte</span>
+        <h3>Entraînement complet</h3>
+        <p>Mélange de tout — comme un vrai contrôle surprise</p>
+        <div class="q-count">${allQ.length} questions au total</div>
       </div>
     </div>
   `;
-  hide('main-screen');show('subject-screen');hide('quiz-screen');hide('score-screen');
 }
 
 function startQuiz(subj,mode){
   currentMode=mode;currentIdx=0;score=0;answered=false;
-  currentQs=getQuestions(subj,mode);
-  if(!currentQs.length){alert('Pas assez de questions pour ce mode !');return;}
-  hide('subject-screen');show('quiz-screen');
-  renderQuestion();
+  let pool=QUESTIONS[subj]||[];
+  if(mode==='auto')pool=pool.filter(q=>q.type==='auto');
+  else if(mode==='mcq')pool=pool.filter(q=>q.type==='mcq');
+  currentQs=shuffle(pool).slice(0,10);
+  if(!currentQs.length){alert('Pas assez de questions !');return;}
+  document.getElementById('tabs-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  document.getElementById('score-section').style.display='none';
+  renderQ();
 }
 
-function renderQuestion(){
+function renderQ(){
   answered=false;
   const q=currentQs[currentIdx];
-  const s=SUBJECTS.find(x=>x.id===currentSubject);
+  const s=SUBJECTS.find(x=>x.id===activeSubject);
   const pct=Math.round((currentIdx/currentQs.length)*100);
-  let content=q.type==='automatisme'?renderAuto(q):renderMCQ(q);
-  document.getElementById('quiz-screen').innerHTML=`
-    <button class="back-btn" onclick="showSubject('${currentSubject}')"><i class="ti ti-arrow-left"></i> Quitter</button>
-    <div class="quiz-container">
-      <div class="progress-info"><span>${s.emoji} ${s.name}</span><span>Question ${currentIdx+1} / ${currentQs.length}</span></div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      ${content}
-    </div>
+  document.getElementById('quiz-wrap').innerHTML=`
+    <button class="back-btn" onclick="showSubject('${activeSubject}')">← Quitter</button>
+    <div class="progress-row"><span>${s.emoji} ${s.name} — ${q.cat}</span><span>${currentIdx+1} / ${currentQs.length}</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    ${q.type==='auto'?buildAuto(q):buildMCQ(q)}
   `;
-  if(q.type==='automatisme'){
-    const inp=document.getElementById('auto-ans');
-    if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==='Enter')submitAuto()};}
-  }
+  if(q.type==='auto'){const i=document.getElementById('ai');if(i){i.focus();i.onkeydown=e=>{if(e.key==='Enter')submitAuto()};}}
 }
 
-function renderMCQ(q){
-  return`<div class="question-card">
-    <div class="question-type">${q.cat||'Question'}</div>
-    <div class="question-text">${q.q}</div>
-    <div class="options">${q.opts.map((o,i)=>`
-      <button class="option-btn" id="opt-${i}" onclick="selectAnswer(${i})">
-        <span class="option-letter">${'ABCD'[i]}</span>${o}
-      </button>`).join('')}
-    </div>
-    <div id="feedback-area"></div>
+function buildMCQ(q){
+  return`<div class="q-card">
+    <div class="q-cat">${q.cat}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="options">${q.opts.map((o,i)=>`<button class="opt" id="o${i}" onclick="pick(${i})"><span class="opt-letter">${'ABCD'[i]}</span>${o}</button>`).join('')}</div>
+    <div id="fb"></div>
   </div>`;
 }
 
-function renderAuto(q){
-  return`<div class="question-card">
-    <div class="question-type">⚡ Automatisme</div>
-    <div class="question-text">${q.q}</div>
-    <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
-      <input class="auto-input-field" type="text" id="auto-ans" placeholder="Ta réponse..."/>
-      <button class="validate-btn" onclick="submitAuto()">Valider</button>
+function buildAuto(q){
+  return`<div class="q-card">
+    <div class="q-cat">⚡ ${q.cat}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="auto-row">
+      <input class="auto-input" id="ai" type="text" placeholder="Tape ta réponse..."/>
+      <button class="submit-btn" onclick="submitAuto()">Valider →</button>
     </div>
-    <div id="feedback-area"></div>
+    <div id="fb"></div>
   </div>`;
 }
 
-function submitAuto(){
-  if(answered)return;
-  const q=currentQs[currentIdx];
-  const val=(document.getElementById('auto-ans').value||'').trim().toLowerCase().replace(/\s/g,'');
-  const correct=q.a.toLowerCase().replace(/\s/g,'');
-  const ok=val===correct||val===correct.replace(/[^0-9.]/g,'');
-  answered=true;
-  if(ok)score++;
-  document.getElementById('auto-ans').disabled=true;
-  showFeedback(ok,q);
-}
-
-function selectAnswer(idx){
-  if(answered)return;
-  answered=true;
+function pick(idx){
+  if(answered)return;answered=true;
   const q=currentQs[currentIdx];
   const ok=idx===q.ans;
   if(ok)score++;
-  document.querySelectorAll('.option-btn').forEach((btn,i)=>{
-    btn.disabled=true;
-    if(i===q.ans)btn.classList.add('correct');
-    else if(i===idx&&!ok)btn.classList.add('wrong');
+  document.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.ans)b.classList.add('correct');
+    else if(i===idx&&!ok)b.classList.add('wrong');
   });
   showFeedback(ok,q);
 }
 
+function submitAuto(){
+  if(answered)return;answered=true;
+  const q=currentQs[currentIdx];
+  const val=(document.getElementById('ai').value||'').trim().toLowerCase().replace(/\s/g,'');
+  const correct=q.a.toLowerCase().replace(/\s/g,'');
+  const ok=val===correct||val===correct.replace(/[^0-9.,]/g,'');
+  if(ok)score++;
+  document.getElementById('ai').disabled=true;
+  showFeedback(ok,q);
+}
+
 function showFeedback(ok,q){
-  document.getElementById('feedback-area').innerHTML=`
-    <div class="feedback-card ${ok?'correct':'wrong'}" style="margin-top:1rem">
-      <div class="feedback-title">
-        <i class="ti ti-${ok?'circle-check':'circle-x'}" style="font-size:20px"></i>
-        ${ok?'Bravo ! Bonne réponse 🎉':'Pas tout à fait...'}
-        ${q.type==='automatisme'&&!ok?`<span style="font-size:13px;font-weight:400"> — Réponse : <strong>${q.a}</strong></span>`:''}
+  const fb=document.getElementById('fb');
+  const isAuto=q.type==='auto';
+  fb.innerHTML=`
+    <div class="feedback ${ok?'correct-fb':'wrong-fb'}">
+      <div class="fb-head ${ok?'ok':'nope'}">
+        <span class="fb-icon">${ok?'✅':'❌'}</span>
+        ${ok?'Bonne réponse ! Excellent travail 🎉':'Pas cette fois... Voilà la correction 👇'}
+        ${isAuto&&!ok?`<span style="font-size:13px;font-weight:500;margin-left:8px">Réponse : <strong>${q.a}</strong></span>`:''}
       </div>
-      <div class="feedback-body">
-        <strong>📖 Explication :</strong><br>${q.explain}
-        ${q.hint?`<div class="math-display">${q.hint}</div>`:''}
-        <div class="feedback-example"><strong>💡 Exemple :</strong><br>${q.example}</div>
+      <div class="fb-section">
+        <div class="fb-label">📖 Explication</div>
+        <div class="fb-body">${q.explain}</div>
+        ${q.hint?`<div class="math-box">${q.hint}</div>`:''}
+      </div>
+      ${ok?`<div class="fb-tip">
+        <div class="fb-label">💡 Conseil pour aller plus loin</div>
+        <div class="fb-body">${q.tip}</div>
+      </div>`:`
+      <div class="fb-correction">
+        <div class="fb-label">🔧 Correction détaillée</div>
+        <div class="fb-body">${q.correction||q.explain}</div>
+      </div>
+      <div class="fb-tip">
+        <div class="fb-label">💡 Conseil pour retenir</div>
+        <div class="fb-body">${q.tip}</div>
+      </div>`}
+      <div class="fb-example">
+        <div class="fb-label">✏️ Exemple similaire</div>
+        <div class="fb-body">${q.example}</div>
       </div>
     </div>
-    <button class="next-btn" onclick="nextQuestion()">
-      ${currentIdx+1<currentQs.length?'Question suivante →':'Voir mes résultats 🏁'}
-    </button>
+    <button class="next-btn" onclick="nextQ()">${currentIdx+1<currentQs.length?'Question suivante →':'Voir mon score 🏁'}</button>
   `;
 }
 
-function nextQuestion(){
+function nextQ(){
   currentIdx++;
   if(currentIdx>=currentQs.length){showScore();return;}
-  renderQuestion();
+  renderQ();
 }
 
 function showScore(){
-  const s=SUBJECTS.find(x=>x.id===currentSubject);
+  const s=SUBJECTS.find(x=>x.id===activeSubject);
   const pct=Math.round((score/currentQs.length)*100);
-  const color=pct>=70?'#0F6E56':pct>=50?'#854F0B':'#993C1D';
-  const bg=pct>=70?'#E1F5EE':pct>=50?'#FAEEDA':'#FAECE7';
-  const msg=pct>=80?'Excellent ! Tu es prêt(e) ! 🏆':pct>=60?'Bien ! Continue à réviser 💪':pct>=40?'Courage, il faut encore travailler ça 📚':'Il faut reprendre ce chapitre depuis le début 🔄';
-  hide('quiz-screen');show('score-screen');
-  document.getElementById('score-screen').innerHTML=`
-    <div class="score-card">
-      <div class="score-circle" style="border-color:${color};background:${bg};color:${color}">${pct}%</div>
-      <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">${s.emoji} ${s.name}</h2>
-      <p style="color:#888;font-size:14px;margin-bottom:1.5rem">${msg}</p>
-      <div class="stats-row">
-        <div class="stat-box"><div class="val" style="color:#0F6E56">${score}</div><div class="lbl">Bonnes réponses</div></div>
-        <div class="stat-box"><div class="val" style="color:#993C1D">${currentQs.length-score}</div><div class="lbl">Erreurs</div></div>
-        <div class="stat-box"><div class="val">${currentQs.length}</div><div class="lbl">Total</div></div>
-      </div>
-      <div>
-        <button class="restart-btn" onclick="startQuiz('${currentSubject}','${currentMode}')">🔄 Recommencer</button>
-        <button class="restart-btn outline" onclick="showSubject('${currentSubject}')">Changer de mode</button>
-        <button class="restart-btn outline" onclick="showMain()">🏠 Accueil</button>
-      </div>
+  const isGood=pct>=70,isMid=pct>=40;
+  const col=isGood?'#22d48a':isMid?'#ffd76e':'#ff5a7e';
+  const msg=pct>=90?'Parfait ! Tu maîtrises ce chapitre 🏆':pct>=70?'Très bien ! Encore un peu de révision 💪':pct>=50?'Courage ! Relis le cours et recommence 📚':'Il faut reprendre ce chapitre depuis le début 🔄';
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('score-section').style.display='block';
+  if(pct>=70)confetti();
+  document.getElementById('score-wrap').innerHTML=`
+    <h2 class="score-title">${s.emoji} ${s.name} — Résultats</h2>
+    <div class="score-circle" style="border-color:${col};color:${col};background:${col}18">
+      <span class="score-pct">${pct}%</span>
+      <span class="score-label">${score}/${currentQs.length} correct</span>
+    </div>
+    <p class="score-msg">${msg}</p>
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-val" style="color:#22d48a">${score}</div><div class="stat-lbl">✅ Bonnes réponses</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:#ff5a7e">${currentQs.length-score}</div><div class="stat-lbl">❌ Erreurs</div></div>
+      <div class="stat-box"><div class="stat-val" style="color:var(--accent)">${currentQs.length}</div><div class="stat-lbl">📊 Total</div></div>
+    </div>
+    <div class="score-actions">
+      <button class="score-btn primary" onclick="startQuiz('${activeSubject}','${currentMode}')">🔄 Recommencer</button>
+      <button class="score-btn ghost" onclick="showSubject('${activeSubject}')">Changer de mode</button>
+      <button class="score-btn ghost" onclick="showSubject('${activeSubject}')">🏠 Accueil</button>
     </div>
   `;
 }
 
-// Build subject grid
-const grid=document.getElementById('subjects-grid');
-SUBJECTS.forEach(s=>{
-  const card=document.createElement('div');
-  card.className='subject-card';
-  card.onclick=()=>showSubject(s.id);
-  card.innerHTML=`
-    <div class="icon" style="background:${s.color}">${s.emoji}</div>
-    <h3>${s.name}</h3>
-    <p>${s.desc}</p>
-  `;
-  grid.appendChild(card);
-});
+function confetti(){
+  const colors=['#4f8cff','#22d48a','#ffd76e','#ff5a7e','#a78bfa','#fff'];
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');p.className='confetti-piece';
+    p.style.cssText=`left:${20+Math.random()*60}vw;top:30vh;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*0.5}s;animation-duration:${0.8+Math.random()*0.8}s;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),2000);
+  }
+}
 </script>
 </body>
 </html>
